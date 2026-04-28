@@ -1,0 +1,181 @@
+<Window x:Class="FontColorShowcase.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Font and Color Showcase"
+        Width="1000" Height="800"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Border Background="#0A0D12" CornerRadius="12"
+            BorderBrush="#2A3347" BorderThickness="1">
+        <ScrollViewer>
+            <StackPanel Margin="48">
+
+                <!-- ═══ FONTS ═══ -->
+                <TextBlock Text="TYPOGRAPHY REFERENCE"
+                           Foreground="#445566" FontFamily="Consolas" FontSize="11"
+                           FontWeight="Bold" Margin="0,0,0,24"/>
+
+                <!-- Hero / Display -->
+                <TextBlock Text="Hero Display Text" Foreground="#FFFFFF"
+                           FontFamily="Segoe UI Black" FontSize="72" FontWeight="Black"/>
+                <TextBlock Text="Display Heading" Foreground="#FFFFFF"
+                           FontFamily="Segoe UI Black" FontSize="48" FontWeight="Bold"/>
+                <TextBlock Text="Heading H1 — SemiBold 28pt" Foreground="#FFFFFF"
+                           FontFamily="Segoe UI" FontSize="28" FontWeight="SemiBold" Margin="0,8,0,0"/>
+                <TextBlock Text="Heading H2 — SemiBold 20pt" Foreground="#FFFFFF"
+                           FontFamily="Segoe UI" FontSize="20" FontWeight="SemiBold"/>
+                <TextBlock Text="Body text — Regular 14pt — The quick brown fox jumps over the lazy dog"
+                           Foreground="#FFFFFF" FontFamily="Segoe UI" FontSize="14"
+                           TextWrapping="Wrap" Margin="0,8,0,0"/>
+                <TextBlock Text="Muted body — Regular 12pt — Supporting information and secondary context"
+                           Foreground="#8899AA" FontFamily="Segoe UI" FontSize="12" TextWrapping="Wrap"/>
+                <TextBlock Text="LABEL UPPERCASE — 10pt — SECTION HEADERS AND TAGS"
+                           Foreground="#8899AA" FontFamily="Segoe UI" FontSize="10" FontWeight="SemiBold"
+                           Margin="0,8,0,0"/>
+                <TextBlock Text="Caption — 10pt — Fine print, timestamps, metadata"
+                           Foreground="#445566" FontFamily="Segoe UI" FontSize="10"/>
+
+                <!-- Monospace -->
+                <TextBlock Text="Monospace / Code — Cascadia Code 12pt — log.Error(&quot;failed&quot;);"
+                           Foreground="#00B4FF" FontFamily="Cascadia Code, Consolas" FontSize="12"
+                           Margin="0,12,0,0"/>
+
+                <!-- Emoji showcase -->
+                <TextBlock Text="🔥 💥 ⚡ 🎯 🚀 🛡️ ⚔️ 🌊 🔑 📡 🎖️ 🦅 🔶 💡 🎮 🔐 🌐 ⭐ 💎 🏆"
+                           FontSize="24" Margin="0,12,0,0"/>
+
+                <!-- Separator -->
+                <Rectangle Height="1" Fill="#2A3347" Margin="0,32,0,32"/>
+
+                <!-- ═══ COLOR PALETTE ═══ -->
+                <TextBlock Text="COLOR PALETTE"
+                           Foreground="#445566" FontFamily="Consolas" FontSize="11"
+                           FontWeight="Bold" Margin="0,0,0,24"/>
+
+                <!-- Background colors -->
+                <TextBlock Text="BACKGROUNDS" Foreground="#445566" FontFamily="Consolas" FontSize="9" Margin="0,0,0,8"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                    <StackPanel Margin="0,0,16,0">
+                        <Border Width="80" Height="50" Background="#0A0D12" CornerRadius="6"
+                                BorderBrush="#2A3347" BorderThickness="1"/>
+                        <TextBlock Text="#0A0D12" Foreground="#445566" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="Deep" Foreground="#8899AA" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,16,0">
+                        <Border Width="80" Height="50" Background="#12171F" CornerRadius="6"
+                                BorderBrush="#2A3347" BorderThickness="1"/>
+                        <TextBlock Text="#12171F" Foreground="#445566" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="Panel" Foreground="#8899AA" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,16,0">
+                        <Border Width="80" Height="50" Background="#1C2333" CornerRadius="6"
+                                BorderBrush="#2A3347" BorderThickness="1"/>
+                        <TextBlock Text="#1C2333" Foreground="#445566" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="Elevated" Foreground="#8899AA" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Border Width="80" Height="50" Background="#242D3F" CornerRadius="6"
+                                BorderBrush="#2A3347" BorderThickness="1"/>
+                        <TextBlock Text="#242D3F" Foreground="#445566" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="Hover" Foreground="#8899AA" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Accent colors -->
+                <TextBlock Text="ACCENTS" Foreground="#445566" FontFamily="Consolas" FontSize="9" Margin="0,0,0,8"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                    <StackPanel Margin="0,0,16,0">
+                        <Border Width="80" Height="50" Background="#00B4FF" CornerRadius="6">
+                            <Border.Effect><DropShadowEffect Color="#00B4FF" BlurRadius="12" ShadowDepth="0" Opacity="0.6"/></Border.Effect>
+                        </Border>
+                        <TextBlock Text="#00B4FF" Foreground="#445566" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="Electric Blue" Foreground="#8899AA" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,16,0">
+                        <Border Width="80" Height="50" Background="#FF6B35" CornerRadius="6">
+                            <Border.Effect><DropShadowEffect Color="#FF6B35" BlurRadius="12" ShadowDepth="0" Opacity="0.6"/></Border.Effect>
+                        </Border>
+                        <TextBlock Text="#FF6B35" Foreground="#445566" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="Tactical Orange" Foreground="#8899AA" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,16,0">
+                        <Border Width="80" Height="50" Background="#00FF94" CornerRadius="6">
+                            <Border.Effect><DropShadowEffect Color="#00FF94" BlurRadius="12" ShadowDepth="0" Opacity="0.6"/></Border.Effect>
+                        </Border>
+                        <TextBlock Text="#00FF94" Foreground="#445566" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="Mission Green" Foreground="#8899AA" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,16,0">
+                        <Border Width="80" Height="50" Background="#FF2D55" CornerRadius="6">
+                            <Border.Effect><DropShadowEffect Color="#FF2D55" BlurRadius="12" ShadowDepth="0" Opacity="0.6"/></Border.Effect>
+                        </Border>
+                        <TextBlock Text="#FF2D55" Foreground="#445566" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="Red Alert" Foreground="#8899AA" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,16,0">
+                        <Border Width="80" Height="50" Background="#FFD700" CornerRadius="6">
+                            <Border.Effect><DropShadowEffect Color="#FFD700" BlurRadius="12" ShadowDepth="0" Opacity="0.6"/></Border.Effect>
+                        </Border>
+                        <TextBlock Text="#FFD700" Foreground="#445566" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="Gold" Foreground="#8899AA" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Border Width="80" Height="50" Background="#9B59FF" CornerRadius="6">
+                            <Border.Effect><DropShadowEffect Color="#9B59FF" BlurRadius="12" ShadowDepth="0" Opacity="0.6"/></Border.Effect>
+                        </Border>
+                        <TextBlock Text="#9B59FF" Foreground="#445566" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="Arcane Purple" Foreground="#8899AA" FontFamily="Consolas" FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Glow effects -->
+                <TextBlock Text="GLOW EFFECTS ON TEXT" Foreground="#445566" FontFamily="Consolas" FontSize="9" Margin="0,0,0,12"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                    <TextBlock Text="ELECTRIC" Foreground="#00B4FF" FontFamily="Consolas" FontSize="24"
+                               FontWeight="Bold" Margin="0,0,32,0">
+                        <TextBlock.Effect><DropShadowEffect Color="#00B4FF" BlurRadius="20" ShadowDepth="0" Opacity="0.9"/></TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock Text="DANGER" Foreground="#FF2D55" FontFamily="Consolas" FontSize="24"
+                               FontWeight="Bold" Margin="0,0,32,0">
+                        <TextBlock.Effect><DropShadowEffect Color="#FF2D55" BlurRadius="20" ShadowDepth="0" Opacity="0.9"/></TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock Text="MISSION" Foreground="#00FF94" FontFamily="Consolas" FontSize="24"
+                               FontWeight="Bold" Margin="0,0,32,0">
+                        <TextBlock.Effect><DropShadowEffect Color="#00FF94" BlurRadius="20" ShadowDepth="0" Opacity="0.9"/></TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock Text="ARCANE" Foreground="#9B59FF" FontFamily="Consolas" FontSize="24"
+                               FontWeight="Bold">
+                        <TextBlock.Effect><DropShadowEffect Color="#9B59FF" BlurRadius="20" ShadowDepth="0" Opacity="0.9"/></TextBlock.Effect>
+                    </TextBlock>
+                </StackPanel>
+
+                <Button Content="CLOSE" HorizontalAlignment="Center" Margin="0,20,0,0"
+                        Padding="24,10" Click="CloseBtn_Click"
+                        FontFamily="Consolas" Background="#12171F"
+                        Foreground="#FF2D55" BorderBrush="#3A1522" BorderThickness="1" Cursor="Hand"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</Window>
