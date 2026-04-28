@@ -1,0 +1,144 @@
+<UserControl x:Class="__APP_NAME__.Debug.DiagnosticsOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:__APP_NAME__.Debug"
+             IsHitTestVisible="False"
+             Opacity="0.92"
+             HorizontalAlignment="Right"
+             VerticalAlignment="Top"
+             Margin="0,52,12,0"
+             Width="320">
+
+    <UserControl.Resources>
+        <!-- Fallback styles if engine ResourceDictionary not merged -->
+        <Style x:Key="HudLabel" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Cascadia Code, Consolas"/>
+            <Setter Property="FontSize"   Value="11"/>
+            <Setter Property="Foreground" Value="#CCFFFFFF"/>
+        </Style>
+        <Style x:Key="HudKey" TargetType="TextBlock" BasedOn="{StaticResource HudLabel}">
+            <Setter Property="Foreground" Value="#8899AA"/>
+            <Setter Property="Width"      Value="90"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Border Background="#E0050810"
+            BorderBrush="#33FFFFFF"
+            BorderThickness="1"
+            CornerRadius="6"
+            Padding="12,10">
+        <StackPanel Spacing="4">
+
+            <!-- Header -->
+            <TextBlock Text="◈ DEBUG OVERLAY"
+                       FontFamily="Cascadia Code, Consolas"
+                       FontSize="11"
+                       FontWeight="Bold"
+                       Foreground="#00B4FF"
+                       Margin="0,0,0,6"/>
+
+            <!-- FPS -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="FPS" Style="{StaticResource HudKey}"/>
+                <TextBlock Grid.Column="1"
+                           Text="{Binding Fps, StringFormat={}{0:F1}}"
+                           Foreground="{Binding FpsColor}"
+                           FontFamily="Cascadia Code, Consolas"
+                           FontSize="11"
+                           FontWeight="Bold"/>
+            </Grid>
+
+            <!-- Memory -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Memory" Style="{StaticResource HudKey}"/>
+                <TextBlock Grid.Column="1"
+                           Style="{StaticResource HudLabel}">
+                    <Run Text="{Binding MemoryMb, StringFormat={}{0:F1}}"/>
+                    <Run Text=" MB"/>
+                </TextBlock>
+            </Grid>
+
+            <!-- Uptime -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Uptime" Style="{StaticResource HudKey}"/>
+                <TextBlock Grid.Column="1"
+                           Text="{Binding Uptime}"
+                           Style="{StaticResource HudLabel}"/>
+            </Grid>
+
+            <!-- Separator -->
+            <Rectangle Height="1" Fill="#22FFFFFF" Margin="0,4"/>
+
+            <!-- Current View -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="View" Style="{StaticResource HudKey}"/>
+                <TextBlock Grid.Column="1"
+                           Text="{Binding CurrentView}"
+                           Foreground="#00FF94"
+                           FontFamily="Cascadia Code, Consolas"
+                           FontSize="11"
+                           TextTrimming="CharacterEllipsis"/>
+            </Grid>
+
+            <!-- ViewModel -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="ViewModel" Style="{StaticResource HudKey}"/>
+                <TextBlock Grid.Column="1"
+                           Text="{Binding CurrentViewModel}"
+                           Foreground="#8899AA"
+                           FontFamily="Cascadia Code, Consolas"
+                           FontSize="11"
+                           TextTrimming="CharacterEllipsis"/>
+            </Grid>
+
+            <!-- Separator -->
+            <Rectangle Height="1" Fill="#22FFFFFF" Margin="0,4"/>
+
+            <!-- Last Log Line -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Last Log" Style="{StaticResource HudKey}"/>
+                <TextBlock Grid.Column="1"
+                           Text="{Binding LastLogLine}"
+                           Foreground="#AAAAAA"
+                           FontFamily="Cascadia Code, Consolas"
+                           FontSize="10"
+                           TextWrapping="Wrap"
+                           MaxHeight="32"
+                           TextTrimming="CharacterEllipsis"/>
+            </Grid>
+
+            <!-- Footer hint -->
+            <TextBlock Text="Ctrl+Shift+D to hide"
+                       FontFamily="Cascadia Code, Consolas"
+                       FontSize="9"
+                       Foreground="#44FFFFFF"
+                       Margin="0,6,0,0"
+                       HorizontalAlignment="Right"/>
+
+        </StackPanel>
+    </Border>
+</UserControl>
