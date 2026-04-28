@@ -113,16 +113,63 @@ Every error must be caught, logged with context, and surfaced — never swallowe
 | `samples/controls/PopupModalDemo/` | Sliding left/right panels (animated TranslateTransform), confirm/info/input modals with overlay, toast notifications |
 | `samples/controls/ButtonGallery/` | Every button variant — primary gradient, danger, ghost, link, icon (small/hero), toggle, disabled, with code labels |
 | `samples/controls/EmojiShowcase/` | Emoji in tabs/status bars/buttons, size scale 12px→64px, emoji tiles: military, science, status, people |
+| `samples/controls/ToastDemo/` | Standalone toast notification sample — success/error/info variants with auto-dismiss |
+
+### UI Showcase (alternate single-page layouts)
+
+| Folder | Description |
+|--------|-------------|
+| `samples/ui/ButtonGallery/` | Button gallery in single-page layout |
+| `samples/ui/EmojiShowcase/` | Emoji showcase in single-page layout |
+| `samples/ui/FontShowcase/` | Typography showcase — font scale, weights, mono vs display |
+
+### Reusable UserControls
+
+| Folder | Description |
+|--------|-------------|
+| `templates/controls/ConfirmDialog/` | Drop-in confirm dialog — wire Cancel/Confirm callbacks |
+| `templates/controls/LoadingOverlay/` | Full-screen loading overlay — show/hide with message |
+| `templates/controls/ToastNotification/` | Toast component — call Show(message, type) from code-behind |
+
+### Layout Templates
+
+| Folder | Description |
+|--------|-------------|
+| `templates/layouts/SidebarLayout.xaml` | Left sidebar + content area — standard app shell |
+| `templates/layouts/DashboardLayout.xaml` | Header + stat cards + main content area |
+| `templates/layouts/SinglePageLayout.xaml` | Minimal window with title bar + scrollable content |
+
+### Page Scaffolds
+
+| Folder | Description |
+|--------|-------------|
+| `templates/pages/DashboardPage/` | Dashboard scaffold — stat cards, chart area, activity feed |
+| `templates/pages/SettingsPage/` | Settings scaffold — sections, toggles, input fields |
+| `templates/pages/EmptyPage/` | Blank page with MVVM wiring — copy for any new page |
 
 ### Debug Utilities
 
 | Folder | Description |
 |--------|-------------|
 | `templates/BaseProject/Debug/DiagnosticsOverlay.xaml` | Overlay panel — FPS (color-coded), memory MB, uptime, current view, last log line, keyboard shortcuts |
+| `debug/DiagnosticsOverlay/DiagnosticsViewModel.cs` | Standalone DiagnosticsViewModel — use outside base template |
+| `debug/LoggingTemplate/LoggingSetup.cs` | Copy-paste Serilog setup with all sinks pre-configured |
+| `debug/LoggingTemplate/GlobalExceptionHandler.cs` | All three WPF exception handler patterns in one file |
 | `debug/AdornerOverlay/GridAdorner.cs` | Debug grid drawn via AdornerLayer — toggle with `AdornerOverlayExtensions.ToggleGrid(element)` |
 | `debug/AdornerOverlay/BoundsAdorner.cs` | Bounds highlighter — shows actual width×height + margin box via AdornerLayer |
 | `debug/AdornerOverlay/AdornerOverlayExtensions.cs` | Static helper — `ToggleGrid`, `AddBounds`, `ClearAllBounds` — wire to Ctrl+Shift+G / B |
 
+### Agent Framework
+
+| Folder | Description |
+|--------|-------------|
+| `.agent/agents/` | Role definitions — builder-verifier, repo-analyst, research-planner |
+| `.agent/knowledge/` | Persistent knowledge — solution patterns, stack decisions, workflow preferences |
+| `.agent/reports/` | Session intake, tasks, progress, understanding-proof, master blueprint |
+| `.agent/scripts/` | Python helpers — bootstrap workspace, update knowledge, run with logs |
+| `.agent/templates/` | Document templates for all agent artifact types |
+| `.agent/state/router.md` | Current agent routing state |
+
 ---
 
-*Last updated: 2026-04-27 | Engine version: 1.0.0 | 22 projects | 4 animations | 4 progress | 6 themes | 4 controls | 3 page templates*
+*Last updated: 2026-04-27 | Engine version: 1.0.0 | 26 projects | 4 animations | 4 progress | 6 themes | 5 controls | 3 ui showcases | 3 UserControls | 3 layouts | 4 page scaffolds | 3 page templates | agent framework*

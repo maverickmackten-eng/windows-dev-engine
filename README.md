@@ -54,7 +54,7 @@ This repo solves all of that. Once. The first app you build from this template t
 ```
 windows-dev-engine/
 │
-├── WindowsDevEngine.sln          ← Open this to see ALL 22 projects in Visual Studio
+├── WindowsDevEngine.sln          ← Open this to see ALL 26 projects in Visual Studio
 │
 ├── AGENT_README.md               ← Entry point for AI agents building apps with this engine
 │
@@ -136,7 +136,7 @@ cd windows-dev-engine
 start WindowsDevEngine.sln
 ```
 
-All 22 projects load in Visual Studio. Right-click any sample in Solution Explorer and hit **Set as Startup Project**, then press F5. You're running.
+All 26 projects load in Visual Studio. Right-click any sample in Solution Explorer and hit **Set as Startup Project**, then press F5. You're running.
 
 ### Step 3 — Start your own app
 
