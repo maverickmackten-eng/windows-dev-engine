@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>MavericksCopy</AssemblyName>
+    <RootNamespace>MavericksCopy</RootNamespace>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+    <!-- Disable DPI-blurring (WPF per-monitor DPI aware) -->
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog"                       Version="4.*" />
+    <PackageReference Include="Serilog.Sinks.File"           Version="6.*" />
+    <PackageReference Include="Serilog.Sinks.Debug"          Version="3.*" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*" />
+  </ItemGroup>
+
+  <!-- Embed the app manifest for DPI awareness -->
+  <ItemGroup>
+    <None Update="app.manifest">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
