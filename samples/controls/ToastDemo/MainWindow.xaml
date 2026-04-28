@@ -1,120 +1,125 @@
 <Window x:Class="ToastDemo.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Toast Demo" Height="600" Width="900"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Title="Toast Notification Demo"
+        Width="960" Height="640"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="#0A0D12"
         WindowStartupLocation="CenterScreen">
+    <!--
+        ToastDemo — In-window toast notification system
+        ================================================
+        Toast types: Info (blue), Success (green), Warning (gold), Error (red)
+        Stack:       Toasts stack vertically in a Canvas at bottom-right
+        Animation:   Slide-in from right, fade in. Auto-dismiss after N seconds.
+        Close:       X button on each toast
+        Persistent:  "Sticky" mode toggle — toasts only close via X
 
-  <Border Background="#0A0D12" BorderBrush="#2A3347" BorderThickness="1">
+        Implementation notes:
+        - Each toast is a self-contained Border + Storyboard
+        - ToastHost Canvas is positioned bottom-right via Margin
+        - Each new toast is inserted at index 0 (top of stack) in the canvas
+        - Auto-dismiss is a DispatcherTimer per toast
+    -->
+    <Window.Resources>
+        <!-- Shared slide-in storyboard template (applied per-instance in code-behind) -->
+        <SolidColorBrush x:Key="BgPanel" Color="#12171F"/>
+    </Window.Resources>
     <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="48"/>
-        <RowDefinition Height="*"/>
-      </Grid.RowDefinitions>
-
-      <!-- Title bar -->
-      <Grid Grid.Row="0" Background="#12171F" MouseLeftButtonDown="TitleBar_MouseDown">
-        <TextBlock Text="TOAST NOTIFICATION DEMO" FontFamily="Segoe UI Black" FontSize="13"
-                   Foreground="#00B4FF" LetterSpacing="2"
-                   VerticalAlignment="Center" Margin="16,0"/>
-        <Button Content="&#xE8BB;" FontFamily="Segoe MDL2 Assets"
-                Foreground="#FF2D55" Background="Transparent" BorderThickness="0"
-                Width="40" Height="48" HorizontalAlignment="Right"
-                Click="BtnClose_Click"/>
-      </Grid>
-
-      <!-- Content -->
-      <Grid Grid.Row="1">
-
-        <!-- Trigger buttons in centre -->
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-          <Button Content="&#xE946;  INFO" Margin="0,0,12,0"
-                  Background="#12171F" Foreground="#00B4FF"
-                  BorderBrush="#00B4FF" BorderThickness="1"
-                  Padding="20,12" FontSize="13"
-                  Click="BtnInfo_Click"/>
-
-          <Button Content="&#xE73E;  SUCCESS" Margin="0,0,12,0"
-                  Background="#12171F" Foreground="#00FF94"
-                  BorderBrush="#00FF94" BorderThickness="1"
-                  Padding="20,12" FontSize="13"
-                  Click="BtnSuccess_Click"/>
-
-          <Button Content="&#xE7BA;  WARNING" Margin="0,0,12,0"
-                  Background="#12171F" Foreground="#FFD700"
-                  BorderBrush="#FFD700" BorderThickness="1"
-                  Padding="20,12" FontSize="13"
-                  Click="BtnWarning_Click"/>
-
-          <Button Content="&#xEA39;  ERROR"
-                  Background="#12171F" Foreground="#FF2D55"
-                  BorderBrush="#FF2D55" BorderThickness="1"
-                  Padding="20,12" FontSize="13"
-                  Click="BtnError_Click"/>
-        </StackPanel>
-
-        <!-- Toast stack: ItemsControl bound to ToastQueue -->
-        <!-- Positioned bottom-right, stacks upward -->
-        <ItemsControl x:Name="toastHost"
-                      VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                      Margin="0,0,20,20"
-                      Width="320">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <!-- Each toast is a Border with left accent bar -->
-              <Border x:Name="toastCard"
-                      Background="#1C2333"
-                      BorderBrush="#2A3347" BorderThickness="1"
-                      CornerRadius="8" Margin="0,0,0,8"
-                      Opacity="0">
-                <Border.RenderTransform>
-                  <TranslateTransform x:Name="toastSlide" Y="40"/>
-                </Border.RenderTransform>
-                <Border.Triggers>
-                  <EventTrigger RoutedEvent="Loaded">
-                    <BeginStoryboard>
-                      <Storyboard>
-                        <DoubleAnimation Storyboard.TargetName="toastCard"
-                                         Storyboard.TargetProperty="Opacity"
-                                         From="0" To="1" Duration="0:0:0.25"/>
-                        <DoubleAnimation Storyboard.TargetName="toastSlide"
-                                         Storyboard.TargetProperty="Y"
-                                         From="40" To="0" Duration="0:0:0.3">
-                          <DoubleAnimation.EasingFunction>
-                            <CubicEase EasingMode="EaseOut"/>
-                          </DoubleAnimation.EasingFunction>
-                        </DoubleAnimation>
-                      </Storyboard>
-                    </BeginStoryboard>
-                  </EventTrigger>
-                </Border.Triggers>
+        <!-- Title bar -->
+        <Grid Height="48" VerticalAlignment="Top" Background="#12171F">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Toast Notification Demo"
+                       FontFamily="Segoe UI Black" FontSize="15"
+                       Foreground="#00B4FF" VerticalAlignment="Center" Margin="16,0"
+                       IsHitTestVisible="False"/>
+            <Button Grid.Column="1" Content="×" Width="46" Height="48"
+                    Background="Transparent" Foreground="#8899AA" BorderThickness="0"
+                    FontSize="18" Click="CloseClick"
+                    WindowChrome.IsHitTestVisibleInChrome="True"/>
+        </Grid>
+        <!-- Control panel -->
+        <Border Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
+                CornerRadius="8" Padding="28" Width="520"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Margin="0,-40,0,0">
+            <StackPanel Spacing="20">
+                <TextBlock Text="Fire Toasts" FontFamily="Segoe UI Black" FontSize="20"
+                           Foreground="White"/>
+                <!-- Type buttons row -->
                 <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="28"/>
-                  </Grid.ColumnDefinitions>
-                  <Rectangle Grid.Column="0" Fill="{Binding AccentColor}" RadiusX="8" RadiusY="0"/>
-                  <StackPanel Grid.Column="1" Margin="12,10">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-                      <TextBlock Text="{Binding IconGlyph}" FontFamily="Segoe MDL2 Assets"
-                                 FontSize="14" Foreground="{Binding AccentColor}"
-                                 VerticalAlignment="Center" Margin="0,0,6,0"/>
-                      <TextBlock Text="{Binding Title}" Foreground="#FFFFFF"
-                                 FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <TextBlock Text="{Binding Message}" Foreground="#8899AA"
-                               FontSize="12" TextWrapping="Wrap"/>
-                  </StackPanel>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/><ColumnDefinition/>
+                        <ColumnDefinition/><ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="ℹ Info"
+                            Background="#00B4FF" Foreground="#0A0D12"
+                            FontWeight="Bold" Padding="0,10" BorderThickness="0"
+                            Cursor="Hand" Margin="0,0,6,0" Click="Fire_Info"/>
+                    <Button Grid.Column="1" Content="✔ Success"
+                            Background="#00C47A" Foreground="#0A0D12"
+                            FontWeight="Bold" Padding="0,10" BorderThickness="0"
+                            Cursor="Hand" Margin="0,0,6,0" Click="Fire_Success"/>
+                    <Button Grid.Column="2" Content="⚠ Warning"
+                            Background="#FFD700" Foreground="#0A0D12"
+                            FontWeight="Bold" Padding="0,10" BorderThickness="0"
+                            Cursor="Hand" Margin="0,0,6,0" Click="Fire_Warning"/>
+                    <Button Grid.Column="3" Content="✖ Error"
+                            Background="#FF2D55" Foreground="White"
+                            FontWeight="Bold" Padding="0,10" BorderThickness="0"
+                            Cursor="Hand" Click="Fire_Error"/>
                 </Grid>
-              </Border>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-      </Grid>
+                <!-- Options row -->
+                <StackPanel Orientation="Horizontal" Spacing="24">
+                    <!-- Duration -->
+                    <StackPanel>
+                        <TextBlock Text="AUTO-DISMISS (sec)" FontSize="9" FontWeight="Bold"
+                                   Foreground="#8899AA" Margin="0,0,0,6"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="Dur2Btn"  Content="2s"  Tag="2000"  Padding="10,6"
+                                    Background="#1C2333" Foreground="#8899AA"
+                                    BorderBrush="#2A3347" BorderThickness="1" Cursor="Hand"
+                                    Click="DurBtn_Click"/>
+                            <Button x:Name="Dur4Btn"  Content="4s"  Tag="4000"  Padding="10,6"
+                                    Background="#0D3A5C" Foreground="#00B4FF"
+                                    BorderBrush="#00B4FF" BorderThickness="1" Cursor="Hand"
+                                    Click="DurBtn_Click"/>
+                            <Button x:Name="Dur8Btn"  Content="8s"  Tag="8000"  Padding="10,6"
+                                    Background="#1C2333" Foreground="#8899AA"
+                                    BorderBrush="#2A3347" BorderThickness="1" Cursor="Hand"
+                                    Click="DurBtn_Click"/>
+                            <Button x:Name="DurSticky" Content="Sticky" Tag="0" Padding="10,6"
+                                    Background="#1C2333" Foreground="#8899AA"
+                                    BorderBrush="#2A3347" BorderThickness="1" Cursor="Hand"
+                                    Click="DurBtn_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <!-- Position -->
+                    <StackPanel>
+                        <TextBlock Text="POSITION" FontSize="9" FontWeight="Bold"
+                                   Foreground="#8899AA" Margin="0,0,0,6"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="PosTopRight" Content="Top-R" Tag="TopRight" Padding="10,6"
+                                    Background="#1C2333" Foreground="#8899AA"
+                                    BorderBrush="#2A3347" BorderThickness="1" Cursor="Hand"
+                                    Click="PosBtn_Click"/>
+                            <Button x:Name="PosBotRight" Content="Bot-R" Tag="BottomRight" Padding="10,6"
+                                    Background="#0D3A5C" Foreground="#00B4FF"
+                                    BorderBrush="#00B4FF" BorderThickness="1" Cursor="Hand"
+                                    Click="PosBtn_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <!-- Counter -->
+                <TextBlock x:Name="FiredCount" Text="Toasts fired: 0"
+                           FontFamily="Cascadia Code, Consolas" FontSize="12"
+                           Foreground="#8899AA"/>
+            </StackPanel>
+        </Border>
+        <!-- Toast host canvas (bottom-right) -->
+        <Canvas x:Name="ToastHost" IsHitTestVisible="True"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Margin="0,0,20,20" Width="340"/>
     </Grid>
-  </Border>
 </Window>
