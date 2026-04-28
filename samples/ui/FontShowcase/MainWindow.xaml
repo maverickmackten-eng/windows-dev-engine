@@ -1,0 +1,167 @@
+<Window x:Class="FontShowcase.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Font Showcase" Height="700" Width="1100"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+
+  <Border Background="#0A0D12" BorderBrush="#2A3347" BorderThickness="1">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="48"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <!-- Title bar -->
+      <Grid Grid.Row="0" Background="#12171F" MouseLeftButtonDown="TitleBar_MouseDown">
+        <TextBlock Text="FONT SHOWCASE" FontFamily="Segoe UI Black" FontSize="13"
+                   Foreground="#00B4FF" LetterSpacing="2"
+                   VerticalAlignment="Center" Margin="16,0"/>
+        <Button Content="&#xE8BB;" FontFamily="Segoe MDL2 Assets"
+                Foreground="#FF2D55" Background="Transparent" BorderThickness="0"
+                Width="40" Height="48" HorizontalAlignment="Right"
+                Click="BtnClose_Click"/>
+      </Grid>
+
+      <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32,24">
+
+          <!-- ── SECTION: Typography Scale ──────────────────────────── -->
+          <TextBlock Text="TYPOGRAPHY SCALE" Foreground="#00B4FF"
+                     FontFamily="Cascadia Code" FontSize="10" LetterSpacing="3"
+                     Margin="0,0,0,16"/>
+          <Border Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
+                  CornerRadius="8" Padding="24" Margin="0,0,0,32">
+            <StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Display" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="11" Width="80" VerticalAlignment="Bottom"/>
+                <TextBlock Text="The Quick Brown Fox" FontFamily="Segoe UI Black"
+                           FontSize="48" Foreground="#FFFFFF"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="XXL" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="11" Width="80" VerticalAlignment="Bottom"/>
+                <TextBlock Text="The Quick Brown Fox" FontFamily="Segoe UI Black"
+                           FontSize="28" Foreground="#FFFFFF"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="XL" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="11" Width="80" VerticalAlignment="Bottom"/>
+                <TextBlock Text="The Quick Brown Fox" FontFamily="Segoe UI"
+                           FontSize="20" Foreground="#FFFFFF"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="LG" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="11" Width="80" VerticalAlignment="Bottom"/>
+                <TextBlock Text="The Quick Brown Fox" FontFamily="Segoe UI"
+                           FontSize="16" Foreground="#FFFFFF"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="MD (body)" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="11" Width="80" VerticalAlignment="Bottom"/>
+                <TextBlock Text="The Quick Brown Fox jumps over the lazy dog."
+                           FontFamily="Segoe UI" FontSize="14" Foreground="#FFFFFF"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="SM" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="11" Width="80" VerticalAlignment="Bottom"/>
+                <TextBlock Text="The Quick Brown Fox jumps over the lazy dog."
+                           FontFamily="Segoe UI" FontSize="12" Foreground="#8899AA"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="XS" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="11" Width="80" VerticalAlignment="Bottom"/>
+                <TextBlock Text="Caption text — labels, hints, metadata"
+                           FontFamily="Segoe UI" FontSize="10" Foreground="#8899AA"/>
+              </StackPanel>
+            </StackPanel>
+          </Border>
+
+          <!-- ── SECTION: Font Family Comparison ──────────────────────── -->
+          <TextBlock Text="FONT FAMILIES" Foreground="#00B4FF"
+                     FontFamily="Cascadia Code" FontSize="10" LetterSpacing="3"
+                     Margin="0,0,0,16"/>
+          <Border Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
+                  CornerRadius="8" Padding="24" Margin="0,0,0,32">
+            <UniformGrid Columns="2" Rows="2">
+              <StackPanel Margin="0,0,24,16">
+                <TextBlock Text="Segoe UI" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="10" Margin="0,0,0,6"/>
+                <TextBlock Text="The quick brown fox 0O1l"
+                           FontFamily="Segoe UI" FontSize="16" Foreground="#FFFFFF"/>
+                <TextBlock Text="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                           FontFamily="Segoe UI" FontSize="12" Foreground="#8899AA"/>
+              </StackPanel>
+              <StackPanel Margin="0,0,0,16">
+                <TextBlock Text="Cascadia Code" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="10" Margin="0,0,0,6"/>
+                <TextBlock Text="The quick brown fox 0O1l"
+                           FontFamily="Cascadia Code" FontSize="16" Foreground="#FFFFFF"/>
+                <TextBlock Text="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                           FontFamily="Cascadia Code" FontSize="12" Foreground="#8899AA"/>
+              </StackPanel>
+              <StackPanel Margin="0,0,24,0">
+                <TextBlock Text="Segoe UI Black" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="10" Margin="0,0,0,6"/>
+                <TextBlock Text="The quick brown fox 0O1l"
+                           FontFamily="Segoe UI Black" FontSize="16" Foreground="#FFFFFF"/>
+                <TextBlock Text="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                           FontFamily="Segoe UI Black" FontSize="12" Foreground="#8899AA"/>
+              </StackPanel>
+              <StackPanel>
+                <TextBlock Text="Impact" Foreground="#8899AA" FontFamily="Cascadia Code"
+                           FontSize="10" Margin="0,0,0,6"/>
+                <TextBlock Text="The quick brown fox 0O1l"
+                           FontFamily="Impact" FontSize="16" Foreground="#FFFFFF"/>
+                <TextBlock Text="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                           FontFamily="Impact" FontSize="12" Foreground="#8899AA"/>
+              </StackPanel>
+            </UniformGrid>
+          </Border>
+
+          <!-- ── SECTION: Weight Grid ───────────────────────────────── -->
+          <TextBlock Text="FONT WEIGHTS (Segoe UI)" Foreground="#00B4FF"
+                     FontFamily="Cascadia Code" FontSize="10" LetterSpacing="3"
+                     Margin="0,0,0,16"/>
+          <Border Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
+                  CornerRadius="8" Padding="24" Margin="0,0,0,32">
+            <StackPanel>
+              <TextBlock Text="Windows Dev Engine" FontFamily="Segoe UI"
+                         FontWeight="Thin"     FontSize="22" Foreground="#FFFFFF"/>
+              <TextBlock Text="Windows Dev Engine" FontFamily="Segoe UI"
+                         FontWeight="Light"    FontSize="22" Foreground="#FFFFFF"/>
+              <TextBlock Text="Windows Dev Engine" FontFamily="Segoe UI"
+                         FontWeight="Regular"  FontSize="22" Foreground="#FFFFFF"/>
+              <TextBlock Text="Windows Dev Engine" FontFamily="Segoe UI"
+                         FontWeight="SemiBold" FontSize="22" Foreground="#FFFFFF"/>
+              <TextBlock Text="Windows Dev Engine" FontFamily="Segoe UI"
+                         FontWeight="Bold"     FontSize="22" Foreground="#FFFFFF"/>
+              <TextBlock Text="Windows Dev Engine" FontFamily="Segoe UI Black"
+                         FontWeight="Black"    FontSize="22" Foreground="#FFFFFF"/>
+            </StackPanel>
+          </Border>
+
+          <!-- ── SECTION: Colour Samples ────────────────────────────── -->
+          <TextBlock Text="PALETTE TEXT COLOURS" Foreground="#00B4FF"
+                     FontFamily="Cascadia Code" FontSize="10" LetterSpacing="3"
+                     Margin="0,0,0,16"/>
+          <Border Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
+                  CornerRadius="8" Padding="24" Margin="0,0,0,32">
+            <WrapPanel>
+              <TextBlock Text="AccentPrimary  " Foreground="#00B4FF" FontSize="16" FontWeight="SemiBold" Margin="0,0,24,8"/>
+              <TextBlock Text="AccentSecondary" Foreground="#FF6B35" FontSize="16" FontWeight="SemiBold" Margin="0,0,24,8"/>
+              <TextBlock Text="AccentSuccess  " Foreground="#00FF94" FontSize="16" FontWeight="SemiBold" Margin="0,0,24,8"/>
+              <TextBlock Text="AccentDanger   " Foreground="#FF2D55" FontSize="16" FontWeight="SemiBold" Margin="0,0,24,8"/>
+              <TextBlock Text="AccentGold     " Foreground="#FFD700" FontSize="16" FontWeight="SemiBold" Margin="0,0,24,8"/>
+              <TextBlock Text="TextPrimary    " Foreground="#FFFFFF" FontSize="16" Margin="0,0,24,8"/>
+              <TextBlock Text="TextSecondary  " Foreground="#8899AA" FontSize="16" Margin="0,0,24,8"/>
+              <TextBlock Text="TextDisabled   " Foreground="#445566" FontSize="16" Margin="0,0,24,8"/>
+            </WrapPanel>
+          </Border>
+
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </Border>
+</Window>
