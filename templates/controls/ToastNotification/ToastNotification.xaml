@@ -1,0 +1,63 @@
+<UserControl x:Class="__APP_NAME__.Controls.ToastNotification"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="320"
+             IsHitTestVisible="True">
+
+  <UserControl.RenderTransform>
+    <TranslateTransform x:Name="slideTransform" Y="80"/>
+  </UserControl.RenderTransform>
+
+  <Border x:Name="toastBorder"
+          Background="#1C2333"
+          BorderBrush="#2A3347"
+          BorderThickness="1"
+          CornerRadius="8"
+          Opacity="0"
+          Margin="0,0,0,8">
+
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="4"/>   <!-- Accent bar -->
+        <ColumnDefinition Width="*"/>   <!-- Content -->
+        <ColumnDefinition Width="32"/>  <!-- Close button -->
+      </Grid.ColumnDefinitions>
+
+      <!-- Left accent colour bar -->
+      <Rectangle Grid.Column="0"
+                 Fill="{Binding AccentColor}"
+                 RadiusX="8" RadiusY="8"/>
+
+      <!-- Content -->
+      <StackPanel Grid.Column="1" Margin="12,10">
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+          <!-- Icon glyph (Segoe MDL2) -->
+          <TextBlock Text="{Binding IconGlyph}"
+                     FontFamily="Segoe MDL2 Assets" FontSize="14"
+                     Foreground="{Binding AccentColor}"
+                     VerticalAlignment="Center"
+                     Margin="0,0,6,0"/>
+          <TextBlock Text="{Binding Title}"
+                     Foreground="#FFFFFF" FontSize="13"
+                     FontWeight="SemiBold"
+                     VerticalAlignment="Center"/>
+        </StackPanel>
+        <TextBlock Text="{Binding Message}"
+                   Foreground="#8899AA" FontSize="12"
+                   TextWrapping="Wrap"/>
+      </StackPanel>
+
+      <!-- Close button -->
+      <Button Grid.Column="2"
+              x:Name="btnClose"
+              Content="&#xE711;"
+              FontFamily="Segoe MDL2 Assets" FontSize="10"
+              Foreground="#8899AA" Background="Transparent"
+              BorderThickness="0"
+              VerticalAlignment="Top"
+              Margin="0,6,6,0"
+              Click="BtnClose_Click"
+              ToolTip="Dismiss"/>
+    </Grid>
+  </Border>
+</UserControl>

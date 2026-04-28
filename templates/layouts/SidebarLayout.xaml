@@ -1,0 +1,160 @@
+<!--
+  SidebarLayout.xaml — Copy this Grid pattern into your MainWindow.xaml
+  Replace all __APP_NAME__ with your actual namespace.
+
+  Structure:
+    Row 0: 48px custom title bar
+    Row 1: * main area  (sidebar + content)
+    Row 2: 24px status bar
+
+  Column inside Row 1:
+    Col 0: 240px sidebar (collapses to 64px icon-only mode)
+    Col 1: * content frame
+-->
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Grid.RowDefinitions>
+    <RowDefinition Height="48"/>     <!-- Title bar -->
+    <RowDefinition Height="*"/>      <!-- Main area -->
+    <RowDefinition Height="24"/>     <!-- Status bar -->
+  </Grid.RowDefinitions>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       ROW 0 — Custom Title Bar
+       MouseLeftButtonDown="TitleBar_MouseDown" enables window drag
+  ═══════════════════════════════════════════════════════════════ -->
+  <Grid Grid.Row="0"
+        Background="#0A0D12"
+        MouseLeftButtonDown="TitleBar_MouseDown">
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <!-- App name / logo -->
+    <StackPanel Grid.Column="0" Orientation="Horizontal"
+                VerticalAlignment="Center" Margin="16,0">
+      <!-- Optional: app icon glyph -->
+      <TextBlock Text="&#xE80F;"
+                 FontFamily="Segoe MDL2 Assets" FontSize="16"
+                 Foreground="#00B4FF" VerticalAlignment="Center"
+                 Margin="0,0,8,0"/>
+      <TextBlock Text="__APP_DISPLAY_NAME__"
+                 FontFamily="Segoe UI Black" FontSize="13"
+                 Foreground="#FFFFFF" VerticalAlignment="Center"
+                 LetterSpacing="2"/>
+    </StackPanel>
+
+    <!-- Window control buttons -->
+    <StackPanel Grid.Column="1" Orientation="Horizontal">
+      <Button x:Name="btnMinimize" Content="&#xE921;"
+              Style="{StaticResource WindowButtonStyle}"
+              Click="BtnMinimize_Click"/>
+      <Button x:Name="btnMaximize" Content="&#xE922;"
+              Style="{StaticResource WindowButtonStyle}"
+              Click="BtnMaximize_Click"/>
+      <Button x:Name="btnClose" Content="&#xE8BB;"
+              Style="{StaticResource WindowButtonDangerStyle}"
+              Click="BtnClose_Click"/>
+    </StackPanel>
+  </Grid>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       ROW 1 — Main Area (Sidebar + Content)
+  ═══════════════════════════════════════════════════════════════ -->
+  <Grid Grid.Row="1">
+    <Grid.ColumnDefinitions>
+      <!-- Sidebar: 240px expanded, 64px collapsed; animated via code-behind -->
+      <ColumnDefinition x:Name="sidebarColumn" Width="240" MinWidth="64"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <!-- ─────────────────────────────────────────────────────────────
+         SIDEBAR
+    ───────────────────────────────────────────────────────────── -->
+    <Grid Grid.Column="0" Background="#12171F" x:Name="sidebarGrid">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>    <!-- Nav buttons -->
+        <RowDefinition Height="Auto"/> <!-- Collapse toggle -->
+      </Grid.RowDefinitions>
+
+      <!-- ── Navigation buttons ──────────────────────────────────
+           AGENT: Replace these with real nav buttons.
+           Pattern: Command binds to NavigateCommand with CommandParameter = page name.
+           Use SidebarNavButtonStyle (defined in Controls.xaml) for full style.
+      ─────────────────────────────────────────────────────────── -->
+      <StackPanel Grid.Row="0" Margin="0,8">
+
+        <!-- Example nav button template:
+        <Button Style="{StaticResource SidebarNavButtonStyle}"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="Dashboard">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets"
+                       FontSize="16" Width="32" TextAlignment="Center"/>
+            <TextBlock Text="Dashboard" x:Name="navLabelDashboard"
+                       VerticalAlignment="Center"/>
+          </StackPanel>
+        </Button>
+        -->
+
+        <!-- PLACEHOLDER: Wire your nav buttons here -->
+        <TextBlock Text="[ nav buttons ]" Foreground="#445566"
+                   Margin="16,12" FontSize="11"
+                   FontFamily="Cascadia Code"/>
+
+      </StackPanel>
+
+      <!-- ── Collapse toggle ─────────────────────────────────────
+           Clicking this animates sidebarColumn.Width 240 ↔ 64
+           and toggles nav label visibility.
+      ─────────────────────────────────────────────────────────── -->
+      <Button Grid.Row="1"
+              x:Name="btnSidebarToggle"
+              Content="&#xE700;"
+              FontFamily="Segoe MDL2 Assets" FontSize="16"
+              Foreground="#8899AA" Background="Transparent"
+              BorderThickness="0"
+              Height="44" HorizontalAlignment="Stretch"
+              ToolTip="Collapse sidebar"
+              Click="BtnSidebarToggle_Click"/>
+    </Grid>
+
+    <!-- ─────────────────────────────────────────────────────────────
+         CONTENT AREA
+         Wire navigation: contentFrame.Navigate(new DashboardPage());
+    ───────────────────────────────────────────────────────────── -->
+    <Grid Grid.Column="1" Background="#0A0D12">
+      <!-- Diagnostics overlay sits here, collapsed by default -->
+      <!-- <local:DiagnosticsOverlay x:Name="diagOverlay" Visibility="Collapsed"/> -->
+
+      <!-- Content frame: NavigationService swaps pages here -->
+      <Frame x:Name="contentFrame"
+             NavigationUIVisibility="Hidden"
+             Background="Transparent"/>
+    </Grid>
+  </Grid>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       ROW 2 — Status Bar
+  ═══════════════════════════════════════════════════════════════ -->
+  <Grid Grid.Row="2" Background="#0D1117">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <TextBlock Grid.Column="0"
+               Text="{Binding StatusMessage}"
+               Foreground="#8899AA" FontSize="11"
+               VerticalAlignment="Center" Margin="12,0"/>
+
+    <TextBlock Grid.Column="1"
+               Text="{Binding AppVersion, StringFormat='v{0}'}"
+               Foreground="#445566" FontSize="11"
+               VerticalAlignment="Center" Margin="12,0"/>
+  </Grid>
+
+</Grid>
