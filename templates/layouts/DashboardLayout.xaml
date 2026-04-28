@@ -1,0 +1,132 @@
+<!--
+  DashboardLayout.xaml — Grid-of-cards layout. No sidebar.
+  Use for: data dashboards, monitoring tools, home screens.
+
+  Structure:
+    Row 0: 48px title bar
+    Row 1: Auto metrics strip (stat cards)
+    Row 2: * main grid (2-column card grid)
+    Row 3: 24px status bar
+-->
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Grid.RowDefinitions>
+    <RowDefinition Height="48"/>
+    <RowDefinition Height="Auto"/>
+    <RowDefinition Height="*"/>
+    <RowDefinition Height="24"/>
+  </Grid.RowDefinitions>
+
+  <!-- Title Bar -->
+  <Grid Grid.Row="0" Background="#0A0D12"
+        MouseLeftButtonDown="TitleBar_MouseDown">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <TextBlock Grid.Column="0"
+               Text="__APP_DISPLAY_NAME__"
+               FontFamily="Segoe UI Black" FontSize="14"
+               Foreground="#FFFFFF" LetterSpacing="2"
+               VerticalAlignment="Center" Margin="16,0"/>
+    <StackPanel Grid.Column="1" Orientation="Horizontal">
+      <Button x:Name="btnMinimize" Content="&#xE921;"
+              Style="{StaticResource WindowButtonStyle}" Click="BtnMinimize_Click"/>
+      <Button x:Name="btnMaximize" Content="&#xE922;"
+              Style="{StaticResource WindowButtonStyle}" Click="BtnMaximize_Click"/>
+      <Button x:Name="btnClose"   Content="&#xE8BB;"
+              Style="{StaticResource WindowButtonDangerStyle}" Click="BtnClose_Click"/>
+    </StackPanel>
+  </Grid>
+
+  <!-- ── Stat Cards Strip ───────────────────────────────────────────
+       AGENT: Bind each StatCard to a ViewModel property.
+       Duplicate the card pattern for as many metrics as needed.
+  ─────────────────────────────────────────────────────────────── -->
+  <ItemsControl Grid.Row="1" Margin="16,12,16,0"
+                ItemsSource="{Binding StatCards}">
+    <ItemsControl.ItemsPanel>
+      <ItemsPanelTemplate>
+        <UniformGrid Rows="1"/>
+      </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
+    <ItemsControl.ItemTemplate>
+      <DataTemplate>
+        <Border Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
+                CornerRadius="8" Margin="0,0,12,0" Padding="16,12">
+          <StackPanel>
+            <TextBlock Text="{Binding Label}" Foreground="#8899AA" FontSize="11"/>
+            <TextBlock Text="{Binding Value}" Foreground="#FFFFFF"
+                       FontSize="28" FontWeight="Bold" Margin="0,4,0,0"/>
+            <TextBlock Text="{Binding Trend}" Foreground="{Binding TrendColor}"
+                       FontSize="11"/>
+          </StackPanel>
+        </Border>
+      </DataTemplate>
+    </ItemsControl.ItemTemplate>
+  </ItemsControl>
+
+  <!-- ── Main Card Grid ─────────────────────────────────────────────
+       Two equal columns. Add more columns/rows by editing ColumnDefinitions.
+  ─────────────────────────────────────────────────────────────── -->
+  <Grid Grid.Row="2" Margin="16,12,16,16">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="12"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="12"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- Card (0,0) -->
+    <Border Grid.Column="0" Grid.Row="0"
+            Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
+            CornerRadius="8" Padding="16">
+      <TextBlock Text="Card A — wire content here"
+                 Foreground="#445566" FontFamily="Cascadia Code" FontSize="11"/>
+    </Border>
+
+    <!-- Card (2,0) -->
+    <Border Grid.Column="2" Grid.Row="0"
+            Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
+            CornerRadius="8" Padding="16">
+      <TextBlock Text="Card B — wire content here"
+                 Foreground="#445566" FontFamily="Cascadia Code" FontSize="11"/>
+    </Border>
+
+    <!-- Card (0,2) -->
+    <Border Grid.Column="0" Grid.Row="2"
+            Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
+            CornerRadius="8" Padding="16">
+      <TextBlock Text="Card C — wire content here"
+                 Foreground="#445566" FontFamily="Cascadia Code" FontSize="11"/>
+    </Border>
+
+    <!-- Card (2,2) -->
+    <Border Grid.Column="2" Grid.Row="2"
+            Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
+            CornerRadius="8" Padding="16">
+      <TextBlock Text="Card D — wire content here"
+                 Foreground="#445566" FontFamily="Cascadia Code" FontSize="11"/>
+    </Border>
+  </Grid>
+
+  <!-- Status Bar -->
+  <Grid Grid.Row="3" Background="#0D1117">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <TextBlock Grid.Column="0" Text="{Binding StatusMessage}"
+               Foreground="#8899AA" FontSize="11"
+               VerticalAlignment="Center" Margin="12,0"/>
+    <TextBlock Grid.Column="1" Text="{Binding AppVersion, StringFormat='v{0}'}"
+               Foreground="#445566" FontSize="11"
+               VerticalAlignment="Center" Margin="12,0"/>
+  </Grid>
+
+</Grid>
