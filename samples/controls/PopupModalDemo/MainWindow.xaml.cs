@@ -1,90 +1,114 @@
-using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using Serilog;
 
 namespace PopupModalDemo
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow() { InitializeComponent(); Log.Debug("[PopupModalDemo] Loaded"); }
+
+        private void CloseClick(object s, RoutedEventArgs e) => Close();
+
+        // ---- Pattern 1: Confirm dialog ----
+        private void OpenConfirm_Click(object s, RoutedEventArgs e)
         {
-            InitializeComponent();
-            KeyDown += (_, e) => { if (e.Key == Key.Escape) CloseAll(); };
+            ConfirmOverlay.Visibility = Visibility.Visible;
+            ((Storyboard)FindResource("ModalScaleIn")).Begin();
+            ConfirmOverlay.Focus();
         }
 
-        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
-        { if (e.LeftButton == MouseButtonState.Pressed) DragMove(); }
-
-        private void BtnClose_Click(object sender, RoutedEventArgs e) => Close();
-
-        // ── Slide Panel ───────────────────────────────────────────
-        private void BtnSlidePanel_Click(object sender, RoutedEventArgs e)
+        private void ConfirmOK_Click(object s, RoutedEventArgs e)
         {
-            slidePanelHost.Visibility = Visibility.Visible;
-            var anim = new DoubleAnimation(350, 0, TimeSpan.FromMilliseconds(320))
-            { EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut } };
-            slidePanelTranslate.BeginAnimation(TranslateTransform.XProperty, anim);
-            txtStatus.Text = "Slide panel opened — click overlay or X to close";
+            ConfirmOverlay.Visibility = Visibility.Collapsed;
+            ConfirmResult.Text = "✓ Confirmed";
+            ConfirmResult.Foreground = System.Windows.Media.Brushes.LimeGreen;
+            Log.Debug("[Confirm] OK");
         }
 
-        private async void SlidePanel_Close(object sender, RoutedEventArgs e)
+        private void ConfirmCancel_Click(object s, RoutedEventArgs e)
         {
-            var anim = new DoubleAnimation(0, 350, TimeSpan.FromMilliseconds(260))
-            { EasingFunction = new CubicEase { EasingMode = EasingMode.EaseIn } };
-            var tcs = new TaskCompletionSource<bool>();
-            anim.Completed += (_, _) => tcs.SetResult(true);
-            slidePanelTranslate.BeginAnimation(TranslateTransform.XProperty, anim);
-            await tcs.Task;
-            slidePanelHost.Visibility = Visibility.Collapsed;
-            txtStatus.Text = "Slide panel closed";
+            ConfirmOverlay.Visibility = Visibility.Collapsed;
+            ConfirmResult.Text = "× Cancelled";
+            ConfirmResult.Foreground = new System.Windows.Media.SolidColorBrush(
+                System.Windows.Media.Color.FromRgb(0x88, 0x99, 0xAA));
+            Log.Debug("[Confirm] Cancelled");
         }
 
-        private void Overlay_Close(object sender, MouseButtonEventArgs e)
-            => SlidePanel_Close(sender, new RoutedEventArgs());
-
-        // ── Center Modal ──────────────────────────────────────────
-        private void BtnCenterModal_Click(object sender, RoutedEventArgs e)
+        private void Overlay_KeyDown(object s, KeyEventArgs e)
         {
-            centerModalHost.Visibility = Visibility.Visible;
-            centerModalHost.Opacity = 0;
-            var fadeIn  = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(200));
-            var scaleX  = new DoubleAnimation(0.85, 1.0, TimeSpan.FromMilliseconds(250))
-            { EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut } };
-            var scaleY  = new DoubleAnimation(0.85, 1.0, TimeSpan.FromMilliseconds(250))
-            { EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut } };
-            centerModalHost.BeginAnimation(OpacityProperty, fadeIn);
-            modalScale.BeginAnimation(ScaleTransform.ScaleXProperty, scaleX);
-            modalScale.BeginAnimation(ScaleTransform.ScaleYProperty, scaleY);
-            txtStatus.Text = "Center modal opened — press ESC or click X to close";
+            if (e.Key == Key.Escape) ConfirmCancel_Click(s, new RoutedEventArgs());
         }
 
-        private void CenterModal_Close(object sender, RoutedEventArgs e)
+        // ---- Pattern 2: Form modal ----
+        private void OpenForm_Click(object s, RoutedEventArgs e)
         {
-            var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(180));
-            fadeOut.Completed += (_, _) => centerModalHost.Visibility = Visibility.Collapsed;
-            centerModalHost.BeginAnimation(OpacityProperty, fadeOut);
-            txtStatus.Text = "Center modal closed";
+            NameField.Clear();
+            NotesField.Clear();
+            NameError.Visibility = Visibility.Collapsed;
+            FormOverlay.Visibility = Visibility.Visible;
+            NameField.Focus();
+            Log.Debug("[Form] Opened");
         }
 
-        // ── Confirm Box ───────────────────────────────────────────
-        private void BtnConfirmBox_Click(object sender, RoutedEventArgs e)
+        private void FormCancel_Click(object s, RoutedEventArgs e)
         {
-            var result = MessageBox.Show(
-                "Delete this item? This action cannot be undone.",
-                "Confirm Delete",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning);
-            txtStatus.Text = result == MessageBoxResult.Yes
-                ? "Confirmed! Item deleted."
-                : "Cancelled. Nothing changed.";
+            FormOverlay.Visibility = Visibility.Collapsed;
+            FormResult.Text = "× Cancelled";
+            Log.Debug("[Form] Cancelled");
         }
 
-        private void CloseAll()
+        private void FormSave_Click(object s, RoutedEventArgs e)
         {
-            slidePanelHost.Visibility = Visibility.Collapsed;
-            centerModalHost.Visibility = Visibility.Collapsed;
+            if (string.IsNullOrWhiteSpace(NameField.Text))
+            {
+                NameError.Visibility = Visibility.Visible;
+                NameField.Focus();
+                return;
+            }
+            var category = (CategoryField.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content?.ToString() ?? "";
+            FormOverlay.Visibility = Visibility.Collapsed;
+            FormResult.Text = $"✓ Name: {NameField.Text}\nCat: {category}";
+            Log.Information("[Form] Saved: {Name} / {Cat}", NameField.Text, category);
+        }
+
+        private void NameField_TextChanged(object s, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (NameField.Text.Length > 0)
+                NameError.Visibility = Visibility.Collapsed;
+        }
+
+        // ---- Pattern 3: Drawer ----
+        private void OpenDrawer_Click(object s, RoutedEventArgs e)
+        {
+            DrawerOverlay.Visibility = Visibility.Visible;
+            ((Storyboard)FindResource("DrawerSlideIn")).Begin();
+            Log.Debug("[Drawer] Opened");
+        }
+
+        private void CloseDrawer_Click(object s, RoutedEventArgs e)
+            => ((Storyboard)FindResource("DrawerSlideOut")).Begin();
+
+        private void DrawerBackdrop_MouseDown(object s, MouseButtonEventArgs e)
+            => ((Storyboard)FindResource("DrawerSlideOut")).Begin();
+
+        private void DrawerSlideOut_Completed(object? s, System.EventArgs e)
+        {
+            DrawerOverlay.Visibility = Visibility.Collapsed;
+            Log.Debug("[Drawer] Closed");
+        }
+
+        private void DrawerEdit_Click(object s, RoutedEventArgs e)
+        {
+            ((Storyboard)FindResource("DrawerSlideOut")).Begin();
+            Log.Debug("[Drawer] Edit clicked");
+        }
+
+        private void DrawerDelete_Click(object s, RoutedEventArgs e)
+        {
+            ((Storyboard)FindResource("DrawerSlideOut")).Begin();
+            Log.Debug("[Drawer] Delete clicked");
         }
     }
 }

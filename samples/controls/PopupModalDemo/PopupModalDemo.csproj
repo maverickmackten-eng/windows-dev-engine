@@ -8,4 +8,8 @@
     <AssemblyName>PopupModalDemo</AssemblyName>
     <RootNamespace>PopupModalDemo</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.*" />
+    <PackageReference Include="Serilog.Sinks.Debug" Version="3.*" />
+  </ItemGroup>
 </Project>
