@@ -2,221 +2,167 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="COMMAND AUTHORITY"
-        Height="700" Width="1100"
+        Width="1280" Height="800"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Transparent"
+        Background="{DynamicResource BackgroundDeepBrush}"
         WindowStartupLocation="CenterScreen">
-
-  <Window.Resources>
-    <!-- ── GoldCommand Palette ────────────────────────────────────── -->
-    <SolidColorBrush x:Key="BgDeep"    Color="#0C0800"/>  <!-- Deep black with warm hint -->
-    <SolidColorBrush x:Key="BgPanel"   Color="#14100A"/>
-    <SolidColorBrush x:Key="BgCard"    Color="#1E180A"/>
-    <SolidColorBrush x:Key="Gold"      Color="#FFB800"/>  <!-- Primary gold -->
-    <SolidColorBrush x:Key="Amber"     Color="#CC6600"/>  <!-- Secondary amber -->
-    <SolidColorBrush x:Key="GoldDim"   Color="#775500"/>  <!-- Muted gold -->
-    <SolidColorBrush x:Key="TextPri"   Color="#FFE0A0"/>
-    <SolidColorBrush x:Key="TextSub"   Color="#886600"/>
-
-    <!-- Glow effects -->
-    <DropShadowEffect x:Key="GlowGold"  Color="#FFB800" BlurRadius="18"
-                      ShadowDepth="0" Opacity="0.7"/>
-    <DropShadowEffect x:Key="GlowAmber" Color="#CC6600" BlurRadius="12"
-                      ShadowDepth="0" Opacity="0.6"/>
-    <DropShadowEffect x:Key="GlowSubtle" Color="#FFB800" BlurRadius="6"
-                      ShadowDepth="0" Opacity="0.25"/>
-
-    <!-- Gold button style -->
-    <Style x:Key="GoldButton" TargetType="Button">
-      <Setter Property="Background"      Value="Transparent"/>
-      <Setter Property="Foreground"      Value="#FFB800"/>
-      <Setter Property="BorderBrush"    Value="#FFB800"/>
-      <Setter Property="BorderThickness" Value="1"/>
-      <Setter Property="Padding"         Value="16,8"/>
-      <Setter Property="FontFamily"      Value="Segoe UI Black"/>
-      <Setter Property="FontSize"        Value="12"/>
-      <Setter Property="Cursor"          Value="Hand"/>
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="Button">
-            <Border Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Padding="{TemplateBinding Padding}">
-              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <ControlTemplate.Triggers>
-              <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#22FFB800"/>
-                <Setter Property="Effect"     Value="{StaticResource GlowGold}"/>
-              </Trigger>
-              <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#44FFB800"/>
-              </Trigger>
-            </ControlTemplate.Triggers>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-  </Window.Resources>
-
-  <Border Background="{StaticResource BgDeep}"
-          BorderBrush="#332200" BorderThickness="1">
-    <Border.Effect>
-      <DropShadowEffect BlurRadius="40" ShadowDepth="0" Color="#FFB800" Opacity="0.08"/>
-    </Border.Effect>
-
+    <!--
+        GoldCommand Theme Sample
+        ========================
+        Palette: #0C0800 deep black, #FFB800 gold accent, #CC6600 amber secondary
+        Features: subtle grid tile pattern, gold borders with inner glow,
+                  all icons and text in gold/amber tones
+    -->
     <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="48"/>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="24"/>
-      </Grid.RowDefinitions>
-
-      <!-- Subtle grid tile pattern (inline via Canvas) -->
-      <Canvas Grid.RowSpan="3" IsHitTestVisible="False">
-        <Rectangle Canvas.Left="183"  Width="1" Height="700" Fill="#08FFB800"/>
-        <Rectangle Canvas.Left="366"  Width="1" Height="700" Fill="#08FFB800"/>
-        <Rectangle Canvas.Left="549"  Width="1" Height="700" Fill="#08FFB800"/>
-        <Rectangle Canvas.Left="732"  Width="1" Height="700" Fill="#08FFB800"/>
-        <Rectangle Canvas.Left="915"  Width="1" Height="700" Fill="#08FFB800"/>
-        <Rectangle Canvas.Top="116"  Height="1" Width="1100" Fill="#08FFB800"/>
-        <Rectangle Canvas.Top="232"  Height="1" Width="1100" Fill="#08FFB800"/>
-        <Rectangle Canvas.Top="348"  Height="1" Width="1100" Fill="#08FFB800"/>
-        <Rectangle Canvas.Top="464"  Height="1" Width="1100" Fill="#08FFB800"/>
-        <Rectangle Canvas.Top="580"  Height="1" Width="1100" Fill="#08FFB800"/>
-      </Canvas>
-
-      <!-- ── Accent line top ── -->
-      <Rectangle Height="1" VerticalAlignment="Top" Grid.RowSpan="3"
-                 IsHitTestVisible="False">
-        <Rectangle.Fill>
-          <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Color="Transparent" Offset="0"/>
-            <GradientStop Color="#FFB800"     Offset="0.5"/>
-            <GradientStop Color="Transparent" Offset="1"/>
-          </LinearGradientBrush>
-        </Rectangle.Fill>
-      </Rectangle>
-
-      <!-- ── Title Bar ── -->
-      <Grid Grid.Row="0" MouseLeftButtonDown="TitleBar_MouseDown">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-
-        <TextBlock Grid.Column="0"
-                   Text="COMMAND AUTHORITY"
-                   FontFamily="Segoe UI Black" FontSize="17"
-                   Foreground="#FFB800"
-                   LetterSpacing="4"
-                   VerticalAlignment="Center" Margin="20,0"
-                   Effect="{StaticResource GlowGold}"/>
-
-        <StackPanel Grid.Column="1" Orientation="Horizontal">
-          <Button Content="─" Foreground="#775500" Background="Transparent"
-                  BorderThickness="0" Width="40" Height="48" FontSize="14"
-                  Click="BtnMinimize_Click"/>
-          <Button Content="□" Foreground="#775500" Background="Transparent"
-                  BorderThickness="0" Width="40" Height="48" FontSize="14"
-                  Click="BtnMaximize_Click"/>
-          <Button Content="✕" Foreground="#FFB800" Background="Transparent"
-                  BorderThickness="0" Width="40" Height="48" FontSize="14"
-                  Click="BtnClose_Click"/>
-        </StackPanel>
-      </Grid>
-
-      <!-- ── Content ── -->
-      <Grid Grid.Row="1" Margin="24,16">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="240"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <!-- Left panel -->
-        <StackPanel Grid.Column="0" Margin="0,0,16,0">
-          <TextBlock Text="COMMAND STATUS"
-                     Foreground="#886600" FontFamily="Cascadia Code"
-                     FontSize="10" LetterSpacing="2" Margin="0,0,0,12"/>
-
-          <Border Background="{StaticResource BgPanel}"
-                  BorderBrush="#332200" BorderThickness="1"
-                  CornerRadius="4" Padding="12,10" Margin="0,0,0,6">
-            <StackPanel Orientation="Horizontal">
-              <Ellipse Width="8" Height="8" Fill="#FFB800"
-                       VerticalAlignment="Center" Margin="0,0,8,0">
-                <Ellipse.Effect>
-                  <DropShadowEffect Color="#FFB800" BlurRadius="6" ShadowDepth="0"/>
-                </Ellipse.Effect>
-              </Ellipse>
-              <TextBlock Text="AUTHORITY ACTIVE" Foreground="#FFB800"
-                         FontFamily="Cascadia Code" FontSize="11"
-                         Effect="{StaticResource GlowSubtle}"/>
-            </StackPanel>
-          </Border>
-
-          <Border Background="{StaticResource BgPanel}"
-                  BorderBrush="#332200" BorderThickness="1"
-                  CornerRadius="4" Padding="12,10" Margin="0,0,0,16">
-            <StackPanel Orientation="Horizontal">
-              <Ellipse Width="8" Height="8" Fill="#CC6600"
-                       VerticalAlignment="Center" Margin="0,0,8,0"/>
-              <TextBlock Text="MISSION READY" Foreground="#CC6600"
-                         FontFamily="Cascadia Code" FontSize="11"/>
-            </StackPanel>
-          </Border>
-
-          <Button Content="EXECUTE ORDER" Style="{StaticResource GoldButton}"
-                  Margin="0,0,0,8" HorizontalAlignment="Stretch"/>
-          <Button Content="STAND DOWN" HorizontalAlignment="Stretch"
-                  Background="Transparent" Foreground="#886600"
-                  BorderBrush="#332200" BorderThickness="1"
-                  Padding="16,8" FontFamily="Segoe UI Black" FontSize="12"
-                  Cursor="Hand"/>
-        </StackPanel>
-
-        <!-- Main panel -->
-        <Border Grid.Column="1"
-                Background="{StaticResource BgPanel}"
-                BorderBrush="#332200" BorderThickness="1"
-                CornerRadius="8">
-          <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <!-- Gold eagle/command icon (Segoe MDL2) -->
-            <TextBlock Text="&#xE753;"
-                       FontFamily="Segoe MDL2 Assets" FontSize="56"
-                       Foreground="#FFB800"
-                       HorizontalAlignment="Center"
-                       Effect="{StaticResource GlowGold}"
-                       Margin="0,0,0,16"/>
-            <TextBlock Text="COMMAND AUTHORITY"
-                       FontFamily="Segoe UI Black" FontSize="28"
-                       Foreground="#FFB800" LetterSpacing="4"
-                       HorizontalAlignment="Center"
-                       Effect="{StaticResource GlowGold}"
-                       Margin="0,0,0,8"/>
-            <TextBlock Text="gold • amber • command-center"
-                       FontFamily="Cascadia Code" FontSize="12"
-                       Foreground="#886600"
-                       HorizontalAlignment="Center"/>
-          </StackPanel>
+        <!-- Subtle grid tile pattern overlay -->
+        <Border IsHitTestVisible="False" Opacity="0.04">
+            <Border.Background>
+                <DrawingBrush TileMode="Tile" Viewport="0,0,32,32" ViewportUnits="Absolute">
+                    <DrawingBrush.Drawing>
+                        <GeometryDrawing>
+                            <GeometryDrawing.Pen><Pen Brush="#FFB800" Thickness="0.5"/></GeometryDrawing.Pen>
+                            <GeometryDrawing.Geometry>
+                                <GeometryGroup>
+                                    <LineGeometry StartPoint="32,0" EndPoint="32,32"/>
+                                    <LineGeometry StartPoint="0,32" EndPoint="32,32"/>
+                                </GeometryGroup>
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Border.Background>
         </Border>
-      </Grid>
 
-      <!-- ── Status Bar ── -->
-      <Grid Grid.Row="2" Background="#0A0800">
-        <TextBlock Text="COMMAND AUTHORITY — v1.0.0 — OPERATIONAL"
-                   Foreground="#332200" FontSize="10"
-                   FontFamily="Cascadia Code"
-                   VerticalAlignment="Center" Margin="16,0"/>
-        <TextBlock Text="&#x2605; AUTHORIZED"
-                   Foreground="#FFB800" FontSize="10"
-                   FontFamily="Cascadia Code"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Right"
-                   Margin="0,0,16,0"/>
-      </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="24"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title bar -->
+            <Grid Grid.Row="0" Background="#150E00">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- Gold accent left stripe -->
+                <Border Grid.Column="0" Width="4" Background="#FFB800">
+                    <Border.Effect><DropShadowEffect Color="#FFB800" BlurRadius="8" ShadowDepth="0" Opacity="0.8"/></Border.Effect>
+                </Border>
+                <TextBlock Grid.Column="1" Text="COMMAND AUTHORITY"
+                           FontFamily="Segoe UI Black" FontSize="16"
+                           Foreground="#FFB800" VerticalAlignment="Center" Margin="16,0"
+                           IsHitTestVisible="False">
+                    <TextBlock.Effect><DropShadowEffect Color="#FFB800" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/></TextBlock.Effect>
+                </TextBlock>
+                <StackPanel Grid.Column="2" Orientation="Horizontal"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Button Content="—" Width="46" Height="48" Background="Transparent"
+                            Foreground="#AA8822" BorderThickness="0" FontSize="16" Click="MinimizeClick"/>
+                    <Button Content="&#x2716;" Width="46" Height="48" Background="Transparent"
+                            Foreground="#FFB800" BorderThickness="0" FontSize="14" Click="CloseClick"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Content -->
+            <Grid Grid.Row="1" Margin="24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Sidebar -->
+                <Border Grid.Column="0" Background="#150E00"
+                        BorderBrush="#3D2E00" BorderThickness="1" CornerRadius="4">
+                    <Border.Effect><DropShadowEffect Color="#FFB800" BlurRadius="8" ShadowDepth="0" Opacity="0.15"/></Border.Effect>
+                    <StackPanel Margin="12" Spacing="6">
+                        <TextBlock Text="COMMAND DECK" FontSize="8" FontWeight="Bold"
+                                   Foreground="#554400" Margin="4,0,0,10"/>
+                        <Button Content="📊  OPERATIONS" Style="{DynamicResource PrimaryButtonStyle}" HorizontalAlignment="Stretch"/>
+                        <Button Content="🛡️  DEFENSE" Background="Transparent"
+                                Foreground="#AA8822" BorderBrush="#3D2E00" BorderThickness="1"
+                                Padding="12,8" HorizontalAlignment="Stretch"/>
+                        <Button Content="📈  INTELLIGENCE" Background="Transparent"
+                                Foreground="#AA8822" BorderBrush="#3D2E00" BorderThickness="1"
+                                Padding="12,8" HorizontalAlignment="Stretch"/>
+                        <Button Content="🎯  TARGETING" Background="Transparent"
+                                Foreground="#AA8822" BorderBrush="#3D2E00" BorderThickness="1"
+                                Padding="12,8" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Main panel -->
+                <Border Grid.Column="2" Background="#150E00"
+                        BorderBrush="#3D2E00" BorderThickness="1" CornerRadius="4" Padding="24">
+                    <StackPanel>
+                        <!-- KPI row -->
+                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,0,0,24">
+                            <Border Width="160" Height="80" Background="#0C0800"
+                                    BorderBrush="#FFB800" BorderThickness="1" CornerRadius="4" Padding="14">
+                                <Border.Effect><DropShadowEffect Color="#FFB800" BlurRadius="10" ShadowDepth="0" Opacity="0.3"/></Border.Effect>
+                                <StackPanel>
+                                    <TextBlock Text="ACTIVE UNITS" FontSize="8" FontWeight="Bold" Foreground="#AA8822"/>
+                                    <TextBlock Text="48" FontFamily="Segoe UI Black" FontSize="32" Foreground="#FFB800"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Width="160" Height="80" Background="#0C0800"
+                                    BorderBrush="#CC6600" BorderThickness="1" CornerRadius="4" Padding="14">
+                                <Border.Effect><DropShadowEffect Color="#CC6600" BlurRadius="10" ShadowDepth="0" Opacity="0.3"/></Border.Effect>
+                                <StackPanel>
+                                    <TextBlock Text="OBJECTIVES" FontSize="8" FontWeight="Bold" Foreground="#884400"/>
+                                    <TextBlock Text="7/12" FontFamily="Segoe UI Black" FontSize="32" Foreground="#CC6600"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Width="160" Height="80" Background="#0C0800"
+                                    BorderBrush="#88DD44" BorderThickness="1" CornerRadius="4" Padding="14">
+                                <StackPanel>
+                                    <TextBlock Text="MISSION STATUS" FontSize="8" FontWeight="Bold" Foreground="#558822"/>
+                                    <TextBlock Text="GO" FontFamily="Segoe UI Black" FontSize="32" Foreground="#88DD44"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <!-- Ops log -->
+                        <TextBlock Text="OPERATIONS LOG" FontSize="9" FontWeight="Bold"
+                                   Foreground="#FFB800" Margin="0,0,0,10"/>
+                        <Border Background="#0C0800" BorderBrush="#3D2E00" BorderThickness="1"
+                                CornerRadius="4" Padding="12" Height="200">
+                            <StackPanel Spacing="6">
+                                <TextBlock FontFamily="Cascadia Code, Consolas" FontSize="11">
+                                    <Run Foreground="#554400">14:23:01</Run><Run Foreground="#AA8822">  ALPHA team confirmed at grid 447-892</Run>
+                                </TextBlock>
+                                <TextBlock FontFamily="Cascadia Code, Consolas" FontSize="11">
+                                    <Run Foreground="#554400">14:22:47</Run><Run Foreground="#FF4422">  CONTACT REPORT — north perimeter</Run>
+                                </TextBlock>
+                                <TextBlock FontFamily="Cascadia Code, Consolas" FontSize="11">
+                                    <Run Foreground="#554400">14:22:33</Run><Run Foreground="#88DD44">  Objective DELTA secured</Run>
+                                </TextBlock>
+                                <TextBlock FontFamily="Cascadia Code, Consolas" FontSize="11">
+                                    <Run Foreground="#554400">14:21:58</Run><Run Foreground="#AA8822">  BRAVO team in position, awaiting orders</Run>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Status bar -->
+            <Grid Grid.Row="2" Background="#150E00">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="■ MISSION ACTIVE — CONDITION YELLOW"
+                           FontFamily="Cascadia Code, Consolas" FontSize="10"
+                           Foreground="#FFB800" VerticalAlignment="Center" Margin="12,0"/>
+                <TextBlock Grid.Column="1" Text="GOLD COMMAND v1.0"
+                           FontFamily="Cascadia Code, Consolas" FontSize="10"
+                           Foreground="#554400" VerticalAlignment="Center" Margin="12,0"/>
+            </Grid>
+        </Grid>
     </Grid>
-  </Border>
 </Window>

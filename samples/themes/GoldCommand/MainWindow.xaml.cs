@@ -1,26 +1,17 @@
 using System.Windows;
-using System.Windows.Input;
+using Serilog;
 
 namespace GoldCommand
 {
     public partial class MainWindow : Window
     {
-        public MainWindow() => InitializeComponent();
-
-        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        public MainWindow()
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
+            InitializeComponent();
+            Log.Debug("[GoldCommand] MainWindow loaded");
         }
 
-        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
-            => WindowState = WindowState.Minimized;
-
-        private void BtnMaximize_Click(object sender, RoutedEventArgs e)
-            => WindowState = WindowState == WindowState.Maximized
-                ? WindowState.Normal : WindowState.Maximized;
-
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
-            => Close();
+        private void MinimizeClick(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+        private void CloseClick(object sender, RoutedEventArgs e) => Close();
     }
 }

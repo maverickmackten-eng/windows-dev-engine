@@ -2,5 +2,56 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
-  <Application.Resources/>
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- ══ CYBER NEON PALETTE ══════════════════════════════ -->
+            <!-- Backgrounds -->
+            <SolidColorBrush x:Key="BackgroundDeepBrush"     Color="#0D0015"/>
+            <SolidColorBrush x:Key="BackgroundPanelBrush"    Color="#150022"/>
+            <SolidColorBrush x:Key="BackgroundElevatedBrush" Color="#1E0033"/>
+            <!-- Borders -->
+            <SolidColorBrush x:Key="BorderSubtleBrush"       Color="#3D0066"/>
+            <SolidColorBrush x:Key="BorderActiveBrush"       Color="#FF00FF"/>
+            <!-- Accents -->
+            <SolidColorBrush x:Key="AccentPrimaryBrush"      Color="#FF00FF"/>  <!-- Magenta -->
+            <SolidColorBrush x:Key="AccentSecondaryBrush"    Color="#00FFCC"/>  <!-- Cyan -->
+            <SolidColorBrush x:Key="AccentSuccessBrush"      Color="#00FFCC"/>
+            <SolidColorBrush x:Key="AccentDangerBrush"       Color="#FF2D55"/>
+            <SolidColorBrush x:Key="AccentGoldBrush"         Color="#FFD700"/>
+            <!-- Text -->
+            <SolidColorBrush x:Key="TextPrimaryBrush"        Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="TextSecondaryBrush"      Color="#CC88FF"/>
+            <SolidColorBrush x:Key="TextDisabledBrush"       Color="#662299"/>
+            <!-- Button styles -->
+            <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="#FF00FF"/>
+                <Setter Property="Foreground" Value="#0D0015"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Padding" Value="16,8"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bg" Background="{TemplateBinding Background}"
+                                    CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#FF00FF" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
+                                </Border.Effect>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="#FF44FF"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="#CC00CC"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

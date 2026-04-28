@@ -9,4 +9,8 @@
     <RootNamespace>GoldCommand</RootNamespace>
     <Version>1.0.0</Version>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.*" />
+    <PackageReference Include="Serilog.Sinks.Debug" Version="3.*" />
+  </ItemGroup>
 </Project>
