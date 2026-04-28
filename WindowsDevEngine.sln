@@ -1,0 +1,161 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.0.0
+MinimumVisualStudioVersion = 10.0.40219.1
+
+# =====================================================================
+# WINDOWS DEV ENGINE — Open this .sln to see all samples at once
+# =====================================================================
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseApp", "templates\BaseProject\BaseApp.csproj", "{A1000001-0000-0000-0000-000000000001}"
+EndProject
+
+# --- ANIMATIONS ---
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonOverCastle", "samples\animations\DragonOverCastle\DragonOverCastle.csproj", "{A1000002-0000-0000-0000-000000000002}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaverickMach10", "samples\animations\MaverickMach10\MaverickMach10.csproj", "{A1000003-0000-0000-0000-000000000003}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WizardSpell", "samples\animations\WizardSpell\WizardSpell.csproj", "{A1000004-0000-0000-0000-000000000004}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BombsAndExplosions", "samples\animations\BombsAndExplosions\BombsAndExplosions.csproj", "{A1000005-0000-0000-0000-000000000005}"
+EndProject
+
+# --- PROGRESS ---
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountdownClock", "samples\progress\CountdownClock\CountdownClock.csproj", "{A1000006-0000-0000-0000-000000000006}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FillingBars", "samples\progress\FillingBars\FillingBars.csproj", "{A1000007-0000-0000-0000-000000000007}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpinningWheels", "samples\progress\SpinningWheels\SpinningWheels.csproj", "{A1000008-0000-0000-0000-000000000008}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PieProgress", "samples\progress\PieProgress\PieProgress.csproj", "{A1000009-0000-0000-0000-000000000009}"
+EndProject
+
+# --- THEMES ---
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkMilitary", "samples\themes\DarkMilitary\DarkMilitary.csproj", "{A100000A-0000-0000-0000-00000000000A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FontColorShowcase", "samples\themes\FontColorShowcase\FontColorShowcase.csproj", "{A100000B-0000-0000-0000-00000000000B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyberNeon", "samples\themes\CyberNeon\CyberNeon.csproj", "{A100000C-0000-0000-0000-00000000000C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldCommand", "samples\themes\GoldCommand\GoldCommand.csproj", "{A100000D-0000-0000-0000-00000000000D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcaneWizard", "samples\themes\ArcaneWizard\ArcaneWizard.csproj", "{A100000E-0000-0000-0000-00000000000E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeonSciFi", "samples\themes\NeonSciFi\NeonSciFi.csproj", "{A100000F-0000-0000-0000-00000000000F}"
+EndProject
+
+# --- CONTROLS ---
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DropdownMenuDemo", "samples\controls\DropdownMenuDemo\DropdownMenuDemo.csproj", "{A1000010-0000-0000-0000-000000000010}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopupModalDemo", "samples\controls\PopupModalDemo\PopupModalDemo.csproj", "{A1000011-0000-0000-0000-000000000011}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ButtonGallery", "samples\controls\ButtonGallery\ButtonGallery.csproj", "{A1000012-0000-0000-0000-000000000012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmojiShowcase", "samples\controls\EmojiShowcase\EmojiShowcase.csproj", "{A1000013-0000-0000-0000-000000000013}"
+EndProject
+
+# --- PAGE TEMPLATES ---
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplashScreen", "templates\pages\SplashScreen\SplashScreen.csproj", "{A1000014-0000-0000-0000-000000000014}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginPage", "templates\pages\LoginPage\LoginPage.csproj", "{A1000015-0000-0000-0000-000000000015}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AboutPage", "templates\pages\AboutPage\AboutPage.csproj", "{A1000016-0000-0000-0000-000000000016}"
+EndProject
+
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1000001-0000-0000-0000-000000000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000001-0000-0000-0000-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000001-0000-0000-0000-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000001-0000-0000-0000-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000002-0000-0000-0000-000000000002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000002-0000-0000-0000-000000000002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000002-0000-0000-0000-000000000002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000002-0000-0000-0000-000000000002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000003-0000-0000-0000-000000000003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000003-0000-0000-0000-000000000003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000003-0000-0000-0000-000000000003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000003-0000-0000-0000-000000000003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000004-0000-0000-0000-000000000004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000004-0000-0000-0000-000000000004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000004-0000-0000-0000-000000000004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000004-0000-0000-0000-000000000004}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000005-0000-0000-0000-000000000005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000005-0000-0000-0000-000000000005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000005-0000-0000-0000-000000000005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000005-0000-0000-0000-000000000005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000006-0000-0000-0000-000000000006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000006-0000-0000-0000-000000000006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000006-0000-0000-0000-000000000006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000006-0000-0000-0000-000000000006}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000007-0000-0000-0000-000000000007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000007-0000-0000-0000-000000000007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000007-0000-0000-0000-000000000007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000007-0000-0000-0000-000000000007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000008-0000-0000-0000-000000000008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000008-0000-0000-0000-000000000008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000008-0000-0000-0000-000000000008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000008-0000-0000-0000-000000000008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000009-0000-0000-0000-000000000009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000009-0000-0000-0000-000000000009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000009-0000-0000-0000-000000000009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000009-0000-0000-0000-000000000009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A100000A-0000-0000-0000-00000000000A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A100000A-0000-0000-0000-00000000000A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A100000A-0000-0000-0000-00000000000A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A100000A-0000-0000-0000-00000000000A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A100000B-0000-0000-0000-00000000000B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A100000B-0000-0000-0000-00000000000B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A100000B-0000-0000-0000-00000000000B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A100000B-0000-0000-0000-00000000000B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A100000C-0000-0000-0000-00000000000C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A100000C-0000-0000-0000-00000000000C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A100000C-0000-0000-0000-00000000000C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A100000C-0000-0000-0000-00000000000C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A100000D-0000-0000-0000-00000000000D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A100000D-0000-0000-0000-00000000000D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A100000D-0000-0000-0000-00000000000D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A100000D-0000-0000-0000-00000000000D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A100000E-0000-0000-0000-00000000000E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A100000E-0000-0000-0000-00000000000E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A100000E-0000-0000-0000-00000000000E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A100000E-0000-0000-0000-00000000000E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A100000F-0000-0000-0000-00000000000F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A100000F-0000-0000-0000-00000000000F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A100000F-0000-0000-0000-00000000000F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A100000F-0000-0000-0000-00000000000F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000010-0000-0000-0000-000000000010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000010-0000-0000-0000-000000000010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000010-0000-0000-0000-000000000010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000010-0000-0000-0000-000000000010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000011-0000-0000-0000-000000000011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000011-0000-0000-0000-000000000011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000011-0000-0000-0000-000000000011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000011-0000-0000-0000-000000000011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000012-0000-0000-0000-000000000012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000012-0000-0000-0000-000000000012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000012-0000-0000-0000-000000000012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000012-0000-0000-0000-000000000012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000013-0000-0000-0000-000000000013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000013-0000-0000-0000-000000000013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000013-0000-0000-0000-000000000013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000013-0000-0000-0000-000000000013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000014-0000-0000-0000-000000000014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000014-0000-0000-0000-000000000014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000014-0000-0000-0000-000000000014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000014-0000-0000-0000-000000000014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000015-0000-0000-0000-000000000015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000015-0000-0000-0000-000000000015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000015-0000-0000-0000-000000000015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000015-0000-0000-0000-000000000015}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000016-0000-0000-0000-000000000016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000016-0000-0000-0000-000000000016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000016-0000-0000-0000-000000000016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000016-0000-0000-0000-000000000016}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,400 @@
+<Window x:Class="PopupModalDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="POPUP &amp; MODAL CONTROLS"
+        Width="1050" Height="720"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Bg0"   Color="#0A0D12"/>
+        <SolidColorBrush x:Key="Bg1"   Color="#12171F"/>
+        <SolidColorBrush x:Key="Bg2"   Color="#1C2333"/>
+        <SolidColorBrush x:Key="Acc"   Color="#00B4FF"/>
+        <SolidColorBrush x:Key="Acc2"  Color="#FF6B35"/>
+        <SolidColorBrush x:Key="Green" Color="#00FF94"/>
+        <SolidColorBrush x:Key="Red"   Color="#FF2D55"/>
+        <SolidColorBrush x:Key="Dim"   Color="#445566"/>
+        <SolidColorBrush x:Key="Text"  Color="#CCDDEE"/>
+        <SolidColorBrush x:Key="Bord"  Color="#2A3347"/>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Main window -->
+        <Border Background="{StaticResource Bg0}" CornerRadius="10" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+            <Border.Effect><DropShadowEffect Color="#000000" BlurRadius="30" ShadowDepth="0" Opacity="0.6"/></Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="46"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="22"/>
+                </Grid.RowDefinitions>
+
+                <!-- Title bar -->
+                <Border Background="{StaticResource Bg1}" CornerRadius="10,10,0,0"
+                        MouseLeftButtonDown="TitleBar_MouseDown" BorderBrush="#1A2A3A" BorderThickness="0,0,0,1">
+                    <DockPanel Margin="16,0">
+                        <TextBlock Text="◈  POPUP &amp; MODAL CONTROLS" Foreground="{StaticResource Acc}"
+                                   FontFamily="Cascadia Code" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                            <Button Content="─" Width="36" Height="36" Click="MinBtn_Click"
+                                    Background="Transparent" Foreground="{StaticResource Dim}" BorderThickness="0" Cursor="Hand"/>
+                            <Button Content="✕" Width="36" Height="36" Click="CloseBtn_Click"
+                                    Background="Transparent" Foreground="{StaticResource Red}" BorderThickness="0" Cursor="Hand"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+
+                <!-- Content -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="32,24">
+
+                        <!-- Slide-in panel trigger -->
+                        <TextBlock Text="SLIDING PANELS" Foreground="{StaticResource Acc}"
+                                   FontFamily="Cascadia Code" FontSize="11" FontWeight="Bold" Margin="0,0,0,16"/>
+                        <WrapPanel Margin="0,0,0,32">
+                            <Button Content="◀  Open Left Panel" Click="OpenLeftPanel_Click" Margin="0,0,12,0"
+                                    Background="#1A00B4FF" Foreground="{StaticResource Acc}"
+                                    BorderBrush="{StaticResource Acc}" BorderThickness="1" Padding="16,10"
+                                    FontFamily="Segoe UI" FontSize="13" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Content="▶  Open Right Panel" Click="OpenRightPanel_Click" Margin="0,0,12,0"
+                                    Background="{StaticResource Bg2}" Foreground="{StaticResource Text}"
+                                    BorderBrush="{StaticResource Bord}" BorderThickness="1" Padding="16,10"
+                                    FontFamily="Segoe UI" FontSize="13" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </WrapPanel>
+
+                        <!-- Modal triggers -->
+                        <TextBlock Text="MODAL DIALOGS" Foreground="{StaticResource Acc}"
+                                   FontFamily="Cascadia Code" FontSize="11" FontWeight="Bold" Margin="0,0,0,16"/>
+                        <WrapPanel Margin="0,0,0,32">
+                            <Button Content="⚠  Confirm Dialog" Click="ShowConfirm_Click" Margin="0,0,12,0"
+                                    Background="#1AFF2D55" Foreground="{StaticResource Red}"
+                                    BorderBrush="{StaticResource Red}" BorderThickness="1" Padding="16,10"
+                                    FontFamily="Segoe UI" FontSize="13" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Content="ℹ  Info Dialog" Click="ShowInfo_Click" Margin="0,0,12,0"
+                                    Background="{StaticResource Bg2}" Foreground="{StaticResource Text}"
+                                    BorderBrush="{StaticResource Bord}" BorderThickness="1" Padding="16,10"
+                                    FontFamily="Segoe UI" FontSize="13" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Content="✏  Input Dialog" Click="ShowInput_Click"
+                                    Background="#1A00FF94" Foreground="{StaticResource Green}"
+                                    BorderBrush="{StaticResource Green}" BorderThickness="1" Padding="16,10"
+                                    FontFamily="Segoe UI" FontSize="13" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </WrapPanel>
+
+                        <!-- Toast notification trigger -->
+                        <TextBlock Text="TOAST NOTIFICATIONS" Foreground="{StaticResource Acc}"
+                                   FontFamily="Cascadia Code" FontSize="11" FontWeight="Bold" Margin="0,0,0,16"/>
+                        <WrapPanel Margin="0,0,0,16">
+                            <Button Content="🟢  Success Toast" Click="ShowSuccessToast_Click" Margin="0,0,12,0"
+                                    Background="{StaticResource Bg2}" Foreground="{StaticResource Green}"
+                                    BorderBrush="{StaticResource Bord}" BorderThickness="1" Padding="16,10"
+                                    FontFamily="Segoe UI" FontSize="13" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Content="🔴  Error Toast" Click="ShowErrorToast_Click"
+                                    Background="{StaticResource Bg2}" Foreground="{StaticResource Red}"
+                                    BorderBrush="{StaticResource Bord}" BorderThickness="1" Padding="16,10"
+                                    FontFamily="Segoe UI" FontSize="13" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </WrapPanel>
+
+                        <!-- Toast container (anchored bottom-right via code) -->
+                        <Border x:Name="toastBorder" Visibility="Collapsed"
+                                Background="{StaticResource Bg2}" CornerRadius="8"
+                                BorderThickness="1" Padding="16,12" MaxWidth="340">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#000000" BlurRadius="20" ShadowDepth="0" Opacity="0.5"/>
+                            </Border.Effect>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="toastIcon" FontSize="18" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                <StackPanel>
+                                    <TextBlock x:Name="toastTitle" FontFamily="Segoe UI" FontSize="13" FontWeight="Bold"/>
+                                    <TextBlock x:Name="toastBody" FontFamily="Segoe UI" FontSize="11" Foreground="{StaticResource Dim}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Status bar -->
+                <Border Grid.Row="2" Background="{StaticResource Bg1}" CornerRadius="0,0,10,10"
+                        BorderBrush="#1A2A3A" BorderThickness="0,1,0,0">
+                    <TextBlock Text="◈ POPUP &amp; MODAL DEMO  //  CLICK BUTTONS TO SEE PANELS  //  ESC TO EXIT"
+                               Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="8"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Left slide panel (overlaid) -->
+        <Border x:Name="leftPanel" Width="280" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                Background="{StaticResource Bg1}" BorderBrush="{StaticResource Acc}" BorderThickness="0,0,1,0"
+                CornerRadius="10,0,0,10" Visibility="Collapsed">
+            <Border.Effect>
+                <DropShadowEffect Color="#00B4FF" BlurRadius="20" ShadowDepth="0" Opacity="0.2"/>
+            </Border.Effect>
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="leftPanelTranslate" X="-280"/>
+            </Border.RenderTransform>
+            <StackPanel Margin="24,24">
+                <DockPanel Margin="0,0,0,20">
+                    <TextBlock Text="◀  NAVIGATION" Foreground="{StaticResource Acc}"
+                               FontFamily="Cascadia Code" FontSize="12" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <Button Content="✕" DockPanel.Dock="Right" Click="CloseLeftPanel_Click"
+                            Background="Transparent" Foreground="{StaticResource Dim}" BorderThickness="0"
+                            Width="28" FontSize="12" Cursor="Hand"/>
+                </DockPanel>
+                <Border Margin="0,3" Padding="12,10" CornerRadius="6" Background="#1A00B4FF" Cursor="Hand">
+                    <TextBlock Text="🏠  Dashboard" Foreground="{StaticResource Acc}" FontFamily="Segoe UI" FontSize="13"/>
+                </Border>
+                <Border Margin="0,3" Padding="12,10" CornerRadius="6" Cursor="Hand">
+                    <TextBlock Text="📡  Sensors" Foreground="{StaticResource Dim}" FontFamily="Segoe UI" FontSize="13"/>
+                </Border>
+                <Border Margin="0,3" Padding="12,10" CornerRadius="6" Cursor="Hand">
+                    <TextBlock Text="⚔  Weapons" Foreground="{StaticResource Dim}" FontFamily="Segoe UI" FontSize="13"/>
+                </Border>
+                <Border Margin="0,3" Padding="12,10" CornerRadius="6" Cursor="Hand">
+                    <TextBlock Text="⚙  Systems" Foreground="{StaticResource Dim}" FontFamily="Segoe UI" FontSize="13"/>
+                </Border>
+                <Border Margin="0,3" Padding="12,10" CornerRadius="6" Cursor="Hand">
+                    <TextBlock Text="📋  Logs" Foreground="{StaticResource Dim}" FontFamily="Segoe UI" FontSize="13"/>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Right slide panel (overlaid) -->
+        <Border x:Name="rightPanel" Width="300" HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                Background="{StaticResource Bg1}" BorderBrush="{StaticResource Bord}" BorderThickness="1,0,0,0"
+                CornerRadius="0,10,10,0" Visibility="Collapsed">
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="rightPanelTranslate" X="300"/>
+            </Border.RenderTransform>
+            <StackPanel Margin="24,24">
+                <DockPanel Margin="0,0,0,20">
+                    <Button Content="✕" Click="CloseRightPanel_Click"
+                            Background="Transparent" Foreground="{StaticResource Dim}" BorderThickness="0"
+                            Width="28" FontSize="12" Cursor="Hand" HorizontalAlignment="Left"/>
+                    <TextBlock Text="DETAILS ▶" Foreground="{StaticResource Text}"
+                               FontFamily="Cascadia Code" FontSize="12" FontWeight="Bold"
+                               VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                </DockPanel>
+                <TextBlock Text="Mission Alpha-7" Foreground="{StaticResource Text}"
+                           FontFamily="Segoe UI" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>
+                <TextBlock Text="STATUS: ACTIVE" Foreground="{StaticResource Green}"
+                           FontFamily="Cascadia Code" FontSize="10" Margin="0,0,0,16"/>
+                <TextBlock Text="Crew: 847  •  ETA: 4.2 hrs" Foreground="{StaticResource Dim}"
+                           FontFamily="Segoe UI" FontSize="12" Margin="0,0,0,8"/>
+                <TextBlock Text="Current heading: 270° mark 15" Foreground="{StaticResource Dim}"
+                           FontFamily="Segoe UI" FontSize="12" Margin="0,0,0,8"/>
+                <TextBlock Text="Shield integrity: 94%" Foreground="{StaticResource Dim}"
+                           FontFamily="Segoe UI" FontSize="12" Margin="0,0,0,8"/>
+                <Rectangle Height="1" Fill="#2A3347" Margin="0,16"/>
+                <TextBlock Text="NOTES" Foreground="{StaticResource Dim}"
+                           FontFamily="Cascadia Code" FontSize="9" Margin="0,0,0,8"/>
+                <TextBlock TextWrapping="Wrap" Foreground="{StaticResource Text}"
+                           FontFamily="Segoe UI" FontSize="12"
+                           Text="Hull breach on Deck 7 Section 4. Repair crews dispatched. Estimated repair: 2.1 hours."/>
+            </StackPanel>
+        </Border>
+
+        <!-- Dark overlay for modals -->
+        <Border x:Name="overlay" Background="#AA000000" Visibility="Collapsed"
+                MouseDown="Overlay_MouseDown"/>
+
+        <!-- Confirm modal -->
+        <Border x:Name="confirmModal" Visibility="Collapsed"
+                Background="{StaticResource Bg1}" CornerRadius="12"
+                BorderBrush="{StaticResource Red}" BorderThickness="1"
+                Width="440" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="32,28">
+            <Border.Effect>
+                <DropShadowEffect Color="#FF2D55" BlurRadius="30" ShadowDepth="0" Opacity="0.3"/>
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Text="⚠  CONFIRM ACTION" Foreground="{StaticResource Red}"
+                           FontFamily="Cascadia Code" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
+                <TextBlock TextWrapping="Wrap" Foreground="{StaticResource Text}" FontFamily="Segoe UI" FontSize="13"
+                           Text="This will initiate a full weapons lock on the target. This action cannot be undone. Are you absolutely sure you want to proceed?"
+                           Margin="0,0,0,24"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Cancel" Click="ConfirmCancel_Click" Margin="0,0,12,0"
+                            Background="Transparent" Foreground="{StaticResource Dim}"
+                            BorderBrush="{StaticResource Bord}" BorderThickness="1" Padding="20,10"
+                            FontFamily="Segoe UI" FontSize="13" Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Content="🔥  CONFIRM" Click="ConfirmOk_Click"
+                            Background="#1AFF2D55" Foreground="{StaticResource Red}"
+                            BorderBrush="{StaticResource Red}" BorderThickness="1" Padding="20,10"
+                            FontFamily="Segoe UI" FontSize="13" FontWeight="Bold" Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Info modal -->
+        <Border x:Name="infoModal" Visibility="Collapsed"
+                Background="{StaticResource Bg1}" CornerRadius="12"
+                BorderBrush="{StaticResource Acc}" BorderThickness="1"
+                Width="420" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="32,28">
+            <Border.Effect>
+                <DropShadowEffect Color="#00B4FF" BlurRadius="30" ShadowDepth="0" Opacity="0.25"/>
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Text="ℹ  MISSION BRIEFING" Foreground="{StaticResource Acc}"
+                           FontFamily="Cascadia Code" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
+                <TextBlock TextWrapping="Wrap" Foreground="{StaticResource Text}" FontFamily="Segoe UI" FontSize="13"
+                           Text="Mission Alpha-7 is now active. Your objective is to intercept hostile vessels at coordinates 270 mark 15. Backup arrives in 4.2 hours. Shields must remain above 50% at all times."
+                           Margin="0,0,0,24"/>
+                <Button Content="Got it" Click="InfoClose_Click" HorizontalAlignment="Right"
+                        Background="#1A00B4FF" Foreground="{StaticResource Acc}"
+                        BorderBrush="{StaticResource Acc}" BorderThickness="1" Padding="24,10"
+                        FontFamily="Segoe UI" FontSize="13" Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!-- Input modal -->
+        <Border x:Name="inputModal" Visibility="Collapsed"
+                Background="{StaticResource Bg1}" CornerRadius="12"
+                BorderBrush="{StaticResource Green}" BorderThickness="1"
+                Width="420" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="32,28">
+            <Border.Effect>
+                <DropShadowEffect Color="#00FF94" BlurRadius="20" ShadowDepth="0" Opacity="0.2"/>
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Text="✏  ENTER COORDINATES" Foreground="{StaticResource Green}"
+                           FontFamily="Cascadia Code" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
+                <TextBlock Text="Target heading (degrees mark altitude):" Foreground="{StaticResource Dim}"
+                           FontFamily="Segoe UI" FontSize="12" Margin="0,0,0,8"/>
+                <Border Background="{StaticResource Bg2}" CornerRadius="6"
+                        BorderBrush="{StaticResource Green}" BorderThickness="1" Padding="12,8" Margin="0,0,0,20">
+                    <TextBox x:Name="inputBox" Background="Transparent" Foreground="{StaticResource Text}"
+                             BorderThickness="0" FontFamily="Cascadia Code" FontSize="14"
+                             Text="270 mark 15" CaretBrush="{StaticResource Green}"/>
+                </Border>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Cancel" Click="InputCancel_Click" Margin="0,0,12,0"
+                            Background="Transparent" Foreground="{StaticResource Dim}"
+                            BorderBrush="{StaticResource Bord}" BorderThickness="1" Padding="20,10"
+                            FontFamily="Segoe UI" FontSize="13" Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Content="✔  Set Course" Click="InputOk_Click"
+                            Background="#1A00FF94" Foreground="{StaticResource Green}"
+                            BorderBrush="{StaticResource Green}" BorderThickness="1" Padding="20,10"
+                            FontFamily="Segoe UI" FontSize="13" FontWeight="Bold" Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,193 @@
+<Window x:Class="NeonSciFi.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="NEXUS STATION — Sci-Fi Theme"
+        Width="1100" Height="700"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Bg0"    Color="#020810"/>
+        <SolidColorBrush x:Key="Bg1"    Color="#050F1E"/>
+        <SolidColorBrush x:Key="Bg2"    Color="#091525"/>
+        <SolidColorBrush x:Key="Blue"   Color="#0088FF"/>
+        <SolidColorBrush x:Key="Teal"   Color="#00DDFF"/>
+        <SolidColorBrush x:Key="Green"  Color="#00FF88"/>
+        <SolidColorBrush x:Key="Red"    Color="#FF3344"/>
+        <SolidColorBrush x:Key="Dim"    Color="#335577"/>
+        <SolidColorBrush x:Key="White"  Color="#CCDDEE"/>
+    </Window.Resources>
+
+    <Border Background="{StaticResource Bg0}" CornerRadius="10"
+            BorderBrush="#0088FF" BorderThickness="1">
+        <Border.Effect><DropShadowEffect Color="#0088FF" BlurRadius="25" ShadowDepth="0" Opacity="0.5"/></Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="46"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="22"/>
+            </Grid.RowDefinitions>
+
+            <Border Background="{StaticResource Bg1}" CornerRadius="10,10,0,0"
+                    MouseLeftButtonDown="TitleBar_MouseDown" BorderBrush="#220088FF" BorderThickness="0,0,0,1">
+                <DockPanel Margin="16,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="◉  NEXUS STATION" Foreground="{StaticResource Teal}"
+                                   FontFamily="Consolas" FontSize="15" FontWeight="Bold">
+                            <TextBlock.Effect><DropShadowEffect Color="#00DDFF" BlurRadius="12" ShadowDepth="0" Opacity="0.8"/></TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock Text="  —  SECTOR ALPHA COMMAND" Foreground="{StaticResource Dim}"
+                                   FontFamily="Consolas" FontSize="11" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                        <Button Content="─" Width="36" Height="36" Click="MinBtn_Click"
+                                Background="Transparent" Foreground="{StaticResource Dim}" BorderThickness="0" Cursor="Hand"/>
+                        <Button Content="✕" Width="36" Height="36" Click="CloseBtn_Click"
+                                Background="Transparent" Foreground="{StaticResource Red}" BorderThickness="0" Cursor="Hand"/>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="170"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Nav -->
+                <Border Background="{StaticResource Bg1}" BorderBrush="#220088FF" BorderThickness="0,0,1,0">
+                    <StackPanel Margin="8,16">
+                        <TextBlock Text="// SECTORS" Foreground="{StaticResource Dim}"
+                                   FontFamily="Consolas" FontSize="9" Margin="8,0,0,10"/>
+                        <Border Margin="4,2" Padding="10,9" CornerRadius="4"
+                                Background="#150088FF" BorderBrush="{StaticResource Blue}" BorderThickness="1">
+                            <TextBlock Text="⬛ COMMAND" Foreground="{StaticResource Blue}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                        </Border>
+                        <Border Margin="4,2" Padding="10,9" CornerRadius="4" Cursor="Hand">
+                            <TextBlock Text="◈ SCIENCE" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+                        <Border Margin="4,2" Padding="10,9" CornerRadius="4" Cursor="Hand">
+                            <TextBlock Text="◉ WEAPONS" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+                        <Border Margin="4,2" Padding="10,9" CornerRadius="4" Cursor="Hand">
+                            <TextBlock Text="◎ MEDICAL" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+                        <Border Margin="4,2" Padding="10,9" CornerRadius="4" Cursor="Hand">
+                            <TextBlock Text="⚙ ENGINEERING" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+                        <Rectangle Height="1" Fill="#220088FF" Margin="4,12"/>
+                        <StackPanel Margin="8,2"><StackPanel Orientation="Horizontal">
+                            <Ellipse Width="6" Height="6" Fill="{StaticResource Green}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="SHIELDS 94%" Foreground="{StaticResource Green}" FontFamily="Consolas" FontSize="9"/>
+                        </StackPanel></StackPanel>
+                        <StackPanel Margin="8,2"><StackPanel Orientation="Horizontal">
+                            <Ellipse Width="6" Height="6" Fill="{StaticResource Blue}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="ENGINES OK" Foreground="{StaticResource Blue}" FontFamily="Consolas" FontSize="9"/>
+                        </StackPanel></StackPanel>
+                        <StackPanel Margin="8,2"><StackPanel Orientation="Horizontal">
+                            <Ellipse Width="6" Height="6" Fill="{StaticResource Red}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="HULL BREACH" Foreground="{StaticResource Red}" FontFamily="Consolas" FontSize="9"/>
+                        </StackPanel></StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Main -->
+                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="28,20">
+                        <TextBlock Text="NEXUS" HorizontalAlignment="Center"
+                                   FontFamily="Impact" FontSize="56" Foreground="{StaticResource Teal}" LetterSpacing="10">
+                            <TextBlock.Effect><DropShadowEffect Color="#00DDFF" BlurRadius="30" ShadowDepth="0" Opacity="0.7"/></TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock Text="STATION  ALPHA — STARDATE 2847.6" HorizontalAlignment="Center"
+                                   FontFamily="Consolas" FontSize="11" Foreground="{StaticResource Dim}" Margin="0,-4,0,20"/>
+
+                        <!-- Hexagonal stat panels -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                            <Border Margin="6" Padding="16,12" CornerRadius="6" MinWidth="140"
+                                    Background="{StaticResource Bg2}" BorderBrush="{StaticResource Teal}" BorderThickness="1">
+                                <Border.Effect><DropShadowEffect Color="#00DDFF" BlurRadius="10" ShadowDepth="0" Opacity="0.25"/></Border.Effect>
+                                <StackPanel>
+                                    <TextBlock Text="CREW" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="9"/>
+                                    <TextBlock Text="847" Foreground="{StaticResource Teal}" FontFamily="Consolas" FontSize="30" FontWeight="Bold"/>
+                                    <TextBlock Text="3 INJURED" Foreground="{StaticResource Red}" FontFamily="Consolas" FontSize="9"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="6" Padding="16,12" CornerRadius="6" MinWidth="140"
+                                    Background="{StaticResource Bg2}" BorderBrush="{StaticResource Blue}" BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="WARP CORE" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="9"/>
+                                    <TextBlock Text="98%" Foreground="{StaticResource Green}" FontFamily="Consolas" FontSize="30" FontWeight="Bold"/>
+                                    <TextBlock Text="STABLE" Foreground="{StaticResource Green}" FontFamily="Consolas" FontSize="9"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="6" Padding="16,12" CornerRadius="6" MinWidth="140"
+                                    Background="{StaticResource Bg2}" BorderBrush="{StaticResource Red}" BorderThickness="1">
+                                <Border.Effect><DropShadowEffect Color="#FF3344" BlurRadius="10" ShadowDepth="0" Opacity="0.2"/></Border.Effect>
+                                <StackPanel>
+                                    <TextBlock Text="HULL" Foreground="{StaticResource Red}" FontFamily="Consolas" FontSize="9"/>
+                                    <TextBlock Text="62%" Foreground="{StaticResource Red}" FontFamily="Consolas" FontSize="30" FontWeight="Bold"/>
+                                    <TextBlock Text="BREACH — DECK 7" Foreground="{StaticResource Red}" FontFamily="Consolas" FontSize="9"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <!-- Ship systems readout -->
+                        <Border Background="{StaticResource Bg2}" CornerRadius="8"
+                                BorderBrush="#220088FF" BorderThickness="1" Padding="16" Margin="0,0,0,16">
+                            <StackPanel>
+                                <TextBlock Text="// SHIP SYSTEMS READOUT" Foreground="{StaticResource Teal}"
+                                           FontFamily="Consolas" FontSize="10" FontWeight="Bold" Margin="0,0,0,12"/>
+                                <TextBlock Text="[TACT] Photon torpedoes: 48/50  |  Phasers: ONLINE  |  Shields: 94%"
+                                           Foreground="{StaticResource White}" FontFamily="Consolas" FontSize="11"/>
+                                <TextBlock Text="[ENGR] Warp core: NOMINAL  |  Impulse: 100%  |  EPS: STABLE"
+                                           Foreground="{StaticResource Green}" FontFamily="Consolas" FontSize="11"/>
+                                <TextBlock Text="[NAVC] Current heading: 270 mark 15  |  Speed: Warp 7.2"
+                                           Foreground="{StaticResource Blue}" FontFamily="Consolas" FontSize="11"/>
+                                <TextBlock Text="[WARN] Hull breach confirmed — Deck 7 Section 4  |  Repair crews dispatched"
+                                           Foreground="{StaticResource Red}" FontFamily="Consolas" FontSize="11"/>
+                                <TextBlock Text="[COMM] Starfleet Command acknowledged — ETA to starbase: 4.2 hrs"
+                                           Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="11"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Right panel -->
+                <Border Grid.Column="2" Background="{StaticResource Bg1}" BorderBrush="#220088FF" BorderThickness="1,0,0,0">
+                    <StackPanel Margin="14,16">
+                        <TextBlock Text="// QUICK OPS" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="9" Margin="0,0,0,10"/>
+                        <Border Margin="0,3" Padding="10,9" CornerRadius="4" Cursor="Hand"
+                                Background="#150088FF" BorderBrush="{StaticResource Blue}" BorderThickness="1">
+                            <TextBlock Text="🚀 RED ALERT" Foreground="{StaticResource Red}" FontFamily="Consolas" FontSize="10" FontWeight="Bold"/>
+                        </Border>
+                        <Border Margin="0,3" Padding="10,9" CornerRadius="4" Cursor="Hand"
+                                Background="{StaticResource Bg2}" BorderBrush="#220088FF" BorderThickness="1">
+                            <TextBlock Text="📡 HAIL STARFLEET" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="10"/>
+                        </Border>
+                        <Border Margin="0,3" Padding="10,9" CornerRadius="4" Cursor="Hand"
+                                Background="{StaticResource Bg2}" BorderBrush="#220088FF" BorderThickness="1">
+                            <TextBlock Text="⚙ DAMAGE CTRL" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="10"/>
+                        </Border>
+                        <Border Margin="0,3" Padding="10,9" CornerRadius="4" Cursor="Hand"
+                                Background="{StaticResource Bg2}" BorderBrush="#220088FF" BorderThickness="1">
+                            <TextBlock Text="🛡 RAISE SHIELDS" Foreground="{StaticResource Green}" FontFamily="Consolas" FontSize="10"/>
+                        </Border>
+                        <Rectangle Height="1" Fill="#220088FF" Margin="0,12"/>
+                        <TextBlock Text="// CAPTAIN" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="9" Margin="0,0,0,6"/>
+                        <TextBlock Text="MAVERICK" HorizontalAlignment="Center"
+                                   FontFamily="Impact" FontSize="20" Foreground="{StaticResource Teal}" LetterSpacing="2">
+                            <TextBlock.Effect><DropShadowEffect Color="#00DDFF" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/></TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock Text="NCC-1701-M" HorizontalAlignment="Center" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="9"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Grid.Row="2" Background="{StaticResource Bg1}" CornerRadius="0,0,10,10"
+                    BorderBrush="#220088FF" BorderThickness="0,1,0,0">
+                <TextBlock Text="◉ WARP DRIVE ONLINE  //  SHIELDS RAISED  //  NEXUS v3.0  //  ESC TO EXIT"
+                           Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="8"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

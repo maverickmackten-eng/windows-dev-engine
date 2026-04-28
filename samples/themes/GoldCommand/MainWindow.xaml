@@ -1,0 +1,406 @@
+<Window x:Class="GoldCommand.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="COMMAND AUTHORITY — Gold Theme"
+        Width="1100" Height="720"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Bg0"    Color="#05030000"/>
+        <SolidColorBrush x:Key="Bg1"    Color="#0A0700"/>
+        <SolidColorBrush x:Key="Bg2"    Color="#120D00"/>
+        <SolidColorBrush x:Key="Gold"   Color="#FFD700"/>
+        <SolidColorBrush x:Key="Gold2"  Color="#FFC200"/>
+        <SolidColorBrush x:Key="Amber"  Color="#FF8C00"/>
+        <SolidColorBrush x:Key="Red"    Color="#CC2200"/>
+        <SolidColorBrush x:Key="Dim"    Color="#554400"/>
+        <SolidColorBrush x:Key="Dimmer" Color="#332200"/>
+        <LinearGradientBrush x:Key="GoldGrad" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#8B6914" Offset="0"/>
+            <GradientStop Color="#FFD700" Offset="0.4"/>
+            <GradientStop Color="#FFF4AA" Offset="0.5"/>
+            <GradientStop Color="#FFD700" Offset="0.6"/>
+            <GradientStop Color="#8B6914" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
+
+    <Border CornerRadius="10" BorderThickness="2">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#0A0700" Offset="0"/>
+                <GradientStop Color="#050300" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#8B6914" Offset="0"/>
+                <GradientStop Color="#FFD700" Offset="0.3"/>
+                <GradientStop Color="#FFD700" Offset="0.7"/>
+                <GradientStop Color="#8B6914" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Border.Effect>
+            <DropShadowEffect Color="#FFD700" BlurRadius="30" ShadowDepth="0" Opacity="0.3"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="24"/>
+            </Grid.RowDefinitions>
+
+            <!-- Gold title bar -->
+            <Border CornerRadius="10,10,0,0" MouseLeftButtonDown="TitleBar_MouseDown">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#1A1000" Offset="0"/>
+                        <GradientStop Color="#0A0700" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <!-- Gold top accent line -->
+                <Border.BorderBrush><LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#00000000" Offset="0"/>
+                    <GradientStop Color="#FFD700" Offset="0.3"/>
+                    <GradientStop Color="#FFF4AA" Offset="0.5"/>
+                    <GradientStop Color="#FFD700" Offset="0.7"/>
+                    <GradientStop Color="#00000000" Offset="1"/>
+                </LinearGradientBrush></Border.BorderBrush>
+                <Border.BorderThickness>0,0,0,1</Border.BorderThickness>
+                <DockPanel Margin="20,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="✦ " Foreground="{StaticResource Gold}" FontSize="14"/>
+                        <TextBlock Text="COMMAND AUTHORITY" FontFamily="Impact" FontSize="18"
+                                   LetterSpacing="4">
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFF4AA" Offset="0"/>
+                                    <GradientStop Color="#FFD700" Offset="0.5"/>
+                                    <GradientStop Color="#8B6914" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#FFD700" BlurRadius="15" ShadowDepth="0" Opacity="0.7"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock Text="  ✦  STRATEGIC OPERATIONS" Foreground="{StaticResource Dim}"
+                                   FontFamily="Consolas" FontSize="11" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                        <Button Content="─" Width="36" Height="36" Click="MinBtn_Click"
+                                Background="Transparent" Foreground="{StaticResource Dim}"
+                                BorderThickness="0" Cursor="Hand"/>
+                        <Button Content="✕" Width="36" Height="36" Click="CloseBtn_Click"
+                                Background="Transparent" Foreground="{StaticResource Red}"
+                                BorderThickness="0" Cursor="Hand"/>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <!-- Main content -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="220"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left nav -->
+                <Border Background="{StaticResource Bg1}"
+                        BorderBrush="#33FFD700" BorderThickness="0,0,1,0">
+                    <StackPanel Margin="0,20">
+                        <TextBlock Text="COMMAND SECTORS" Foreground="{StaticResource Dim}"
+                                   FontFamily="Consolas" FontSize="9" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="0,0,0,12"/>
+                        <!-- Gold separator -->
+                        <Rectangle Height="1" Margin="16,0,16,12">
+                            <Rectangle.Fill><LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#00FFD700" Offset="0"/>
+                                <GradientStop Color="#FFD700" Offset="0.5"/>
+                                <GradientStop Color="#00FFD700" Offset="1"/>
+                            </LinearGradientBrush></Rectangle.Fill>
+                        </Rectangle>
+
+                        <!-- Active -->
+                        <Border Margin="8,2" Padding="12,10" CornerRadius="4"
+                                BorderBrush="{StaticResource Gold}" BorderThickness="1"
+                                Background="#1AFFD700">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FFD700" BlurRadius="10" ShadowDepth="0" Opacity="0.4"/>
+                            </Border.Effect>
+                            <TextBlock Text="⬛  STRATEGIC HQ" Foreground="{StaticResource Gold}"
+                                       FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                        </Border>
+                        <Border Margin="8,2" Padding="12,10" CornerRadius="4" Cursor="Hand">
+                            <TextBlock Text="◈  FIELD OPS" Foreground="{StaticResource Dim}"
+                                       FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+                        <Border Margin="8,2" Padding="12,10" CornerRadius="4" Cursor="Hand">
+                            <TextBlock Text="◉  INTELLIGENCE" Foreground="{StaticResource Dim}"
+                                       FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+                        <Border Margin="8,2" Padding="12,10" CornerRadius="4" Cursor="Hand">
+                            <TextBlock Text="◎  LOGISTICS" Foreground="{StaticResource Dim}"
+                                       FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+                        <Border Margin="8,2" Padding="12,10" CornerRadius="4" Cursor="Hand">
+                            <TextBlock Text="✦  ARCHIVES" Foreground="{StaticResource Dim}"
+                                       FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Center -->
+                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="32,24">
+
+                        <!-- Seal / crest area -->
+                        <StackPanel HorizontalAlignment="Center" Margin="0,0,0,24">
+                            <!-- Decorative ring -->
+                            <Canvas Width="120" Height="120" HorizontalAlignment="Center">
+                                <Ellipse Width="110" Height="110" Canvas.Left="5" Canvas.Top="5"
+                                         Stroke="#FFD700" StrokeThickness="2" Fill="Transparent">
+                                    <Ellipse.Effect>
+                                        <DropShadowEffect Color="#FFD700" BlurRadius="15" ShadowDepth="0" Opacity="0.6"/>
+                                    </Ellipse.Effect>
+                                </Ellipse>
+                                <Ellipse Width="90" Height="90" Canvas.Left="15" Canvas.Top="15"
+                                         Stroke="#8B6914" StrokeThickness="1" Fill="#0AFFD700"/>
+                                <TextBlock Canvas.Left="0" Canvas.Top="38" Width="120" TextAlignment="Center"
+                                           Text="✦" FontSize="40" Foreground="{StaticResource Gold}">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect Color="#FFD700" BlurRadius="20" ShadowDepth="0" Opacity="0.8"/>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                            </Canvas>
+
+                            <TextBlock Text="COMMAND AUTHORITY" HorizontalAlignment="Center"
+                                       FontFamily="Impact" FontSize="36" LetterSpacing="4"
+                                       Margin="0,8,0,0">
+                                <TextBlock.Foreground><LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFF4AA" Offset="0"/>
+                                    <GradientStop Color="#FFD700" Offset="0.5"/>
+                                    <GradientStop Color="#8B6914" Offset="1"/>
+                                </LinearGradientBrush></TextBlock.Foreground>
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FFD700" BlurRadius="20" ShadowDepth="0" Opacity="0.6"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock Text="STRATEGIC OPERATIONS CENTER — CLEARANCE ALPHA" HorizontalAlignment="Center"
+                                       Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="10"/>
+                        </StackPanel>
+
+                        <!-- Gold divider -->
+                        <Rectangle Height="1" Margin="0,0,0,24">
+                            <Rectangle.Fill><LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#00FFD700" Offset="0"/>
+                                <GradientStop Color="#FFD700" Offset="0.3"/>
+                                <GradientStop Color="#FFF4AA" Offset="0.5"/>
+                                <GradientStop Color="#FFD700" Offset="0.7"/>
+                                <GradientStop Color="#00FFD700" Offset="1"/>
+                            </LinearGradientBrush></Rectangle.Fill>
+                        </Rectangle>
+
+                        <!-- Stats with gold borders -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,24">
+                            <Border Margin="6" Padding="20,14" CornerRadius="6" MinWidth="160"
+                                    Background="{StaticResource Bg2}" BorderThickness="1">
+                                <Border.BorderBrush><LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFD700" Offset="0"/>
+                                    <GradientStop Color="#8B6914" Offset="1"/>
+                                </LinearGradientBrush></Border.BorderBrush>
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#FFD700" BlurRadius="10" ShadowDepth="0" Opacity="0.2"/>
+                                </Border.Effect>
+                                <StackPanel>
+                                    <TextBlock Text="ACTIVE MISSIONS" Foreground="{StaticResource Dim}"
+                                               FontFamily="Consolas" FontSize="9"/>
+                                    <TextBlock Text="7" Foreground="{StaticResource Gold}"
+                                               FontFamily="Consolas" FontSize="36" FontWeight="Bold"/>
+                                    <TextBlock Text="3 CRITICAL PRIORITY" Foreground="{StaticResource Amber}"
+                                               FontFamily="Consolas" FontSize="9"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="6" Padding="20,14" CornerRadius="6" MinWidth="160"
+                                    Background="{StaticResource Bg2}" BorderThickness="1">
+                                <Border.BorderBrush><LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFD700" Offset="0"/>
+                                    <GradientStop Color="#8B6914" Offset="1"/>
+                                </LinearGradientBrush></Border.BorderBrush>
+                                <StackPanel>
+                                    <TextBlock Text="FORCES DEPLOYED" Foreground="{StaticResource Dim}"
+                                               FontFamily="Consolas" FontSize="9"/>
+                                    <TextBlock Text="4,200" Foreground="{StaticResource Gold}"
+                                               FontFamily="Consolas" FontSize="36" FontWeight="Bold"/>
+                                    <TextBlock Text="ACROSS 12 SECTORS" Foreground="{StaticResource Dim}"
+                                               FontFamily="Consolas" FontSize="9"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="6" Padding="20,14" CornerRadius="6" MinWidth="160"
+                                    Background="{StaticResource Bg2}" BorderThickness="1">
+                                <Border.BorderBrush><LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FFD700" Offset="0"/>
+                                    <GradientStop Color="#8B6914" Offset="1"/>
+                                </LinearGradientBrush></Border.BorderBrush>
+                                <StackPanel>
+                                    <TextBlock Text="VICTORY RATE" Foreground="{StaticResource Dim}"
+                                               FontFamily="Consolas" FontSize="9"/>
+                                    <TextBlock Text="96%" Foreground="{StaticResource Gold}"
+                                               FontFamily="Consolas" FontSize="36" FontWeight="Bold"/>
+                                    <TextBlock Text="HISTORICAL RECORD" Foreground="{StaticResource Gold}"
+                                               FontFamily="Consolas" FontSize="9"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <!-- Operations table with gold header -->
+                        <Border Background="{StaticResource Bg2}" CornerRadius="8" BorderThickness="1">
+                            <Border.BorderBrush><LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#FFD700" Offset="0"/>
+                                <GradientStop Color="#332200" Offset="1"/>
+                            </LinearGradientBrush></Border.BorderBrush>
+                            <StackPanel>
+                                <Border Padding="16,12" CornerRadius="8,8,0,0">
+                                    <Border.Background><LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#1AFFD700" Offset="0"/>
+                                        <GradientStop Color="#33FFC200" Offset="0.5"/>
+                                        <GradientStop Color="#1AFFD700" Offset="1"/>
+                                    </LinearGradientBrush></Border.Background>
+                                    <TextBlock Text="✦  ACTIVE OPERATIONS ROSTER" Foreground="{StaticResource Gold}"
+                                               FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                </Border>
+                                <Border Padding="16,12" BorderBrush="#22FFD700" BorderThickness="0,1,0,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="130"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="OPERATION" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="9" FontWeight="Bold"/>
+                                        <TextBlock Grid.Column="1" Text="COMMANDER" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="9" FontWeight="Bold"/>
+                                        <TextBlock Grid.Column="2" Text="STATUS" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="9" FontWeight="Bold"/>
+                                        <TextBlock Grid.Column="3" Text="PRIORITY" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="9" FontWeight="Bold"/>
+                                    </Grid>
+                                </Border>
+                                <Border Padding="16,12" BorderBrush="#11FFD700" BorderThickness="0,1,0,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="130"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Operation Nighthawk" Foreground="#CCAA55" FontFamily="Consolas" FontSize="12"/>
+                                        <TextBlock Grid.Column="1" Text="MAVERICK" Foreground="{StaticResource Gold}" FontFamily="Consolas" FontSize="12"/>
+                                        <Border Grid.Column="2" Background="#1AFF8C00" CornerRadius="3" HorizontalAlignment="Left" Padding="6,2">
+                                            <TextBlock Text="ACTIVE" Foreground="{StaticResource Amber}" FontFamily="Consolas" FontSize="10" FontWeight="Bold"/>
+                                        </Border>
+                                        <TextBlock Grid.Column="3" Text="✦ ALPHA" Foreground="{StaticResource Gold}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                    </Grid>
+                                </Border>
+                                <Border Background="#050300" Padding="16,12" BorderBrush="#11FFD700" BorderThickness="0,1,0,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="130"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Operation Iceman" Foreground="#CCAA55" FontFamily="Consolas" FontSize="12"/>
+                                        <TextBlock Grid.Column="1" Text="ICEMAN" Foreground="#CCAA55" FontFamily="Consolas" FontSize="12"/>
+                                        <Border Grid.Column="2" Background="#1AFFD700" CornerRadius="3" HorizontalAlignment="Left" Padding="6,2">
+                                            <TextBlock Text="STANDBY" Foreground="{StaticResource Gold}" FontFamily="Consolas" FontSize="10" FontWeight="Bold"/>
+                                        </Border>
+                                        <TextBlock Grid.Column="3" Text="◈ BRAVO" Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="11"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Right panel -->
+                <Border Grid.Column="2" Background="{StaticResource Bg1}"
+                        BorderBrush="#33FFD700" BorderThickness="1,0,0,0">
+                    <StackPanel Margin="16,20">
+                        <TextBlock Text="COMMAND ACTIONS" Foreground="{StaticResource Dim}"
+                                   FontFamily="Consolas" FontSize="9" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="0,0,0,12"/>
+                        <Rectangle Height="1" Margin="0,0,0,12">
+                            <Rectangle.Fill><LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#00FFD700" Offset="0"/>
+                                <GradientStop Color="#FFD700" Offset="0.5"/>
+                                <GradientStop Color="#00FFD700" Offset="1"/>
+                            </LinearGradientBrush></Rectangle.Fill>
+                        </Rectangle>
+                        <Border Margin="0,3" Padding="12,10" CornerRadius="4" Cursor="Hand"
+                                BorderThickness="1">
+                            <Border.Background><LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#1AFFD700" Offset="0"/>
+                                <GradientStop Color="#33FFC200" Offset="1"/>
+                            </LinearGradientBrush></Border.Background>
+                            <Border.BorderBrush><LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#FFD700" Offset="0"/>
+                                <GradientStop Color="#8B6914" Offset="1"/>
+                            </LinearGradientBrush></Border.BorderBrush>
+                            <TextBlock Text="✦  DEPLOY FORCES" Foreground="{StaticResource Gold}"
+                                       FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                        </Border>
+                        <Border Margin="0,3" Padding="12,10" CornerRadius="4" Cursor="Hand"
+                                Background="#0A0700" BorderBrush="#33FFD700" BorderThickness="1">
+                            <TextBlock Text="◈  INTEL BRIEF" Foreground="{StaticResource Dim}"
+                                       FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+                        <Border Margin="0,3" Padding="12,10" CornerRadius="4" Cursor="Hand"
+                                Background="#0A0700" BorderBrush="#33FFD700" BorderThickness="1">
+                            <TextBlock Text="◉  COMM CHANNEL" Foreground="{StaticResource Dim}"
+                                       FontFamily="Consolas" FontSize="11"/>
+                        </Border>
+                        <Border Margin="0,3" Padding="12,10" CornerRadius="4" Cursor="Hand"
+                                Background="#1ACC2200" BorderBrush="#33CC2200" BorderThickness="1">
+                            <TextBlock Text="⚠  RED ALERT" Foreground="{StaticResource Red}"
+                                       FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                        </Border>
+
+                        <Rectangle Height="1" Margin="0,16">
+                            <Rectangle.Fill><LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#00FFD700" Offset="0"/>
+                                <GradientStop Color="#FFD700" Offset="0.5"/>
+                                <GradientStop Color="#00FFD700" Offset="1"/>
+                            </LinearGradientBrush></Rectangle.Fill>
+                        </Rectangle>
+
+                        <TextBlock Text="COMMANDING OFFICER" Foreground="{StaticResource Dim}"
+                                   FontFamily="Consolas" FontSize="9" HorizontalAlignment="Center"/>
+                        <TextBlock Text="MAVERICK" HorizontalAlignment="Center" FontFamily="Impact"
+                                   FontSize="24" LetterSpacing="3">
+                            <TextBlock.Foreground><LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#FFF4AA" Offset="0"/>
+                                <GradientStop Color="#FFD700" Offset="1"/>
+                            </LinearGradientBrush></TextBlock.Foreground>
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#FFD700" BlurRadius="15" ShadowDepth="0" Opacity="0.7"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock Text="CLEARANCE: OMEGA" HorizontalAlignment="Center"
+                                   Foreground="{StaticResource Gold}" FontFamily="Consolas" FontSize="10"/>
+                        <TextBlock Text="AUTHORIZATION: ACTIVE" HorizontalAlignment="Center"
+                                   Foreground="{StaticResource Amber}" FontFamily="Consolas" FontSize="9"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Status bar -->
+            <Border Grid.Row="2" Background="{StaticResource Bg1}" CornerRadius="0,0,10,10"
+                    BorderBrush="#33FFD700" BorderThickness="0,1,0,0">
+                <DockPanel Margin="12,0">
+                    <TextBlock Text="✦ SECURE COMMAND LINK ACTIVE  ✦  ENCRYPTION: ALPHA-7"
+                               Foreground="{StaticResource Dim}" FontFamily="Consolas" FontSize="8" VerticalAlignment="Center"/>
+                    <TextBlock Text="COMMAND AUTHORITY v1.0" Foreground="{StaticResource Dimmer}"
+                               FontFamily="Consolas" FontSize="8" DockPanel.Dock="Right" VerticalAlignment="Center"/>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

@@ -40,6 +40,7 @@ He values:
 - **Debug:** Serilog + DiagnosticsOverlay (always wired before any feature)
 - **Templates:** Copy from `templates/` — never start from scratch
 - **Samples:** Reference `samples/` for any animation, control, or UI effect
+- **Solution:** Open `WindowsDevEngine.sln` in Visual Studio to see all 22 projects
 
 ---
 
@@ -64,4 +65,64 @@ Every error must be caught, logged with context, and surfaced — never swallowe
 
 ---
 
-*Last updated: 2026-04-27 | Engine version: 1.0.0*
+## Complete Sample Index
+
+### Templates (copy-paste starting points)
+
+| Folder | Description |
+|--------|-------------|
+| `templates/BaseProject/` | **START HERE** — full MVVM scaffold with Serilog, DI, global exception handler, DiagnosticsOverlay, navigation, custom chrome, all ResourceDictionaries |
+| `templates/pages/SplashScreen/` | Animated loading splash — logo scale-in, progress bar fill, status text, glow pulse |
+| `templates/pages/LoginPage/` | Auth form — username/password fields, focus states, error border, SSO button, fade slide-in |
+| `templates/pages/AboutPage/` | App info panel — icon, version, credits, links, close button |
+
+### Animations
+
+| Folder | Description |
+|--------|-------------|
+| `samples/animations/DragonOverCastle/` | Dragon flies over night castle — bezier path body, wing flap, fire breath, parallax clouds, moon glow, star field |
+| `samples/animations/MaverickMach10/` | F-18 jet at Mach 10 — afterburner glow, shock diamonds, sonic boom expansion, cloud streaks, ExponentialEase |
+| `samples/animations/WizardSpell/` | Wizard casting spell — rotating magic circle runes, energy beam, orbiting sparks, wizard silhouette |
+| `samples/animations/BombsAndExplosions/` | Bombs drop and explode — gravity acceleration, fireball expand, shockwave ring, smoke rise, debris scatter |
+
+### Progress Indicators
+
+| Folder | Description |
+|--------|-------------|
+| `samples/progress/CountdownClock/` | Countdown timer — color shifts (blue→yellow→red), glow at critical, progress bar, start/pause/reset |
+| `samples/progress/FillingBars/` | 5 fill-bar variants — gradient, segmented ammo, XP bar, download progress, all animate from 0 on load |
+| `samples/progress/SpinningWheels/` | 5 spinner types — classic arc, dots orbit, double ring, pulse ring, gear |
+| `samples/progress/PieProgress/` | 4 donut/pie gauges — ArcSegment math, round stroke caps, center percentage label |
+
+### Themes
+
+| Folder | Description |
+|--------|-------------|
+| `samples/themes/DarkMilitary/` | **Primary design language** — dark blue-grey, blue/orange/green/red accents, full mock app with nav, stats, data table, button row, inputs |
+| `samples/themes/FontColorShowcase/` | Type scale (72pt→10pt), all accent colors with glow swatches, 4 glow text variants |
+| `samples/themes/CyberNeon/` | Cyberpunk — scanline + grid overlays via DrawingBrush, animated scan bar, cyan/pink/green neon |
+| `samples/themes/GoldCommand/` | Military gold — 5-stop gold gradient, decorative seal, command authority branding |
+| `samples/themes/ArcaneWizard/` | Fantasy wizard — Georgia fonts, purple/gold/teal, spell cards with school/level/damage data |
+| `samples/themes/NeonSciFi/` | Sci-fi space — Impact teal, ship systems readout, hull breach alert, captain panel |
+
+### Controls
+
+| Folder | Description |
+|--------|-------------|
+| `samples/controls/DropdownMenuDemo/` | Custom styled ComboBox with placeholder, context menus (right-click zones), popup panels (notification bell, user account) |
+| `samples/controls/PopupModalDemo/` | Sliding left/right panels (animated TranslateTransform), confirm/info/input modals with overlay, toast notifications |
+| `samples/controls/ButtonGallery/` | Every button variant — primary gradient, danger, ghost, link, icon (small/hero), toggle, disabled, with code labels |
+| `samples/controls/EmojiShowcase/` | Emoji in tabs/status bars/buttons, size scale 12px→64px, emoji tiles: military, science, status, people |
+
+### Debug Utilities
+
+| Folder | Description |
+|--------|-------------|
+| `templates/BaseProject/Debug/DiagnosticsOverlay.xaml` | Overlay panel — FPS (color-coded), memory MB, uptime, current view, last log line, keyboard shortcuts |
+| `debug/AdornerOverlay/GridAdorner.cs` | Debug grid drawn via AdornerLayer — toggle with `AdornerOverlayExtensions.ToggleGrid(element)` |
+| `debug/AdornerOverlay/BoundsAdorner.cs` | Bounds highlighter — shows actual width×height + margin box via AdornerLayer |
+| `debug/AdornerOverlay/AdornerOverlayExtensions.cs` | Static helper — `ToggleGrid`, `AddBounds`, `ClearAllBounds` — wire to Ctrl+Shift+G / B |
+
+---
+
+*Last updated: 2026-04-27 | Engine version: 1.0.0 | 22 projects | 4 animations | 4 progress | 6 themes | 4 controls | 3 page templates*

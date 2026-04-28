@@ -1,0 +1,413 @@
+<Window x:Class="ButtonGallery.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BUTTON GALLERY"
+        Width="1100" Height="800"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Bg0"    Color="#0A0D12"/>
+        <SolidColorBrush x:Key="Bg1"    Color="#12171F"/>
+        <SolidColorBrush x:Key="Bg2"    Color="#1C2333"/>
+        <SolidColorBrush x:Key="Acc"    Color="#00B4FF"/>
+        <SolidColorBrush x:Key="Acc2"   Color="#FF6B35"/>
+        <SolidColorBrush x:Key="Green"  Color="#00FF94"/>
+        <SolidColorBrush x:Key="Red"    Color="#FF2D55"/>
+        <SolidColorBrush x:Key="Gold"   Color="#FFD700"/>
+        <SolidColorBrush x:Key="Purple" Color="#9B59FF"/>
+        <SolidColorBrush x:Key="Dim"    Color="#445566"/>
+        <SolidColorBrush x:Key="Text"   Color="#CCDDEE"/>
+        <SolidColorBrush x:Key="Bord"   Color="#2A3347"/>
+
+        <!-- Helper for code snippet labels -->
+        <Style x:Key="CodeLabel" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Cascadia Code"/>
+            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="Foreground" Value="#334455"/>
+            <Setter Property="Margin" Value="0,6,0,0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="SectionLabel" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Cascadia Code"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource Acc}"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource Bg0}" CornerRadius="10" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+        <Border.Effect><DropShadowEffect Color="#000000" BlurRadius="30" ShadowDepth="0" Opacity="0.6"/></Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="46"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="22"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title bar -->
+            <Border Background="{StaticResource Bg1}" CornerRadius="10,10,0,0"
+                    MouseLeftButtonDown="TitleBar_MouseDown" BorderBrush="#1A2A3A" BorderThickness="0,0,0,1">
+                <DockPanel Margin="16,0">
+                    <TextBlock Text="◈  BUTTON GALLERY — Every Style in the Design System"
+                               Foreground="{StaticResource Acc}" FontFamily="Cascadia Code" FontSize="13"
+                               FontWeight="Bold" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                        <Button Content="─" Width="36" Height="36" Click="MinBtn_Click"
+                                Background="Transparent" Foreground="{StaticResource Dim}" BorderThickness="0" Cursor="Hand"/>
+                        <Button Content="✕" Width="36" Height="36" Click="CloseBtn_Click"
+                                Background="Transparent" Foreground="{StaticResource Red}" BorderThickness="0" Cursor="Hand"/>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <!-- Gallery -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="32,24">
+
+                    <!-- PRIMARY BUTTONS -->
+                    <TextBlock Text="PRIMARY BUTTONS" Style="{StaticResource SectionLabel}"/>
+                    <WrapPanel Margin="0,0,0,32">
+                        <!-- Blue Primary -->
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <Button Content="LAUNCH MISSION" Padding="20,10" Cursor="Hand"
+                                        FontFamily="Segoe UI" FontSize="13" FontWeight="Bold" BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="bd" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Color="#0088CC" Offset="0"/>
+                                                        <GradientStop Color="#00B4FF" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <Border.Effect><DropShadowEffect Color="#00B4FF" BlurRadius="0" ShadowDepth="0" Opacity="0" x:Name="glow"/></Border.Effect>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                  TextBlock.Foreground="White"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="glow" Property="BlurRadius" Value="16"/>
+                                                    <Setter TargetName="glow" Property="Opacity" Value="0.7"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="bd" Property="RenderTransform">
+                                                        <Setter.Value><ScaleTransform ScaleX="0.97" ScaleY="0.97" CenterX="50" CenterY="18"/></Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <TextBlock Text='Background=gradient(#0088CC→#00B4FF)&#x0a;CornerRadius=6  FontWeight=Bold&#x0a;Glow on hover  Scale 0.97 on press' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Orange Accent -->
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <Button Content="🚀 FIRE THRUSTERS" Padding="20,10" Cursor="Hand"
+                                        FontFamily="Segoe UI" FontSize="13" FontWeight="Bold" BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="bd" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Color="#CC4400" Offset="0"/>
+                                                        <GradientStop Color="#FF6B35" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <Border.Effect><DropShadowEffect Color="#FF6B35" BlurRadius="0" ShadowDepth="0" Opacity="0" x:Name="glow"/></Border.Effect>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                  TextBlock.Foreground="White"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="glow" Property="BlurRadius" Value="16"/>
+                                                    <Setter TargetName="glow" Property="Opacity" Value="0.7"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <TextBlock Text='Background=gradient(#CC4400→#FF6B35)&#x0a;Orange accent  glow hover' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Gold -->
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <Button Content="★ COMMAND AUTHORITY" Padding="20,10" Cursor="Hand"
+                                        FontFamily="Segoe UI" FontSize="13" FontWeight="Bold" BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Color="#AA8800" Offset="0"/>
+                                                        <GradientStop Color="#FFD700" Offset="0.5"/>
+                                                        <GradientStop Color="#AA8800" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                  TextBlock.Foreground="#1A1000"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <TextBlock Text='Gold gradient  Dark text for contrast&#x0a;StartPoint=0,0 EndPoint=1,0' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+
+                    <!-- DANGER BUTTONS -->
+                    <TextBlock Text="DANGER &amp; WARNING BUTTONS" Style="{StaticResource SectionLabel}"/>
+                    <WrapPanel Margin="0,0,0,32">
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <Button Content="⚠ DELETE TARGET" Padding="20,10" Cursor="Hand"
+                                        FontFamily="Segoe UI" FontSize="13" FontWeight="Bold" BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border CornerRadius="6" Background="#FF2D55" Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                  TextBlock.Foreground="White"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <TextBlock Text='Background=#FF2D55  Solid fill&#x0a;Use for destructive actions' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <Button Content="🔴 RED ALERT" Padding="20,10" Cursor="Hand"
+                                        FontFamily="Segoe UI" FontSize="13" FontWeight="Bold" BorderThickness="1">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border CornerRadius="6" Background="#1AFF2D55"
+                                                    BorderBrush="#FF2D55" BorderThickness="1"
+                                                    Padding="{TemplateBinding Padding}">
+                                                <Border.Effect><DropShadowEffect Color="#FF2D55" BlurRadius="12" ShadowDepth="0" Opacity="0.4"/></Border.Effect>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                  TextBlock.Foreground="#FF2D55"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <TextBlock Text='Outlined danger  Background=10% red&#x0a;Border+glow #FF2D55  Foreground=red' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+
+                    <!-- SECONDARY / GHOST BUTTONS -->
+                    <TextBlock Text="SECONDARY &amp; GHOST BUTTONS" Style="{StaticResource SectionLabel}"/>
+                    <WrapPanel Margin="0,0,0,32">
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <Button Content="SECONDARY" Padding="20,10" Cursor="Hand"
+                                        FontFamily="Segoe UI" FontSize="13" BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="bd" CornerRadius="6" Background="#1C2333"
+                                                    BorderBrush="#2A3347" BorderThickness="1"
+                                                    Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                  TextBlock.Foreground="#CCDDEE"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="BorderBrush" Value="#00B4FF"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <TextBlock Text='Background=Bg2  Border=Bord&#x0a;Hover: border→accent color' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <Button Content="GHOST" Padding="20,10" Cursor="Hand"
+                                        FontFamily="Segoe UI" FontSize="13" BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="bd" CornerRadius="6" Background="Transparent"
+                                                    Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                  TextBlock.Foreground="#445566"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#1A00B4FF"/>
+                                                    <Setter Property="Foreground" Value="#00B4FF"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <TextBlock Text='No border, no bg&#x0a;Hover: faint blue bg + blue text' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <Button Content="🔗 LINK STYLE" Padding="4,2" Cursor="Hand"
+                                        FontFamily="Segoe UI" FontSize="13" BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <TextBlock x:Name="lnk" Text="{TemplateBinding Content}"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       Foreground="#00B4FF" TextDecorations="Underline" Cursor="Hand"/>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="lnk" Property="Foreground" Value="#CCDDEE"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <TextBlock Text='TextDecorations=Underline&#x0a;No border/bg  Accent foreground' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+
+                    <!-- ICON + SIZE VARIANTS -->
+                    <TextBlock Text="ICON BUTTONS &amp; SIZE VARIANTS" Style="{StaticResource SectionLabel}"/>
+                    <WrapPanel Margin="0,0,0,32" VerticalAlignment="Center">
+                        <!-- Small -->
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Text="SMALL" Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="9" Margin="0,0,0,8"/>
+                                <WrapPanel>
+                                    <Button Content="⚙" Width="28" Height="28" Margin="0,0,6,0" Cursor="Hand"
+                                            Background="{StaticResource Bg2}" Foreground="{StaticResource Text}"
+                                            BorderBrush="{StaticResource Bord}" BorderThickness="1"
+                                            FontSize="12" Padding="0">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="4"
+                                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                        Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Content="✕" Width="28" Height="28" Margin="0,0,6,0" Cursor="Hand"
+                                            Background="Transparent" Foreground="{StaticResource Red}"
+                                            BorderBrush="{StaticResource Bord}" BorderThickness="1"
+                                            FontSize="12" Padding="0">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="4"
+                                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                        Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Content="+" Width="28" Height="28" Cursor="Hand"
+                                            Background="#1A00B4FF" Foreground="{StaticResource Acc}"
+                                            BorderBrush="{StaticResource Acc}" BorderThickness="1"
+                                            FontSize="16" FontWeight="Bold" Padding="0">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="4"
+                                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                        Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </WrapPanel>
+                                <TextBlock Text='Width=28 Height=28  CornerRadius=4' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Large/Hero -->
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Text="HERO" Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="9" Margin="0,0,0,8"/>
+                                <Button Content="🚀  INITIATE HYPERSPACE JUMP" Padding="32,16" Cursor="Hand"
+                                        FontFamily="Segoe UI" FontSize="16" FontWeight="Bold" BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border CornerRadius="8" Padding="{TemplateBinding Padding}">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Color="#0066AA" Offset="0"/>
+                                                        <GradientStop Color="#00B4FF" Offset="0.5"/>
+                                                        <GradientStop Color="#0066AA" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <Border.Effect><DropShadowEffect Color="#00B4FF" BlurRadius="20" ShadowDepth="0" Opacity="0.5"/></Border.Effect>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                  TextBlock.Foreground="White"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <TextBlock Text='Padding=32,16  FontSize=16&#x0a;CornerRadius=8  Glow always on' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+
+                    <!-- TOGGLE / STATE BUTTONS -->
+                    <TextBlock Text="TOGGLE &amp; STATE BUTTONS" Style="{StaticResource SectionLabel}"/>
+                    <WrapPanel Margin="0,0,0,16">
+                        <Border Margin="0,0,16,16" Padding="16" CornerRadius="8" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Button x:Name="toggleBtn" Content="SHIELDS: OFF" Click="ToggleBtn_Click" Margin="0,0,8,0"
+                                            Background="{StaticResource Bg2}" Foreground="{StaticResource Dim}"
+                                            BorderBrush="{StaticResource Bord}" BorderThickness="1" Padding="16,9"
+                                            FontFamily="Cascadia Code" FontSize="11" Cursor="Hand">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="6"
+                                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Content="DISABLED" IsEnabled="False" Padding="16,9"
+                                            Background="{StaticResource Bg2}" Foreground="#334455"
+                                            BorderBrush="#1A2A3A" BorderThickness="1"
+                                            FontFamily="Segoe UI" FontSize="13">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                                        Padding="{TemplateBinding Padding}" Opacity="0.5">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </WrapPanel>
+                                <TextBlock Text='Toggle: click to swap state&#x0a;Disabled: IsEnabled=False  Opacity=0.5' Style="{StaticResource CodeLabel}"/>
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Status bar -->
+            <Border Grid.Row="2" Background="{StaticResource Bg1}" CornerRadius="0,0,10,10"
+                    BorderBrush="#1A2A3A" BorderThickness="0,1,0,0">
+                <TextBlock Text="◈ BUTTON GALLERY  //  ALL DESIGN SYSTEM STYLES  //  ESC TO EXIT"
+                           Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="8"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

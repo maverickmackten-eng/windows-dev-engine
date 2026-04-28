@@ -1,0 +1,143 @@
+<Window x:Class="SplashScreen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="APP NAME"
+        Width="600" Height="380"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Bg0"  Color="#0A0D12"/>
+        <SolidColorBrush x:Key="Bg1"  Color="#12171F"/>
+        <SolidColorBrush x:Key="Acc"  Color="#00B4FF"/>
+        <SolidColorBrush x:Key="Dim"  Color="#445566"/>
+        <SolidColorBrush x:Key="Text" Color="#CCDDEE"/>
+        <SolidColorBrush x:Key="Bord" Color="#2A3347"/>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <!-- Fade in whole window -->
+                    <DoubleAnimation Storyboard.TargetName="root" Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1" Duration="0:0:0.6">
+                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <!-- Logo scales in -->
+                    <DoubleAnimation Storyboard.TargetName="logoScale" Storyboard.TargetProperty="ScaleX"
+                                     From="0.6" To="1" Duration="0:0:0.7" BeginTime="0:0:0.2">
+                        <DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut" Amplitude="0.3"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="logoScale" Storyboard.TargetProperty="ScaleY"
+                                     From="0.6" To="1" Duration="0:0:0.7" BeginTime="0:0:0.2">
+                        <DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut" Amplitude="0.3"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <!-- Progress bar fills -->
+                    <DoubleAnimation Storyboard.TargetName="progressFill" Storyboard.TargetProperty="Width"
+                                     From="0" To="480" Duration="0:0:2.8" BeginTime="0:0:0.5">
+                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <!-- Glow pulses on logo -->
+                    <DoubleAnimation Storyboard.TargetName="logoGlow" Storyboard.TargetProperty="BlurRadius"
+                                     From="10" To="30" Duration="0:0:1.2" BeginTime="0:0:0.8"
+                                     AutoReverse="True" RepeatBehavior="Forever">
+                        <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <!-- Status text fades in after progress -->
+                    <DoubleAnimation Storyboard.TargetName="statusText" Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.8"/>
+                    <!-- Version fades in -->
+                    <DoubleAnimation Storyboard.TargetName="versionText" Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:1"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Border x:Name="root" Opacity="0" Background="{StaticResource Bg0}" CornerRadius="12"
+            BorderBrush="#1A00B4FF" BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect Color="#00B4FF" BlurRadius="40" ShadowDepth="0" Opacity="0.3"/>
+        </Border.Effect>
+        <Grid>
+            <!-- Subtle grid texture -->
+            <Border Opacity="0.04">
+                <Border.Background>
+                    <DrawingBrush TileMode="Tile" Viewport="0,0,40,40" ViewportUnits="Absolute">
+                        <DrawingBrush.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Pen><Pen Brush="White" Thickness="0.5"/></GeometryDrawing.Pen>
+                                <GeometryDrawing.Geometry>
+                                    <GeometryGroup>
+                                        <LineGeometry StartPoint="40,0" EndPoint="40,40"/>
+                                        <LineGeometry StartPoint="0,40" EndPoint="40,40"/>
+                                    </GeometryGroup>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Border.Background>
+            </Border>
+
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <!-- Logo / App name -->
+                <StackPanel HorizontalAlignment="Center" Margin="0,0,0,32">
+                    <StackPanel.RenderTransformOrigin>0.5,0.5</StackPanel.RenderTransformOrigin>
+                    <StackPanel.RenderTransform>
+                        <ScaleTransform x:Name="logoScale" ScaleX="1" ScaleY="1"/>
+                    </StackPanel.RenderTransform>
+
+                    <!-- Replace this icon with your app icon/logo -->
+                    <TextBlock Text="⬡" FontFamily="Segoe UI" FontSize="52" Foreground="{StaticResource Acc}"
+                               HorizontalAlignment="Center" Margin="0,0,0,8">
+                        <TextBlock.Effect>
+                            <DropShadowEffect x:Name="logoGlow" Color="#00B4FF" BlurRadius="10" ShadowDepth="0" Opacity="1"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+
+                    <!-- App name — replace APP NAME -->
+                    <TextBlock Text="APP NAME" FontFamily="Segoe UI Black" FontSize="36"
+                               Foreground="{StaticResource Text}" HorizontalAlignment="Center" LetterSpacing="6"/>
+                    <TextBlock Text="SUBTITLE OR TAGLINE" FontFamily="Cascadia Code" FontSize="11"
+                               Foreground="{StaticResource Dim}" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <!-- Progress bar -->
+                <StackPanel Width="480">
+                    <!-- Track -->
+                    <Border Height="4" Background="#1A00B4FF" CornerRadius="2">
+                        <!-- Fill -->
+                        <Border x:Name="progressFill" Width="0" Height="4" HorizontalAlignment="Left" CornerRadius="2">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#0066AA" Offset="0"/>
+                                    <GradientStop Color="#00B4FF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect Color="#00B4FF" BlurRadius="8" ShadowDepth="0" Opacity="0.8"/>
+                            </Border.Effect>
+                        </Border>
+                    </Border>
+
+                    <!-- Status text -->
+                    <TextBlock x:Name="statusText" Opacity="0" Margin="0,12,0,0"
+                               FontFamily="Cascadia Code" FontSize="10" Foreground="{StaticResource Dim}"
+                               HorizontalAlignment="Center"
+                               Text="Initializing systems..."/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Version -->
+            <TextBlock x:Name="versionText" Opacity="0"
+                       Text="v1.0.0  •  Build 2026.04" FontFamily="Cascadia Code" FontSize="9"
+                       Foreground="{StaticResource Dim}" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                       Margin="0,0,20,14"/>
+
+            <!-- Copyright -->
+            <TextBlock Text="© 2026 Commander Maverick  •  NCC-1701-M"
+                       FontFamily="Segoe UI" FontSize="9" Foreground="{StaticResource Dim}"
+                       HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,14"/>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,230 @@
+<Window x:Class="EmojiShowcase.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EMOJI SHOWCASE"
+        Width="1050" Height="780"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Bg0"   Color="#0A0D12"/>
+        <SolidColorBrush x:Key="Bg1"   Color="#12171F"/>
+        <SolidColorBrush x:Key="Bg2"   Color="#1C2333"/>
+        <SolidColorBrush x:Key="Acc"   Color="#00B4FF"/>
+        <SolidColorBrush x:Key="Green" Color="#00FF94"/>
+        <SolidColorBrush x:Key="Red"   Color="#FF2D55"/>
+        <SolidColorBrush x:Key="Gold"  Color="#FFD700"/>
+        <SolidColorBrush x:Key="Dim"   Color="#445566"/>
+        <SolidColorBrush x:Key="Text"  Color="#CCDDEE"/>
+        <SolidColorBrush x:Key="Bord"  Color="#2A3347"/>
+
+        <Style x:Key="EmojiTile" TargetType="Border">
+            <Setter Property="Width" Value="72"/>
+            <Setter Property="Height" Value="72"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Background" Value="{StaticResource Bg2}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Bord}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="EmojiChar" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI Emoji"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="SectionHdr" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Cascadia Code"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource Acc}"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource Bg0}" CornerRadius="10" BorderBrush="{StaticResource Bord}" BorderThickness="1">
+        <Border.Effect><DropShadowEffect Color="#000000" BlurRadius="30" ShadowDepth="0" Opacity="0.6"/></Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="46"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="22"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title bar -->
+            <Border Background="{StaticResource Bg1}" CornerRadius="10,10,0,0"
+                    MouseLeftButtonDown="TitleBar_MouseDown" BorderBrush="#1A2A3A" BorderThickness="0,0,0,1">
+                <DockPanel Margin="16,0">
+                    <TextBlock Text="😀  EMOJI SHOWCASE — Segoe UI Emoji Font" Foreground="{StaticResource Acc}"
+                               FontFamily="Cascadia Code" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                        <Button Content="─" Width="36" Height="36" Click="MinBtn_Click"
+                                Background="Transparent" Foreground="{StaticResource Dim}" BorderThickness="0" Cursor="Hand"/>
+                        <Button Content="✕" Width="36" Height="36" Click="CloseBtn_Click"
+                                Background="Transparent" Foreground="{StaticResource Red}" BorderThickness="0" Cursor="Hand"/>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="32,24">
+
+                    <!-- Emoji in UI contexts: tabs, status bars, buttons -->
+                    <TextBlock Text="EMOJI IN UI CONTROLS" Style="{StaticResource SectionHdr}"/>
+
+                    <!-- Tab bar with emoji -->
+                    <Border Background="{StaticResource Bg1}" CornerRadius="8" BorderBrush="{StaticResource Bord}" BorderThickness="1" Margin="0,0,0,12">
+                        <StackPanel Orientation="Horizontal" Margin="8,6">
+                            <Border Padding="12,7" CornerRadius="6" Background="#1A00B4FF" Cursor="Hand">
+                                <TextBlock Text="🏠  Home" Foreground="{StaticResource Acc}" FontFamily="Segoe UI" FontSize="13"/>
+                            </Border>
+                            <Border Padding="12,7" CornerRadius="6" Cursor="Hand" Margin="4,0,0,0">
+                                <TextBlock Text="📡  Sensors" Foreground="{StaticResource Dim}" FontFamily="Segoe UI" FontSize="13"/>
+                            </Border>
+                            <Border Padding="12,7" CornerRadius="6" Cursor="Hand" Margin="4,0,0,0">
+                                <TextBlock Text="⚔  Combat" Foreground="{StaticResource Dim}" FontFamily="Segoe UI" FontSize="13"/>
+                            </Border>
+                            <Border Padding="12,7" CornerRadius="6" Cursor="Hand" Margin="4,0,0,0">
+                                <TextBlock Text="🛠  Systems" Foreground="{StaticResource Dim}" FontFamily="Segoe UI" FontSize="13"/>
+                            </Border>
+                            <Border Padding="12,7" CornerRadius="6" Cursor="Hand" Margin="4,0,0,0">
+                                <TextBlock Text="📋  Logs" Foreground="{StaticResource Dim}" FontFamily="Segoe UI" FontSize="13"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Status bar with emoji -->
+                    <Border Background="{StaticResource Bg2}" CornerRadius="6" BorderBrush="{StaticResource Bord}" BorderThickness="1"
+                            Padding="16,8" Margin="0,0,0,12">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="✅ SHIELDS ACTIVE" Foreground="{StaticResource Green}" FontFamily="Segoe UI" FontSize="12" Margin="0,0,24,0"/>
+                            <TextBlock Text="⚠️ HULL BREACH" Foreground="{StaticResource Red}" FontFamily="Segoe UI" FontSize="12" Margin="0,0,24,0"/>
+                            <TextBlock Text="🚀 WARP READY" Foreground="{StaticResource Acc}" FontFamily="Segoe UI" FontSize="12" Margin="0,0,24,0"/>
+                            <TextBlock Text="📡 COMMS OPEN" Foreground="{StaticResource Gold}" FontFamily="Segoe UI" FontSize="12"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Buttons with emoji -->
+                    <WrapPanel Margin="0,0,0,28">
+                        <Border Margin="0,0,8,8" CornerRadius="6" Background="#1A00B4FF" BorderBrush="{StaticResource Acc}" BorderThickness="1" Cursor="Hand">
+                            <TextBlock Text="🚀 Launch" Foreground="{StaticResource Acc}" FontFamily="Segoe UI" FontSize="13" Padding="14,9"/>
+                        </Border>
+                        <Border Margin="0,0,8,8" CornerRadius="6" Background="#1AFF2D55" BorderBrush="{StaticResource Red}" BorderThickness="1" Cursor="Hand">
+                            <TextBlock Text="💣 Strike" Foreground="{StaticResource Red}" FontFamily="Segoe UI" FontSize="13" Padding="14,9"/>
+                        </Border>
+                        <Border Margin="0,0,8,8" CornerRadius="6" Background="#1A00FF94" BorderBrush="{StaticResource Green}" BorderThickness="1" Cursor="Hand">
+                            <TextBlock Text="🛡 Defend" Foreground="{StaticResource Green}" FontFamily="Segoe UI" FontSize="13" Padding="14,9"/>
+                        </Border>
+                        <Border Margin="0,0,8,8" CornerRadius="6" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1" Cursor="Hand">
+                            <TextBlock Text="⚙ Config" Foreground="{StaticResource Dim}" FontFamily="Segoe UI" FontSize="13" Padding="14,9"/>
+                        </Border>
+                        <Border Margin="0,0,8,8" CornerRadius="6" Background="{StaticResource Bg2}" BorderBrush="{StaticResource Bord}" BorderThickness="1" Cursor="Hand">
+                            <TextBlock Text="📋 Report" Foreground="{StaticResource Dim}" FontFamily="Segoe UI" FontSize="13" Padding="14,9"/>
+                        </Border>
+                    </WrapPanel>
+
+                    <!-- Emoji size scale -->
+                    <TextBlock Text="SIZE SCALE" Style="{StaticResource SectionHdr}"/>
+                    <WrapPanel Margin="0,0,0,28" VerticalAlignment="Center">
+                        <StackPanel Margin="0,0,24,0" HorizontalAlignment="Center">
+                            <TextBlock Text="🚀" FontFamily="Segoe UI Emoji" FontSize="12" HorizontalAlignment="Center"/>
+                            <TextBlock Text="12px" Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="9" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,24,0" HorizontalAlignment="Center">
+                            <TextBlock Text="🚀" FontFamily="Segoe UI Emoji" FontSize="16" HorizontalAlignment="Center"/>
+                            <TextBlock Text="16px" Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="9" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,24,0" HorizontalAlignment="Center">
+                            <TextBlock Text="🚀" FontFamily="Segoe UI Emoji" FontSize="24" HorizontalAlignment="Center"/>
+                            <TextBlock Text="24px" Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="9" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,24,0" HorizontalAlignment="Center">
+                            <TextBlock Text="🚀" FontFamily="Segoe UI Emoji" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="36px" Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="9" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,24,0" HorizontalAlignment="Center">
+                            <TextBlock Text="🚀" FontFamily="Segoe UI Emoji" FontSize="48" HorizontalAlignment="Center"/>
+                            <TextBlock Text="48px" Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="9" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="🚀" FontFamily="Segoe UI Emoji" FontSize="64" HorizontalAlignment="Center"/>
+                            <TextBlock Text="64px" Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="9" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </WrapPanel>
+
+                    <!-- Emoji grid: Military/tactical -->
+                    <TextBlock Text="MILITARY &amp; TACTICAL" Style="{StaticResource SectionHdr}"/>
+                    <WrapPanel Margin="0,0,0,24">
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🚀"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="💣"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🛡"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="⚔"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🎯"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🔫"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="✈"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🛩"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🚁"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🛸"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="⭐"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🏆"/></Border>
+                    </WrapPanel>
+
+                    <!-- Science / tech -->
+                    <TextBlock Text="SCIENCE &amp; TECH" Style="{StaticResource SectionHdr}"/>
+                    <WrapPanel Margin="0,0,0,24">
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="⚡"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🔬"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🧬"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="💻"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="📡"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🛰"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🌌"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="⚙"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🔧"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="💡"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🔋"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🤖"/></Border>
+                    </WrapPanel>
+
+                    <!-- Status / alerts -->
+                    <TextBlock Text="STATUS &amp; ALERTS" Style="{StaticResource SectionHdr}"/>
+                    <WrapPanel Margin="0,0,0,24">
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="✅"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="❌"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="⚠️"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="ℹ️"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🔴"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🟡"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🟢"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🔵"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🔔"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🔕"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🚨"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="📢"/></Border>
+                    </WrapPanel>
+
+                    <!-- People / roles -->
+                    <TextBlock Text="PEOPLE &amp; ROLES" Style="{StaticResource SectionHdr}"/>
+                    <WrapPanel Margin="0,0,0,24">
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="👤"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="👥"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🧑‍✈️"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🧑‍🔬"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🧑‍💻"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🎖️"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🪖"/></Border>
+                        <Border Style="{StaticResource EmojiTile}"><TextBlock Style="{StaticResource EmojiChar}" Text="🦅"/></Border>
+                    </WrapPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Status bar -->
+            <Border Grid.Row="2" Background="{StaticResource Bg1}" CornerRadius="0,0,10,10"
+                    BorderBrush="#1A2A3A" BorderThickness="0,1,0,0">
+                <TextBlock Text="😀  EMOJI SHOWCASE  //  FontFamily=&quot;Segoe UI Emoji&quot;  //  ESC TO EXIT"
+                           Foreground="{StaticResource Dim}" FontFamily="Cascadia Code" FontSize="8"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
