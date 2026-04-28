@@ -7,87 +7,53 @@ using Serilog;
 namespace __APP_NAME__
 {
     /// <summary>
-    /// Splash screen window.
-    ///
-    /// USAGE in App.xaml.cs OnStartup():
+    /// Splash screen shown during app initialization.
+    /// USAGE in App.xaml.cs OnStartup:
     ///   var splash = new SplashWindow();
     ///   splash.Show();
-    ///   await splash.RunInitSequenceAsync(() => YourInitMethod());
-    ///   // splash closes itself; then show MainWindow
-    ///
-    /// CUSTOMISE:
-    ///   - Replace __APP_DISPLAY_NAME__ and __APP_TAGLINE__ in XAML
-    ///   - Call UpdateStatus(message, percent) from your init steps
+    ///   await splash.RunInitializationAsync(async status =>
+    ///   {
+    ///       status("Loading configuration...");
+    ///       await LoadConfigAsync();
+    ///   });
+    ///   var main = new MainWindow();
+    ///   main.Show();
     /// </summary>
     public partial class SplashWindow : Window
     {
-        private const int MinDisplayMs = 2000; // Never flash away faster than 2s
+        private TaskCompletionSource<bool>? _fadeOutComplete;
 
-        public SplashWindow()
+        public SplashWindow() { InitializeComponent(); Log.Debug("[SplashWindow] Displayed"); }
+
+        public async Task RunInitializationAsync(Func<Action<string>, Task> initWork)
         {
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// Runs your initialization delegate while animating the progress bar.
-        /// Ensures the splash is visible for at least MinDisplayMs milliseconds.
-        /// Fades out and closes when done.
-        /// </summary>
-        public async Task RunInitSequenceAsync(Func<IProgress<(string message, int percent)>, Task> initAction)
-        {
-            var started = DateTime.UtcNow;
-            Log.Debug("[SplashWindow] Init sequence started");
-
-            var progress = new Progress<(string message, int percent)>(report =>
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    txtStatus.Text = report.message;
-                    AnimateProgressTo(report.percent);
-                });
-            });
-
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            ((Storyboard)FindResource("ProgressStoryboard")).Begin();
             try
             {
-                await initAction(progress);
+                await initWork(msg => Dispatcher.Invoke(() =>
+                {
+                    StatusText.Text = msg;
+                    Log.Debug("[Splash] {Status}", msg);
+                }));
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "[SplashWindow] Init sequence failed");
-                throw;
+                Log.Error(ex, "[SplashWindow] Init exception");
+                Dispatcher.Invoke(() => StatusText.Text = "Startup error — check logs");
             }
+            var remaining = 2000 - (int)sw.ElapsedMilliseconds;
+            if (remaining > 0) await Task.Delay(remaining);
+            _fadeOutComplete = new TaskCompletionSource<bool>();
+            Dispatcher.Invoke(() => ((Storyboard)FindResource("FadeOutStoryboard")).Begin());
+            await _fadeOutComplete.Task;
+        }
 
-            // Ensure minimum display time
-            var elapsed = (DateTime.UtcNow - started).TotalMilliseconds;
-            if (elapsed < MinDisplayMs)
-                await Task.Delay((int)(MinDisplayMs - elapsed));
-
-            // Fill to 100% then fade out
-            AnimateProgressTo(100);
-            await Task.Delay(300);
-            await FadeOutAsync();
-
-            Log.Debug("[SplashWindow] Splash dismissed after {Ms}ms",
-                (DateTime.UtcNow - started).TotalMilliseconds);
+        private void FadeOut_Completed(object? sender, EventArgs e)
+        {
+            Log.Debug("[SplashWindow] Fade-out complete");
             Close();
-        }
-
-        private void AnimateProgressTo(double target)
-        {
-            var anim = new DoubleAnimation(target, TimeSpan.FromMilliseconds(300))
-            {
-                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
-            };
-            splashProgress.BeginAnimation(System.Windows.Controls.ProgressBar.ValueProperty, anim);
-        }
-
-        private Task FadeOutAsync()
-        {
-            var tcs = new TaskCompletionSource<bool>();
-            var anim = new DoubleAnimation(0, TimeSpan.FromMilliseconds(400));
-            anim.Completed += (_, _) => tcs.SetResult(true);
-            BeginAnimation(OpacityProperty, anim);
-            return tcs.Task;
+            _fadeOutComplete?.SetResult(true);
         }
     }
 }
