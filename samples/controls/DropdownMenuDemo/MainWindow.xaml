@@ -1,0 +1,166 @@
+<Window x:Class="DropdownMenuDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dropdown Menu Demo" Height="600" Width="900"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+
+  <Window.Resources>
+    <!-- Base dark dropdown item style -->
+    <Style x:Key="DropItemStyle" TargetType="TextBlock">
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+      <Setter Property="FontSize"   Value="13"/>
+      <Setter Property="Padding"    Value="12,8"/>
+    </Style>
+
+    <!-- ComboBox dark style -->
+    <Style x:Key="DarkComboBox" TargetType="ComboBox">
+      <Setter Property="Background"        Value="#12171F"/>
+      <Setter Property="Foreground"        Value="#FFFFFF"/>
+      <Setter Property="BorderBrush"       Value="#2A3347"/>
+      <Setter Property="BorderThickness"   Value="1"/>
+      <Setter Property="Padding"           Value="10,8"/>
+      <Setter Property="FontSize"          Value="13"/>
+      <Setter Property="MinWidth"          Value="200"/>
+    </Style>
+  </Window.Resources>
+
+  <Border Background="#0A0D12" BorderBrush="#2A3347" BorderThickness="1">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="48"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <!-- Title bar -->
+      <Grid Grid.Row="0" Background="#12171F" MouseLeftButtonDown="TitleBar_MouseDown">
+        <TextBlock Text="DROPDOWN MENU DEMO" FontFamily="Segoe UI Black" FontSize="13"
+                   Foreground="#00B4FF" LetterSpacing="2"
+                   VerticalAlignment="Center" Margin="16,0"/>
+        <Button Content="&#xE8BB;" FontFamily="Segoe MDL2 Assets"
+                Foreground="#FF2D55" Background="Transparent" BorderThickness="0"
+                Width="40" Height="48" HorizontalAlignment="Right"
+                Click="BtnClose_Click"/>
+      </Grid>
+
+      <!-- Content -->
+      <StackPanel Grid.Row="1" Margin="40,32" Orientation="Horizontal"
+                  VerticalAlignment="Top" HorizontalAlignment="Left">
+
+        <!-- ── Style 1: Themed ComboBox ───────────────────────────── -->
+        <StackPanel Margin="0,0,48,0">
+          <TextBlock Text="STYLED COMBOBOX" Foreground="#8899AA"
+                     FontFamily="Cascadia Code" FontSize="10" LetterSpacing="2"
+                     Margin="0,0,0,12"/>
+          <ComboBox x:Name="comboStyled"
+                    Style="{StaticResource DarkComboBox}"
+                    SelectionChanged="ComboStyled_SelectionChanged">
+            <ComboBoxItem Content="Option Alpha"/>
+            <ComboBoxItem Content="Option Bravo"/>
+            <ComboBoxItem Content="Option Charlie"/>
+            <ComboBoxItem Content="Option Delta"/>
+          </ComboBox>
+          <TextBlock x:Name="comboResult" Text="Selected: —"
+                     Foreground="#00B4FF" FontSize="12"
+                     FontFamily="Cascadia Code" Margin="0,8,0,0"/>
+        </StackPanel>
+
+        <!-- ── Style 2: Popup-based button menu ─────────────────────── -->
+        <StackPanel Margin="0,0,48,0">
+          <TextBlock Text="POPUP MENU" Foreground="#8899AA"
+                     FontFamily="Cascadia Code" FontSize="10" LetterSpacing="2"
+                     Margin="0,0,0,12"/>
+          <Grid>
+            <Button x:Name="btnPopupTrigger"
+                    Content="OPEN MENU  ▾"
+                    Background="#12171F" Foreground="#FFFFFF"
+                    BorderBrush="#2A3347" BorderThickness="1"
+                    Padding="14,8" FontSize="13"
+                    Click="BtnPopupTrigger_Click"/>
+            <Popup x:Name="popupMenu"
+                   PlacementTarget="{Binding ElementName=btnPopupTrigger}"
+                   Placement="Bottom"
+                   StaysOpen="False"
+                   AllowsTransparency="True">
+              <Border Background="#1C2333" BorderBrush="#3D5A8A" BorderThickness="1"
+                      CornerRadius="6" MinWidth="200">
+                <StackPanel>
+                  <Button Content="&#xE896;  Copy" Style="{StaticResource PopupItemStyle}"
+                          Tag="Copy" Click="PopupItem_Click"/>
+                  <Button Content="&#xE8C8;  Paste" Style="{StaticResource PopupItemStyle}"
+                          Tag="Paste" Click="PopupItem_Click"/>
+                  <Rectangle Height="1" Fill="#2A3347" Margin="8,2"/>
+                  <Button Content="&#xE74D;  Delete" Style="{StaticResource PopupItemDangerStyle}"
+                          Tag="Delete" Click="PopupItem_Click"/>
+                </StackPanel>
+              </Border>
+            </Popup>
+          </Grid>
+          <TextBlock x:Name="popupResult" Text="Clicked: —"
+                     Foreground="#00B4FF" FontSize="12"
+                     FontFamily="Cascadia Code" Margin="0,8,0,0"/>
+        </StackPanel>
+
+        <!-- ── Style 3: Cascading submenu ──────────────────────────── -->
+        <StackPanel>
+          <TextBlock Text="CASCADE MENU" Foreground="#8899AA"
+                     FontFamily="Cascadia Code" FontSize="10" LetterSpacing="2"
+                     Margin="0,0,0,12"/>
+          <Grid>
+            <Button x:Name="btnCascadeTrigger"
+                    Content="FILE  ▾"
+                    Background="#12171F" Foreground="#FFFFFF"
+                    BorderBrush="#2A3347" BorderThickness="1"
+                    Padding="14,8" FontSize="13"
+                    Click="BtnCascadeTrigger_Click"/>
+
+            <Popup x:Name="popupCascade"
+                   PlacementTarget="{Binding ElementName=btnCascadeTrigger}"
+                   Placement="Bottom"
+                   StaysOpen="False"
+                   AllowsTransparency="True">
+              <Border Background="#1C2333" BorderBrush="#3D5A8A" BorderThickness="1"
+                      CornerRadius="6" MinWidth="180">
+                <StackPanel>
+                  <Button Content="New File" Style="{StaticResource PopupItemStyle}"
+                          Tag="NewFile" Click="PopupItem_Click"/>
+                  <!-- Submenu trigger -->
+                  <Grid>
+                    <Button x:Name="btnOpenSub"
+                            Content="Open Recent  ►"
+                            Style="{StaticResource PopupItemStyle}"
+                            MouseEnter="BtnOpenSub_MouseEnter"/>
+                    <Popup x:Name="popupSub"
+                           PlacementTarget="{Binding ElementName=btnOpenSub}"
+                           Placement="Right"
+                           StaysOpen="False"
+                           AllowsTransparency="True">
+                      <Border Background="#1C2333" BorderBrush="#3D5A8A" BorderThickness="1"
+                              CornerRadius="6" MinWidth="160">
+                        <StackPanel>
+                          <Button Content="recent_file_1.cs" Style="{StaticResource PopupItemStyle}"
+                                  Tag="File1" Click="PopupItem_Click"/>
+                          <Button Content="recent_file_2.cs" Style="{StaticResource PopupItemStyle}"
+                                  Tag="File2" Click="PopupItem_Click"/>
+                          <Button Content="recent_file_3.cs" Style="{StaticResource PopupItemStyle}"
+                                  Tag="File3" Click="PopupItem_Click"/>
+                        </StackPanel>
+                      </Border>
+                    </Popup>
+                  </Grid>
+                  <Rectangle Height="1" Fill="#2A3347" Margin="8,2"/>
+                  <Button Content="&#xE74D;  Exit" Style="{StaticResource PopupItemDangerStyle}"
+                          Tag="Exit" Click="PopupItem_Click"/>
+                </StackPanel>
+              </Border>
+            </Popup>
+          </Grid>
+          <TextBlock x:Name="cascadeResult" Text="Clicked: —"
+                     Foreground="#00B4FF" FontSize="12"
+                     FontFamily="Cascadia Code" Margin="0,8,0,0"/>
+        </StackPanel>
+
+      </StackPanel>
+    </Grid>
+  </Border>
+</Window>
