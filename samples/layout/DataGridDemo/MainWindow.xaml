@@ -1,0 +1,303 @@
+<Window x:Class="DataGridDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DataGrid Demo"
+        Width="1280" Height="800"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="#0A0D12"
+        WindowStartupLocation="CenterScreen">
+    <!--
+        DataGridDemo
+        ============
+        Features:
+          - Fully dark-styled WPF DataGrid (no default grey chrome)
+          - Column header click = sort (ICollectionView / SortDescriptions)
+          - Search box filters by any column text (real-time)
+          - Status badge column: colored pill based on value
+          - Row selection: highlights with accent tint
+          - Multi-select support (Ctrl+click / Shift+click)
+          - Row count label updates on filter
+          - Delete selected rows button
+    -->
+    <Window.Resources>
+        <!-- ══ COLORS ═════════════════════════════════════════ -->
+        <SolidColorBrush x:Key="BgPanel"   Color="#12171F"/>
+        <SolidColorBrush x:Key="BgRow"     Color="#0E1318"/>
+        <SolidColorBrush x:Key="BgAlt"     Color="#12171F"/>
+        <SolidColorBrush x:Key="BgHeader"  Color="#0A0D12"/>
+        <SolidColorBrush x:Key="Border1"   Color="#1E2D3D"/>
+        <SolidColorBrush x:Key="Accent"    Color="#00B4FF"/>
+        <SolidColorBrush x:Key="TextPri"   Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextSec"   Color="#8899AA"/>
+
+        <!-- ══ DATAGRID STYLE ════════════════════════════════ -->
+        <Style x:Key="DarkGrid" TargetType="DataGrid">
+            <Setter Property="Background"              Value="#0E1318"/>
+            <Setter Property="Foreground"              Value="#FFFFFF"/>
+            <Setter Property="BorderBrush"             Value="#1E2D3D"/>
+            <Setter Property="BorderThickness"         Value="1"/>
+            <Setter Property="GridLinesVisibility"     Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#1A2535"/>
+            <Setter Property="RowBackground"           Value="#0E1318"/>
+            <Setter Property="AlternatingRowBackground" Value="#0A1018"/>
+            <Setter Property="SelectionMode"           Value="Extended"/>
+            <Setter Property="SelectionUnit"           Value="FullRow"/>
+            <Setter Property="AutoGenerateColumns"     Value="False"/>
+            <Setter Property="CanUserAddRows"          Value="False"/>
+            <Setter Property="CanUserDeleteRows"       Value="False"/>
+            <Setter Property="CanUserResizeRows"       Value="False"/>
+            <Setter Property="HeadersVisibility"       Value="Column"/>
+            <Setter Property="ColumnHeaderHeight"      Value="38"/>
+            <Setter Property="RowHeight"               Value="36"/>
+            <Setter Property="FontSize"                Value="13"/>
+        </Style>
+
+        <!-- Column header style -->
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background"      Value="#0A0D12"/>
+            <Setter Property="Foreground"      Value="#8899AA"/>
+            <Setter Property="FontSize"        Value="10"/>
+            <Setter Property="FontWeight"      Value="Bold"/>
+            <Setter Property="Padding"         Value="12,0"/>
+            <Setter Property="BorderBrush"     Value="#1E2D3D"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+        </Style>
+
+        <!-- Row style: hover + selection highlight -->
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="Transparent"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0F1E2D"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#0D3A5C"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Cell style -->
+        <Style TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding"         Value="12,0"/>
+            <Setter Property="Foreground"      Value="#FFFFFF"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>  <!-- title bar -->
+            <RowDefinition Height="Auto"/> <!-- toolbar -->
+            <RowDefinition Height="*"/>   <!-- grid -->
+            <RowDefinition Height="32"/>  <!-- status bar -->
+        </Grid.RowDefinitions>
+
+        <!-- Title bar -->
+        <Grid Grid.Row="0" Background="#12171F">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="DataGrid Demo"
+                       FontFamily="Segoe UI Black" FontSize="15"
+                       Foreground="#00B4FF" VerticalAlignment="Center" Margin="16,0"
+                       IsHitTestVisible="False"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
+                <Button Content="—" Width="46" Height="48" Background="Transparent"
+                        Foreground="#8899AA" BorderThickness="0" FontSize="14" Click="MinimizeClick"/>
+                <Button Content="×" Width="46" Height="48" Background="Transparent"
+                        Foreground="#8899AA" BorderThickness="0" FontSize="18" Click="CloseClick"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Toolbar -->
+        <Border Grid.Row="1" Background="#0E1318"
+                BorderBrush="#1E2D3D" BorderThickness="0,0,0,1" Padding="16,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Search box -->
+                <Border Grid.Column="0" BorderBrush="#1E2D3D" BorderThickness="1"
+                        CornerRadius="6" MaxWidth="380" HorizontalAlignment="Left">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="&#xE721;" FontFamily="Segoe MDL2 Assets"
+                                   FontSize="13" Foreground="#445566"
+                                   VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        <TextBox Grid.Column="1" x:Name="SearchBox"
+                                 Background="#0E1318" Foreground="White"
+                                 BorderThickness="0" Padding="8,7"
+                                 FontSize="13" CaretBrush="#00B4FF"
+                                 TextChanged="SearchBox_TextChanged">
+                            <TextBox.Resources>
+                                <Style TargetType="Border"><Setter Property="CornerRadius" Value="0,6,6,0"/></Style>
+                            </TextBox.Resources>
+                        </TextBox>
+                    </Grid>
+                </Border>
+
+                <!-- Delete selected -->
+                <Button Grid.Column="1" x:Name="DeleteBtn"
+                        Content="Delete Selected"
+                        Background="#1C2333" Foreground="#FF2D55"
+                        BorderBrush="#FF2D55" BorderThickness="1"
+                        Padding="14,7" Cursor="Hand"
+                        Margin="12,0,0,0"
+                        Click="DeleteSelected_Click"/>
+
+                <!-- Add row -->
+                <Button Grid.Column="2"
+                        Content="+ Add Row"
+                        Background="#00B4FF" Foreground="#0A0D12"
+                        FontWeight="Bold" BorderThickness="0"
+                        Padding="14,7" Cursor="Hand"
+                        Margin="8,0,0,0"
+                        Click="AddRow_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Row="2" x:Name="MainGrid"
+                  Style="{StaticResource DarkGrid}"
+                  Margin="16,12"
+                  SelectionChanged="Grid_SelectionChanged">
+            <DataGrid.Columns>
+                <!-- ID -->
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="#445566"/>
+                            <Setter Property="FontFamily" Value="Cascadia Code, Consolas"/>
+                            <Setter Property="FontSize" Value="11"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="12,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <!-- Name -->
+                <DataGridTextColumn Header="NAME" Binding="{Binding Name}" Width="180">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="12,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <!-- Category -->
+                <DataGridTextColumn Header="CATEGORY" Binding="{Binding Category}" Width="140">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="#8899AA"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="12,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <!-- Status badge (template column) -->
+                <DataGridTemplateColumn Header="STATUS" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border x:Name="Badge"
+                                    CornerRadius="4" Padding="8,2"
+                                    HorizontalAlignment="Left"
+                                    Margin="12,0" VerticalAlignment="Center">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="#1A2535"/>
+                                        <Setter Property="BorderBrush" Value="#2A3347"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Status}" Value="Active">
+                                                <Setter Property="Background" Value="#0A2E1A"/>
+                                                <Setter Property="BorderBrush" Value="#00C47A"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Warning">
+                                                <Setter Property="Background" Value="#2A1F00"/>
+                                                <Setter Property="BorderBrush" Value="#FFD700"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="Error">
+                                                <Setter Property="Background" Value="#2A0A10"/>
+                                                <Setter Property="BorderBrush" Value="#FF2D55"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <TextBlock Text="{Binding Status}" FontSize="11" FontWeight="SemiBold">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="#8899AA"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}" Value="Active">
+                                                    <Setter Property="Foreground" Value="#00C47A"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Warning">
+                                                    <Setter Property="Foreground" Value="#FFD700"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Error">
+                                                    <Setter Property="Foreground" Value="#FF2D55"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- Value -->
+                <DataGridTextColumn Header="VALUE" Binding="{Binding Value, StringFormat='{}{0:N0}'}" Width="110">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="#00B4FF"/>
+                            <Setter Property="FontFamily" Value="Cascadia Code, Consolas"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="12,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <!-- Last Updated -->
+                <DataGridTextColumn Header="UPDATED" Binding="{Binding Updated, StringFormat='yyyy-MM-dd'}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="#445566"/>
+                            <Setter Property="FontFamily" Value="Cascadia Code, Consolas"/>
+                            <Setter Property="FontSize" Value="11"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="12,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Status bar -->
+        <Border Grid.Row="3" Background="#0E1318"
+                BorderBrush="#1E2D3D" BorderThickness="0,1,0,0" Padding="16,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" x:Name="RowCountLabel"
+                           Text="Rows: 0" FontFamily="Cascadia Code, Consolas" FontSize="11"
+                           Foreground="#445566" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" x:Name="SelCountLabel"
+                           Text="Selected: 0" FontFamily="Cascadia Code, Consolas" FontSize="11"
+                           Foreground="#8899AA" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
