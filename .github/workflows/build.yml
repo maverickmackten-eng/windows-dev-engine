@@ -1,0 +1,121 @@
+name: Build All Samples
+
+on:
+  push:
+    branches: [ main, dev, 'feature/**', 'fix/**' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  # ============================================================
+  # Job 1: Build every sample project
+  # ============================================================
+  build:
+    name: Build (${{ matrix.project }})
+    runs-on: windows-latest   # WPF requires Windows
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # controls
+          - project: DropdownMenuDemo
+            path: samples/controls/DropdownMenuDemo/DropdownMenuDemo.csproj
+          - project: PopupModalDemo
+            path: samples/controls/PopupModalDemo/PopupModalDemo.csproj
+          - project: ToastDemo
+            path: samples/controls/ToastDemo/ToastDemo.csproj
+          # layout
+          - project: NavigationShellDemo
+            path: samples/layout/NavigationShellDemo/NavigationShellDemo.csproj
+          - project: DataGridDemo
+            path: samples/layout/DataGridDemo/DataGridDemo.csproj
+          - project: SplitPaneDemo
+            path: samples/layout/SplitPaneDemo/SplitPaneDemo.csproj
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore NuGet packages
+        run: dotnet restore ${{ matrix.path }}
+
+      - name: Build (Debug)
+        run: dotnet build ${{ matrix.path }} --configuration Debug --no-restore
+
+      - name: Build (Release)
+        run: dotnet build ${{ matrix.path }} --configuration Release --no-restore
+
+  # ============================================================
+  # Job 2: Build the entire solution in one pass
+  # ============================================================
+  build-solution:
+    name: Build Full Solution
+    runs-on: windows-latest
+    needs: build       # only run if individual builds pass
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore solution
+        run: dotnet restore WindowsDevEngine.sln
+
+      - name: Build solution (Release)
+        run: dotnet build WindowsDevEngine.sln --configuration Release --no-restore
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-outputs
+          path: |
+            samples/**/bin/Release/**/*.exe
+            samples/**/bin/Release/**/*.dll
+          retention-days: 7
+
+  # ============================================================
+  # Job 3: Lint — check for trailing whitespace / encoding issues
+  # ============================================================
+  lint:
+    name: Lint Source Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for Windows-only line endings in non-.sln files
+        run: |
+          # .sln files must use CRLF — everything else should be LF
+          BAD=$(grep -rlP "\r" --include="*.cs" --include="*.xaml" --include="*.md" --include="*.yml" . || true)
+          if [ -n "$BAD" ]; then
+            echo "Files with CRLF line endings (should be LF):"
+            echo "$BAD"
+            exit 1
+          fi
+          echo "Line ending check passed."
+
+      - name: Check for BOM in .cs / .xaml files
+        run: |
+          BAD=$(find . -name "*.cs" -o -name "*.xaml" | xargs grep -rlP "^\xEF\xBB\xBF" || true)
+          if [ -n "$BAD" ]; then
+            echo "Files with UTF-8 BOM (remove BOM):"
+            echo "$BAD"
+            exit 1
+          fi
+          echo "BOM check passed."
