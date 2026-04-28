@@ -2,89 +2,79 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Serilog;
 
-namespace __APP_NAME__.Controls
+namespace __APP_NAME__.Views.Controls
 {
-    /// <summary>
-    /// Individual toast notification control.
-    /// Managed by ToastService — do not instantiate directly.
-    ///
-    /// TOAST TYPES (set AccentColor + IconGlyph via ToastItem model):
-    ///   Info    — #00B4FF  — &#xE946;
-    ///   Success — #00FF94  — &#xE73E;
-    ///   Warning — #FFD700  — &#xE7BA;
-    ///   Error   — #FF2D55  — &#xEA39;
-    /// </summary>
-    public partial class ToastNotification : UserControl
-    {
-        public static readonly int DefaultDisplayMs = 4000;
-
-        private Action? _onDismissed;
-
-        public ToastNotification()
-        {
-            InitializeComponent();
-        }
-
-        /// <summary>Slide in from below and fade in, then auto-dismiss after delay.</summary>
-        public async Task ShowAsync(int displayMs = 0, Action? onDismissed = null)
-        {
-            _onDismissed = onDismissed;
-            if (displayMs <= 0) displayMs = DefaultDisplayMs;
-
-            // Animate in: slide up + fade in
-            var slideIn = new DoubleAnimation(80, 0, TimeSpan.FromMilliseconds(300))
-            { EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut } };
-            var fadeIn  = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(250));
-
-            slideTransform.BeginAnimation(TranslateTransform.YProperty, slideIn);
-            toastBorder.BeginAnimation(OpacityProperty, fadeIn);
-
-            await Task.Delay(displayMs);
-            await DismissAsync();
-        }
-
-        public async Task DismissAsync()
-        {
-            var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(300));
-            var tcs = new TaskCompletionSource<bool>();
-            fadeOut.Completed += (_, _) => tcs.SetResult(true);
-            toastBorder.BeginAnimation(OpacityProperty, fadeOut);
-            await tcs.Task;
-            _onDismissed?.Invoke();
-        }
-
-        private async void BtnClose_Click(object sender, RoutedEventArgs e)
-            => await DismissAsync();
-    }
-
-    // ─────────────────────────────────────────────────────────────────
-    // Toast data model
-    // ─────────────────────────────────────────────────────────────────
     public enum ToastType { Info, Success, Warning, Error }
 
-    public class ToastItem
+    public partial class ToastNotification : UserControl
     {
-        public string Title   { get; set; } = string.Empty;
-        public string Message { get; set; } = string.Empty;
-        public ToastType Type { get; set; } = ToastType.Info;
-        public int DisplayMs  { get; set; } = ToastNotification.DefaultDisplayMs;
-
-        public string AccentColor => Type switch
+        private static readonly (string Color, string Icon)[] _typeData =
         {
-            ToastType.Success => "#00FF94",
-            ToastType.Warning => "#FFD700",
-            ToastType.Error   => "#FF2D55",
-            _                 => "#00B4FF"   // Info
+            ("#00B4FF", "\uE946"),  // Info    — blue,  information
+            ("#00FF94", "\uE73E"),  // Success — green, checkmark
+            ("#FFD700", "\uE7BA"),  // Warning — gold,  warning
+            ("#FF2D55", "\uEA39"),  // Error   — red,   error badge
         };
 
-        public string IconGlyph => Type switch
+        public ToastNotification() { InitializeComponent(); }
+
+        /// <summary>
+        /// Creates, shows, and auto-dismisses a toast. Returns the instance
+        /// so the caller can await it or add it to a container.
+        /// </summary>
+        public static ToastNotification Create(
+            string title,
+            string? message = null,
+            ToastType type = ToastType.Info,
+            int autoDismissMs = 4000)
         {
-            ToastType.Success => "\uE73E",  // Checkmark
-            ToastType.Warning => "\uE7BA",  // Warning
-            ToastType.Error   => "\uEA39",  // Error
-            _                 => "\uE946"   // Info
-        };
+            var toast = new ToastNotification();
+            toast.Configure(title, message, type);
+            _ = toast.ShowAndAutoCloseAsync(autoDismissMs);
+            return toast;
+        }
+
+        private void Configure(string title, string? message, ToastType type)
+        {
+            var (color, icon) = _typeData[(int)type];
+            var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+
+            TitleText.Text    = title;
+            IconGlyph.Text    = icon;
+            IconGlyph.Foreground = brush;
+            AccentBar.Background = brush;
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                MessageText.Text       = message;
+                MessageText.Visibility = Visibility.Visible;
+            }
+            Log.Debug("[Toast] [{Type}] {Title}", type, title);
+        }
+
+        private async Task ShowAndAutoCloseAsync(int displayMs)
+        {
+            ((Storyboard)FindResource("SlideIn")).Begin();
+            await Task.Delay(displayMs);
+            Dismiss();
+        }
+
+        private void Dismiss()
+        {
+            ((Storyboard)FindResource("SlideOut")).Begin();
+        }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e) => Dismiss();
+
+        // After slide-out completes, remove from parent
+        private void SlideOut_Completed(object? sender, EventArgs e)
+        {
+            if (Parent is Panel panel)
+                panel.Children.Remove(this);
+        }
     }
 }

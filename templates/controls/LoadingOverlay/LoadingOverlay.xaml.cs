@@ -1,61 +1,39 @@
-using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
+using Serilog;
 
-namespace __APP_NAME__.Controls
+namespace __APP_NAME__.Views.Controls
 {
-    /// <summary>
-    /// Full-window loading overlay with spinner and optional cancel button.
-    ///
-    /// USAGE:
-    ///   // Show with message
-    ///   loadingOverlay.Show("Scanning files...");
-    ///   loadingOverlay.Show("Uploading...", detail: "This may take a moment", showCancel: true);
-    ///
-    ///   // Hide when done
-    ///   loadingOverlay.Hide();
-    ///
-    ///   // Handle cancel
-    ///   loadingOverlay.CancelRequested += (s, e) => _cts.Cancel();
-    /// </summary>
     public partial class LoadingOverlay : UserControl
     {
-        public event EventHandler? CancelRequested;
+        private readonly Storyboard _spin;
+        private readonly Storyboard _fadeIn;
 
         public LoadingOverlay()
         {
             InitializeComponent();
+            _spin   = (Storyboard)FindResource("SpinForever");
+            _fadeIn = (Storyboard)FindResource("FadeIn");
         }
 
-        public void Show(string message = "Loading...", string? detail = null, bool showCancel = false)
+        /// <summary>Show the overlay with an optional message.</summary>
+        public void Show(string message = "Loading...")
         {
-            txtLoadingMessage.Text = message;
-
-            if (!string.IsNullOrEmpty(detail))
-            {
-                txtLoadingDetail.Text = detail;
-                txtLoadingDetail.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                txtLoadingDetail.Visibility = Visibility.Collapsed;
-            }
-
-            btnCancel.Visibility = showCancel ? Visibility.Visible : Visibility.Collapsed;
-            Visibility = Visibility.Visible;
+            MessageText.Text = message;
+            Visibility       = Visibility.Visible;
+            _spin.Begin();
+            _fadeIn.Begin();
+            Log.Debug("[LoadingOverlay] Shown: {Message}", message);
         }
 
+        /// <summary>Hide the overlay and stop the spinner.</summary>
         public void Hide()
         {
+            _spin.Stop();
             Visibility = Visibility.Collapsed;
-            txtLoadingDetail.Visibility = Visibility.Collapsed;
-            btnCancel.Visibility = Visibility.Collapsed;
-        }
-
-        private void BtnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            CancelRequested?.Invoke(this, EventArgs.Empty);
-            Hide();
+            Root.Opacity = 0;
+            Log.Debug("[LoadingOverlay] Hidden");
         }
     }
 }

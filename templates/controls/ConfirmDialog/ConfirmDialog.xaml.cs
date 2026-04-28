@@ -1,84 +1,53 @@
+using System;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Media.Animation;
+using Serilog;
 
-namespace __APP_NAME__.Controls
+namespace __APP_NAME__.Views.Controls
 {
-    /// <summary>
-    /// Modal confirm dialog with YES/NO result.
-    ///
-    /// USAGE:
-    ///   var dialog = new ConfirmDialog(this)  // pass owner window
-    ///   {
-    ///       TitleText   = "Delete Item",
-    ///       MessageText = "Delete \"config.json\"? This cannot be undone.",
-    ///       ConfirmText = "DELETE",
-    ///       IsDangerous = true  // makes YES button red instead of blue
-    ///   };
-    ///   bool confirmed = dialog.ShowAndGetResult();
-    /// </summary>
     public partial class ConfirmDialog : Window
     {
-        public bool Result { get; private set; }
+        private bool _result;
 
-        public string TitleText
-        {
-            get => txtTitle.Text;
-            set => txtTitle.Text = value;
-        }
-
-        public string MessageText
-        {
-            get => txtMessage.Text;
-            set => txtMessage.Text = value;
-        }
-
-        public string ConfirmText
-        {
-            get => (string)btnYes.Content;
-            set => btnYes.Content = value;
-        }
-
-        public bool IsDangerous
-        {
-            set
-            {
-                if (value)
-                {
-                    btnYes.Background = new System.Windows.Media.SolidColorBrush(
-                        (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF2D55"));
-                    btnYes.Foreground = System.Windows.Media.Brushes.White;
-                    txtIcon.Text = "\uEA39"; // Error icon
-                    txtIcon.Foreground = new System.Windows.Media.SolidColorBrush(
-                        (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF2D55"));
-                }
-            }
-        }
-
-        public ConfirmDialog(Window owner)
+        public ConfirmDialog(string title, string? message = null,
+                             string confirmText = "Confirm", string cancelText = "Cancel")
         {
             InitializeComponent();
-            Owner = owner;
 
-            // Close on ESC
-            KeyDown += (_, e) => { if (e.Key == Key.Escape) { Result = false; Close(); } };
+            TitleText.Text  = title;
+            ConfirmButton.Content = confirmText;
+            CancelButton.Content  = cancelText;
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                MessageText.Text       = message;
+                MessageText.Visibility = Visibility.Visible;
+            }
+
+            Loaded += (_, _) => ((Storyboard)FindResource("ScaleIn")).Begin();
+            Log.Debug("[ConfirmDialog] Shown: {Title}", title);
         }
 
-        /// <summary>Shows the dialog and returns true if user clicked Confirm.</summary>
-        public bool ShowAndGetResult()
+        /// <summary>
+        /// Shows the dialog modally and returns true if user confirmed.
+        /// </summary>
+        public bool ShowDialogResult()
         {
             ShowDialog();
-            return Result;
+            return _result;
         }
 
-        private void BtnYes_Click(object sender, RoutedEventArgs e)
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            Result = true;
+            _result = true;
+            Log.Debug("[ConfirmDialog] Confirmed");
             Close();
         }
 
-        private void BtnNo_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            Result = false;
+            _result = false;
+            Log.Debug("[ConfirmDialog] Cancelled");
             Close();
         }
     }
