@@ -1,0 +1,28 @@
+# Build artifacts
+bin/
+obj/
+*.user
+.vs/
+*.suo
+
+# Log files (never commit logs)
+logs/
+*.log
+
+# User-specific settings
+launchSettings.json
+
+# NuGet
+.nuget/
+packages/
+*.nupkg
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temp
+*.tmp
+*.temp
+~$*

@@ -1,0 +1,403 @@
+<Window x:Class="DragonOverCastle.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dragon Over Castle"
+        Width="1200" Height="700"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="CanResize">
+
+    <Border Background="#0A0510" CornerRadius="12"
+            BorderBrush="#3D1A5A" BorderThickness="1">
+
+        <!-- Sky gradient background -->
+        <Canvas x:Name="mainCanvas" ClipToBounds="True">
+
+            <!-- Night sky gradient -->
+            <Rectangle Canvas.Left="0" Canvas.Top="0" Width="1200" Height="700">
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#050210" Offset="0"/>
+                        <GradientStop Color="#0D0820" Offset="0.4"/>
+                        <GradientStop Color="#1A0A10" Offset="0.75"/>
+                        <GradientStop Color="#2A1208" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <!-- Stars (static dots) -->
+            <Ellipse Canvas.Left="80"  Canvas.Top="30"  Width="2" Height="2" Fill="#AAFFFF"/>
+            <Ellipse Canvas.Left="200" Canvas.Top="60"  Width="3" Height="3" Fill="#FFFFFF"/>
+            <Ellipse Canvas.Left="350" Canvas.Top="20"  Width="2" Height="2" Fill="#FFEECC"/>
+            <Ellipse Canvas.Left="500" Canvas.Top="45"  Width="2" Height="2" Fill="#AAFFFF"/>
+            <Ellipse Canvas.Left="650" Canvas.Top="15"  Width="3" Height="3" Fill="#FFFFFF"/>
+            <Ellipse Canvas.Left="800" Canvas.Top="55"  Width="2" Height="2" Fill="#CCFFFF"/>
+            <Ellipse Canvas.Left="950" Canvas.Top="30"  Width="2" Height="2" Fill="#FFFFFF"/>
+            <Ellipse Canvas.Left="1100" Canvas.Top="70" Width="3" Height="3" Fill="#FFEECC"/>
+            <Ellipse Canvas.Left="120" Canvas.Top="90"  Width="2" Height="2" Fill="#FFFFFF"/>
+            <Ellipse Canvas.Left="420" Canvas.Top="80"  Width="2" Height="2" Fill="#AAFFFF"/>
+            <Ellipse Canvas.Left="720" Canvas.Top="100" Width="2" Height="2" Fill="#FFFFFF"/>
+
+            <!-- Moon -->
+            <Ellipse Canvas.Left="950" Canvas.Top="40" Width="80" Height="80">
+                <Ellipse.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FFFAEE" Offset="0"/>
+                        <GradientStop Color="#FFDDAA" Offset="0.7"/>
+                        <GradientStop Color="#CC9966" Offset="1"/>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+                <Ellipse.Effect>
+                    <DropShadowEffect Color="#FFCC66" BlurRadius="30" ShadowDepth="0" Opacity="0.6"/>
+                </Ellipse.Effect>
+            </Ellipse>
+
+            <!-- Cloud 1 (far, slow) -->
+            <Canvas x:Name="cloud1" Canvas.Left="-300" Canvas.Top="80">
+                <Path Fill="#1AFFFFFF" Data="M 0,40 Q 20,10 60,20 Q 80,-10 130,15 Q 160,-5 200,20 Q 240,10 250,40 Z"/>
+            </Canvas>
+
+            <!-- Cloud 2 (mid) -->
+            <Canvas x:Name="cloud2" Canvas.Left="-500" Canvas.Top="150">
+                <Path Fill="#22FFFFFF" Data="M 0,50 Q 30,5 90,25 Q 120,-15 180,20 Q 220,-10 280,25 Q 310,10 320,50 Z"/>
+            </Canvas>
+
+            <!-- Cloud 3 (near, fast) -->
+            <Canvas x:Name="cloud3" Canvas.Left="-200" Canvas.Top="180">
+                <Path Fill="#15FFFFFF" Data="M 0,30 Q 20,0 55,15 Q 75,-10 110,12 Q 140,0 150,30 Z"/>
+            </Canvas>
+
+            <!-- ═══ CASTLE SILHOUETTE ═══ -->
+            <Canvas Canvas.Left="0" Canvas.Top="480">
+                <!-- Castle base/wall -->
+                <Rectangle Canvas.Left="0" Canvas.Top="80" Width="1200" Height="140" Fill="#1A0D20"/>
+                <!-- Wall top with battlements -->
+                <Rectangle Canvas.Left="0"  Canvas.Top="60" Width="60"  Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="80" Canvas.Top="60" Width="60"  Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="160" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="240" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="320" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="400" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="480" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="560" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="640" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="720" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="800" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="880" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="960" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="1040" Canvas.Top="60" Width="60" Height="25" Fill="#1A0D20"/>
+                <Rectangle Canvas.Left="1120" Canvas.Top="60" Width="80" Height="25" Fill="#1A0D20"/>
+
+                <!-- Main tower left -->
+                <Rectangle Canvas.Left="100" Canvas.Top="-80" Width="120" Height="160" Fill="#150B1A"/>
+                <Polygon Points="100,0 160,-60 220,0" Fill="#0F0814"/>
+                <!-- Tower battlements -->
+                <Rectangle Canvas.Left="100" Canvas.Top="-90" Width="25" Height="20" Fill="#150B1A"/>
+                <Rectangle Canvas.Left="145" Canvas.Top="-90" Width="25" Height="20" Fill="#150B1A"/>
+                <Rectangle Canvas.Left="190" Canvas.Top="-90" Width="25" Height="20" Fill="#150B1A"/>
+                <!-- Tower windows (glowing orange from dragon fire) -->
+                <Ellipse Canvas.Left="150" Canvas.Top="-30" Width="20" Height="30">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#FFCC44" Offset="0"/>
+                            <GradientStop Color="#FF6600" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#FF8800" BlurRadius="12" ShadowDepth="0" Opacity="0.8"/>
+                    </Ellipse.Effect>
+                </Ellipse>
+
+                <!-- Main tower center (tallest) -->
+                <Rectangle Canvas.Left="520" Canvas.Top="-140" Width="160" Height="220" Fill="#150B1A"/>
+                <Polygon Points="520,-20 600,-100 680,-20" Fill="#0F0814"/>
+                <!-- Center tower windows -->
+                <Ellipse Canvas.Left="570" Canvas.Top="-80" Width="22" Height="34">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#FFCC44" Offset="0"/>
+                            <GradientStop Color="#FF6600" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#FF8800" BlurRadius="14" ShadowDepth="0" Opacity="0.9"/>
+                    </Ellipse.Effect>
+                </Ellipse>
+
+                <!-- Main tower right -->
+                <Rectangle Canvas.Left="980" Canvas.Top="-80" Width="120" Height="160" Fill="#150B1A"/>
+                <Polygon Points="980,0 1040,-60 1100,0" Fill="#0F0814"/>
+                <Ellipse Canvas.Left="1030" Canvas.Top="-30" Width="20" Height="30">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#FFCC44" Offset="0"/>
+                            <GradientStop Color="#FF6600" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#FF8800" BlurRadius="12" ShadowDepth="0" Opacity="0.8"/>
+                    </Ellipse.Effect>
+                </Ellipse>
+            </Canvas>
+
+            <!-- ═══ DRAGON ═══ -->
+            <Canvas x:Name="dragonContainer" Canvas.Left="-200" Canvas.Top="200">
+
+                <!-- Dragon body -->
+                <Path Fill="#2D1A00" Stroke="#4A2800" StrokeThickness="1">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure StartPoint="0,30">
+                                <BezierSegment Point1="30,0" Point2="80,-10" Point3="120,20"/>
+                                <BezierSegment Point1="160,50" Point2="180,40" Point3="200,30"/>
+                                <BezierSegment Point1="220,20" Point2="240,25" Point3="250,35"/>
+                                <BezierSegment Point1="240,50" Point2="220,55" Point3="200,50"/>
+                                <BezierSegment Point1="180,65" Point2="160,70" Point3="120,60"/>
+                                <BezierSegment Point1="80,50" Point2="30,55" Point3="0,30"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+
+                <!-- Dragon neck -->
+                <Path Fill="#2D1A00" Stroke="#4A2800" StrokeThickness="1">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure StartPoint="0,25">
+                                <BezierSegment Point1="-20,10" Point2="-50,0" Point3="-70,10"/>
+                                <BezierSegment Point1="-90,20" Point2="-95,30" Point3="-85,40"/>
+                                <BezierSegment Point1="-70,50" Point2="-40,45" Point3="-20,40"/>
+                                <BezierSegment Point1="0,50" Point2="0,40" Point3="0,25"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+
+                <!-- Dragon head -->
+                <Path Fill="#3A2000" Stroke="#5A3000" StrokeThickness="1.5">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure StartPoint="-85,10">
+                                <BezierSegment Point1="-110,-5" Point2="-140,0" Point3="-160,15"/>
+                                <LineSegment Point="-175,10"/>
+                                <BezierSegment Point1="-180,5" Point2="-185,8" Point3="-188,12"/>
+                                <LineSegment Point="-175,18"/>
+                                <BezierSegment Point1="-165,25" Point2="-145,30" Point3="-120,28"/>
+                                <BezierSegment Point1="-100,40" Point2="-90,42" Point3="-85,38"/>
+                                <BezierSegment Point1="-80,30" Point2="-80,20" Point3="-85,10"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+
+                <!-- Dragon eye -->
+                <Ellipse Canvas.Left="-148" Canvas.Top="5" Width="10" Height="10" Fill="#FF4400">
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#FF6600" BlurRadius="8" ShadowDepth="0" Opacity="1"/>
+                    </Ellipse.Effect>
+                </Ellipse>
+                <Ellipse Canvas.Left="-145" Canvas.Top="8" Width="4" Height="6" Fill="#220000"/>
+
+                <!-- Dragon horns -->
+                <Polygon Points="-120,-5 -110,-35 -100,-5" Fill="#1A0D00"/>
+                <Polygon Points="-140,2 -128,-28 -120,2"  Fill="#1A0D00"/>
+
+                <!-- Wing LEFT (animated) -->
+                <Canvas x:Name="wingLeft" Canvas.Left="60" Canvas.Top="20">
+                    <Path Fill="#220F00" Stroke="#3A1A00" StrokeThickness="1.5">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure StartPoint="0,0">
+                                    <BezierSegment Point1="-20,-60" Point2="-80,-100" Point3="-120,-80"/>
+                                    <BezierSegment Point1="-160,-60" Point2="-140,-20" Point3="-100,-10"/>
+                                    <BezierSegment Point1="-60,0" Point2="-20,10" Point3="0,0"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                    <!-- Wing spines -->
+                    <Line X1="0" Y1="0" X2="-60" Y2="-70" Stroke="#4A2800" StrokeThickness="1.5"/>
+                    <Line X1="0" Y1="0" X2="-100" Y2="-55" Stroke="#4A2800" StrokeThickness="1.5"/>
+                    <Line X1="0" Y1="0" X2="-120" Y2="-35" Stroke="#4A2800" StrokeThickness="1.5"/>
+                </Canvas>
+
+                <!-- Wing RIGHT (animated) -->
+                <Canvas x:Name="wingRight" Canvas.Left="60" Canvas.Top="40">
+                    <Path Fill="#1A0A00" Stroke="#3A1A00" StrokeThickness="1.5">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure StartPoint="0,0">
+                                    <BezierSegment Point1="-20,50" Point2="-80,80" Point3="-120,65"/>
+                                    <BezierSegment Point1="-160,50" Point2="-140,20" Point3="-100,10"/>
+                                    <BezierSegment Point1="-60,0" Point2="-20,-5" Point3="0,0"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                    <Line X1="0" Y1="0" X2="-60" Y2="55" Stroke="#4A2800" StrokeThickness="1.5"/>
+                    <Line X1="0" Y1="0" X2="-100" Y2="42" Stroke="#4A2800" StrokeThickness="1.5"/>
+                    <Line X1="0" Y1="0" X2="-120" Y2="25" Stroke="#4A2800" StrokeThickness="1.5"/>
+                </Canvas>
+
+                <!-- Fire breath -->
+                <Canvas x:Name="fireBreath" Canvas.Left="-188" Canvas.Top="12" Opacity="0">
+                    <Path Fill="Transparent">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure StartPoint="0,0">
+                                    <BezierSegment Point1="-40,-15" Point2="-100,-20" Point3="-160,-5"/>
+                                    <BezierSegment Point1="-100,20" Point2="-40,25" Point3="0,0"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                        <Path.Fill>
+                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="#FFFF00" Offset="0"/>
+                                <GradientStop Color="#FF6600" Offset="0.3"/>
+                                <GradientStop Color="#FF2200" Offset="0.7"/>
+                                <GradientStop Color="#00000000" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Path.Fill>
+                        <Path.Effect>
+                            <DropShadowEffect Color="#FF8800" BlurRadius="20" ShadowDepth="0" Opacity="0.9"/>
+                        </Path.Effect>
+                    </Path>
+                </Canvas>
+
+                <!-- Dragon tail -->
+                <Path Stroke="#3A2000" StrokeThickness="8" Fill="Transparent"
+                      StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure StartPoint="250,35">
+                                <BezierSegment Point1="300,25" Point2="330,50" Point3="360,40"/>
+                                <BezierSegment Point1="390,30" Point2="400,55" Point3="410,45"/>
+                                <BezierSegment Point1="420,35" Point2="415,55" Point3="420,60"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+
+            <!-- Title overlay -->
+            <TextBlock Canvas.Left="40" Canvas.Top="30"
+                       Text="DRAGON OVER CASTLE"
+                       Foreground="#CC8833"
+                       FontFamily="Georgia"
+                       FontSize="22"
+                       FontStyle="Italic"
+                       FontWeight="Bold">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="#FF6600" BlurRadius="8" ShadowDepth="0" Opacity="0.6"/>
+                </TextBlock.Effect>
+            </TextBlock>
+
+            <!-- Press SPACE hint -->
+            <TextBlock x:Name="hintText" Canvas.Left="40" Canvas.Bottom="20"
+                       Canvas.Top="640"
+                       Text="Press SPACE to fire breath | Press R to restart"
+                       Foreground="#55FFFFFF"
+                       FontFamily="Consolas"
+                       FontSize="11"/>
+
+        </Canvas>
+    </Border>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard x:Name="mainStoryboard">
+                <Storyboard>
+                    <!-- Dragon flies across screen continuously -->
+                    <DoubleAnimation
+                        Storyboard.TargetName="dragonContainer"
+                        Storyboard.TargetProperty="(Canvas.Left)"
+                        From="-250" To="1300"
+                        Duration="0:0:14"
+                        RepeatBehavior="Forever"
+                        AutoReverse="False"/>
+
+                    <!-- Dragon bobs up and down -->
+                    <DoubleAnimation
+                        Storyboard.TargetName="dragonContainer"
+                        Storyboard.TargetProperty="(Canvas.Top)"
+                        From="180" To="280"
+                        Duration="0:0:3"
+                        RepeatBehavior="Forever"
+                        AutoReverse="True">
+                        <DoubleAnimation.EasingFunction>
+                            <SineEase EasingMode="EaseInOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                    <!-- Wing left flap -->
+                    <DoubleAnimation
+                        Storyboard.TargetName="wingLeft"
+                        Storyboard.TargetProperty="(Canvas.Top)"
+                        From="10" To="40"
+                        Duration="0:0:0.5"
+                        RepeatBehavior="Forever"
+                        AutoReverse="True">
+                        <DoubleAnimation.EasingFunction>
+                            <SineEase EasingMode="EaseInOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                    <!-- Wing right flap (opposite phase) -->
+                    <DoubleAnimation
+                        Storyboard.TargetName="wingRight"
+                        Storyboard.TargetProperty="(Canvas.Top)"
+                        From="50" To="20"
+                        Duration="0:0:0.5"
+                        RepeatBehavior="Forever"
+                        AutoReverse="True">
+                        <DoubleAnimation.EasingFunction>
+                            <SineEase EasingMode="EaseInOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                    <!-- Cloud 1 drifts slowly -->
+                    <DoubleAnimation
+                        Storyboard.TargetName="cloud1"
+                        Storyboard.TargetProperty="(Canvas.Left)"
+                        From="-300" To="1300"
+                        Duration="0:0:45"
+                        RepeatBehavior="Forever"/>
+
+                    <!-- Cloud 2 medium speed -->
+                    <DoubleAnimation
+                        Storyboard.TargetName="cloud2"
+                        Storyboard.TargetProperty="(Canvas.Left)"
+                        From="-500" To="1500"
+                        Duration="0:0:35"
+                        RepeatBehavior="Forever"/>
+
+                    <!-- Cloud 3 faster -->
+                    <DoubleAnimation
+                        Storyboard.TargetName="cloud3"
+                        Storyboard.TargetProperty="(Canvas.Left)"
+                        From="-200" To="1300"
+                        Duration="0:0:25"
+                        RepeatBehavior="Forever"/>
+
+                    <!-- Fire breath flashes periodically -->
+                    <DoubleAnimationUsingKeyFrames
+                        Storyboard.TargetName="fireBreath"
+                        Storyboard.TargetProperty="Opacity"
+                        RepeatBehavior="Forever">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="1"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:4.8" Value="0.8"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:5.5" Value="0"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:10" Value="0"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:10.1" Value="1"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:10.8" Value="0"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:14" Value="0"/>
+                    </DoubleAnimationUsingKeyFrames>
+
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+</Window>

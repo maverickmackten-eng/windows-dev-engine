@@ -1,0 +1,117 @@
+<Window x:Class="CountdownClock.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Countdown Clock"
+        Width="600" Height="400"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Border Background="#0A0D12" CornerRadius="12"
+            BorderBrush="#2A3347" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                <!-- Mission label -->
+                <TextBlock x:Name="missionLabel"
+                           Text="MISSION LAUNCH" HorizontalAlignment="Center"
+                           Foreground="#445566" FontFamily="Consolas"
+                           FontSize="12" FontWeight="Bold" LetterSpacing="4"
+                           Margin="0,0,0,20"/>
+
+                <!-- Main countdown display -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <!-- Hours -->
+                    <TextBlock x:Name="hoursText" Text="00"
+                               FontFamily="Cascadia Code, Consolas"
+                               FontSize="80" FontWeight="Bold"
+                               Foreground="#00B4FF">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#00B4FF" BlurRadius="20" ShadowDepth="0" Opacity="0.6"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock Text=":" FontFamily="Cascadia Code, Consolas"
+                               FontSize="80" Foreground="#334455" Margin="4,0"/>
+                    <!-- Minutes -->
+                    <TextBlock x:Name="minutesText" Text="10"
+                               FontFamily="Cascadia Code, Consolas"
+                               FontSize="80" FontWeight="Bold"
+                               Foreground="#00B4FF">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#00B4FF" BlurRadius="20" ShadowDepth="0" Opacity="0.6"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock Text=":" FontFamily="Cascadia Code, Consolas"
+                               FontSize="80" Foreground="#334455" Margin="4,0"/>
+                    <!-- Seconds -->
+                    <TextBlock x:Name="secondsText" Text="00"
+                               FontFamily="Cascadia Code, Consolas"
+                               FontSize="80" FontWeight="Bold"
+                               Foreground="#00B4FF">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#00B4FF" BlurRadius="20" ShadowDepth="0" Opacity="0.6"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </StackPanel>
+
+                <!-- Labels under digits -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,4,0,0">
+                    <TextBlock Text="HRS" Width="100" TextAlignment="Center"
+                               Foreground="#334455" FontFamily="Consolas" FontSize="10"/>
+                    <TextBlock Text="" Width="30"/>
+                    <TextBlock Text="MIN" Width="100" TextAlignment="Center"
+                               Foreground="#334455" FontFamily="Consolas" FontSize="10"/>
+                    <TextBlock Text="" Width="30"/>
+                    <TextBlock Text="SEC" Width="100" TextAlignment="Center"
+                               Foreground="#334455" FontFamily="Consolas" FontSize="10"/>
+                </StackPanel>
+
+                <!-- Progress bar -->
+                <Border Margin="40,30,40,0" Height="4" Background="#1A2233" CornerRadius="2">
+                    <Border x:Name="progressBar" HorizontalAlignment="Left"
+                            Height="4" Background="#00B4FF"
+                            CornerRadius="2" Width="0">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#00B4FF" BlurRadius="8" ShadowDepth="0" Opacity="0.8"/>
+                        </Border.Effect>
+                    </Border>
+                </Border>
+
+                <!-- Status text -->
+                <TextBlock x:Name="statusText"
+                           Text="COUNTING DOWN"
+                           HorizontalAlignment="Center" Margin="0,12,0,0"
+                           Foreground="#445566" FontFamily="Consolas" FontSize="11"/>
+
+            </StackPanel>
+
+            <!-- Bottom controls -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal"
+                        HorizontalAlignment="Center" Margin="0,0,0,20">
+                <Button x:Name="startBtn" Content="START"
+                        Margin="8,0" Padding="20,8"
+                        Click="StartBtn_Click"
+                        FontFamily="Consolas" FontWeight="Bold"
+                        Background="#00B4FF" Foreground="White"
+                        BorderThickness="0" Cursor="Hand"/>
+                <Button x:Name="resetBtn" Content="RESET"
+                        Margin="8,0" Padding="20,8"
+                        Click="ResetBtn_Click"
+                        FontFamily="Consolas"
+                        Background="#1C2333" Foreground="#8899AA"
+                        BorderBrush="#2A3347" BorderThickness="1" Cursor="Hand"/>
+                <Button Content="CLOSE"
+                        Margin="8,0" Padding="20,8"
+                        Click="CloseBtn_Click"
+                        FontFamily="Consolas"
+                        Background="#1C2333" Foreground="#FF2D55"
+                        BorderBrush="#3A1522" BorderThickness="1" Cursor="Hand"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

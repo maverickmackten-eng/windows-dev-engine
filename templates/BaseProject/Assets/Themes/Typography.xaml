@@ -1,0 +1,110 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Font Families -->
+    <FontFamily x:Key="FontPrimary">Segoe UI</FontFamily>
+    <FontFamily x:Key="FontMono">Cascadia Code, Consolas, Courier New</FontFamily>
+    <FontFamily x:Key="FontDisplay">Segoe UI Black</FontFamily>
+    <FontFamily x:Key="FontIcons">Segoe MDL2 Assets</FontFamily>
+    <FontFamily x:Key="FontIconsFluent">Segoe Fluent Icons</FontFamily>
+
+    <!-- Font Sizes -->
+    <sys:Double x:Key="FontSizeXS">10</sys:Double>
+    <sys:Double x:Key="FontSizeSM">12</sys:Double>
+    <sys:Double x:Key="FontSizeMD">14</sys:Double>
+    <sys:Double x:Key="FontSizeLG">16</sys:Double>
+    <sys:Double x:Key="FontSizeXL">20</sys:Double>
+    <sys:Double x:Key="FontSizeXXL">28</sys:Double>
+    <sys:Double x:Key="FontSizeDisplay">48</sys:Double>
+    <sys:Double x:Key="FontSizeHero">72</sys:Double>
+
+    <!-- Spacing Scale -->
+    <sys:Double x:Key="SpaceXS">4</sys:Double>
+    <sys:Double x:Key="SpaceSM">8</sys:Double>
+    <sys:Double x:Key="SpaceMD">16</sys:Double>
+    <sys:Double x:Key="SpaceLG">24</sys:Double>
+    <sys:Double x:Key="SpaceXL">40</sys:Double>
+    <sys:Double x:Key="SpaceXXL">64</sys:Double>
+
+    <!-- Border Radius -->
+    <CornerRadius x:Key="RadiusNone">0</CornerRadius>
+    <CornerRadius x:Key="RadiusSM">4</CornerRadius>
+    <CornerRadius x:Key="RadiusMD">8</CornerRadius>
+    <CornerRadius x:Key="RadiusLG">12</CornerRadius>
+    <CornerRadius x:Key="RadiusXL">20</CornerRadius>
+    <CornerRadius x:Key="RadiusFull">999</CornerRadius>
+
+    <!-- Thickness Helpers -->
+    <Thickness x:Key="PaddingXS">4</Thickness>
+    <Thickness x:Key="PaddingSM">8</Thickness>
+    <Thickness x:Key="PaddingMD">16</Thickness>
+    <Thickness x:Key="PaddingLG">24</Thickness>
+    <Thickness x:Key="PaddingXL">40</Thickness>
+    <Thickness x:Key="PaddingCard">16,12</Thickness>
+    <Thickness x:Key="PaddingButton">20,10</Thickness>
+
+    <!-- Animation Durations -->
+    <Duration x:Key="DurationInstant">0:0:0.1</Duration>
+    <Duration x:Key="DurationFast">0:0:0.2</Duration>
+    <Duration x:Key="DurationNormal">0:0:0.35</Duration>
+    <Duration x:Key="DurationSlow">0:0:0.6</Duration>
+    <Duration x:Key="DurationDramatic">0:0:1.2</Duration>
+
+    <!-- Text Styles -->
+    <Style x:Key="TextHero" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontDisplay}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeHero}"/>
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="TextDisplay" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontDisplay}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDisplay}"/>
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
+    </Style>
+
+    <Style x:Key="TextH1" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontPrimary}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeXXL}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
+    </Style>
+
+    <Style x:Key="TextH2" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontPrimary}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeXL}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
+    </Style>
+
+    <Style x:Key="TextBody" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontPrimary}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMD}"/>
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="TextMuted" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontPrimary}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSM}"/>
+        <Setter Property="Foreground" Value="{StaticResource BrushTextSecondary}"/>
+    </Style>
+
+    <Style x:Key="TextMono" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontMono}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSM}"/>
+        <Setter Property="Foreground" Value="{StaticResource BrushAccentPrimary}"/>
+    </Style>
+
+    <Style x:Key="TextLabel" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontPrimary}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeXS}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource BrushTextSecondary}"/>
+        <Setter Property="TextTransform" Value="Uppercase"/>
+        <Setter Property="LetterSpacing" Value="1"/>
+    </Style>
+
+</ResourceDictionary>
