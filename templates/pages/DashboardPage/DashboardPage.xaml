@@ -1,106 +1,102 @@
-<Page x:Class="__APP_NAME__.Views.Pages.DashboardPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Dashboard"
-      Background="#0A0D12">
+<UserControl x:Class="__APP_NAME__.Views.Pages.DashboardPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{DynamicResource BackgroundDeepBrush}">
+    <!--
+        DashboardPage.xaml — Stat Cards + Content Template
+        DataContext: __APP_NAME__.ViewModels.DashboardViewModel
+        Bindings: PageTitle (string), LastUpdated (DateTime), StatCards (ObservableCollection),
+                  RefreshCommand (ICommand), IsLoading (bool), ErrorMessage (string)
+    -->
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-  <ScrollViewer VerticalScrollBarVisibility="Auto">
-    <StackPanel Margin="24">
+        <!-- Loading overlay -->
+        <Grid Grid.RowSpan="3" Background="#CC0A0D12" Panel.ZIndex="100"
+              Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="↻" FontSize="48" Foreground="{DynamicResource AccentPrimaryBrush}"
+                           HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                    <TextBlock.RenderTransform><RotateTransform x:Name="SpinTransform"/></TextBlock.RenderTransform>
+                    <TextBlock.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetName="SpinTransform"
+                                                     Storyboard.TargetProperty="Angle"
+                                                     From="0" To="360" Duration="0:0:1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </TextBlock.Triggers>
+                </TextBlock>
+                <TextBlock Text="Loading..." FontSize="14"
+                           Foreground="{DynamicResource TextSecondaryBrush}"
+                           HorizontalAlignment="Center" Margin="0,12,0,0"/>
+            </StackPanel>
+        </Grid>
 
-      <!-- Page header -->
-      <TextBlock Text="DASHBOARD"
-                 FontFamily="Segoe UI Black" FontSize="22"
-                 Foreground="#FFFFFF" LetterSpacing="3"
-                 Margin="0,0,0,4"/>
-      <TextBlock Text="{Binding PageSubtitle}"
-                 FontSize="13" Foreground="#8899AA"
-                 Margin="0,0,0,24"/>
+        <!-- Page header -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="{Binding PageTitle, FallbackValue='Dashboard'}"
+                           FontFamily="Segoe UI Black" FontSize="28"
+                           Foreground="{DynamicResource TextPrimaryBrush}"/>
+                <TextBlock Text="{Binding LastUpdated, StringFormat='Updated {0:HH:mm:ss}'}"
+                           FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
+            </StackPanel>
+            <Button Grid.Column="1" Command="{Binding RefreshCommand}"
+                    Style="{DynamicResource PrimaryButtonStyle}" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE72C;" FontFamily="Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock Text="Refresh" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
 
-      <!-- ── Stat Cards Row ───────────────────────────────────── -->
-      <UniformGrid Rows="1" Height="100" Margin="0,0,0,16">
+        <!-- Stat cards -->
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding StatCards}" Margin="0,0,0,24">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="200" Height="90"
+                            Background="{DynamicResource BackgroundPanelBrush}"
+                            BorderBrush="{DynamicResource BorderSubtleBrush}"
+                            BorderThickness="1" CornerRadius="8" Margin="0,0,16,16" Padding="14">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding Label}" FontSize="10" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            <TextBlock Grid.Row="1" Text="{Binding Value}"
+                                       FontFamily="Segoe UI Black" FontSize="28"
+                                       Foreground="{Binding Color, FallbackValue='#00B4FF'}"
+                                       VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
-        <Border Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
-                CornerRadius="8" Margin="0,0,12,0" Padding="16,12">
-          <StackPanel>
-            <TextBlock Text="STAT ONE" Foreground="#8899AA" FontSize="11"/>
-            <TextBlock Text="{Binding StatOne}" Foreground="#00B4FF"
-                       FontSize="32" FontWeight="Bold"/>
-            <TextBlock Text="{Binding StatOneTrend}" Foreground="#00FF94" FontSize="11"/>
-          </StackPanel>
-        </Border>
-
-        <Border Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
-                CornerRadius="8" Margin="0,0,12,0" Padding="16,12">
-          <StackPanel>
-            <TextBlock Text="STAT TWO" Foreground="#8899AA" FontSize="11"/>
-            <TextBlock Text="{Binding StatTwo}" Foreground="#00B4FF"
-                       FontSize="32" FontWeight="Bold"/>
-            <TextBlock Text="{Binding StatTwoTrend}" Foreground="#FFD700" FontSize="11"/>
-          </StackPanel>
-        </Border>
-
-        <Border Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
-                CornerRadius="8" Margin="0,0,12,0" Padding="16,12">
-          <StackPanel>
-            <TextBlock Text="STAT THREE" Foreground="#8899AA" FontSize="11"/>
-            <TextBlock Text="{Binding StatThree}" Foreground="#00B4FF"
-                       FontSize="32" FontWeight="Bold"/>
-            <TextBlock Text="{Binding StatThreeTrend}" Foreground="#FF6B35" FontSize="11"/>
-          </StackPanel>
-        </Border>
-
-        <Border Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
-                Padding="16,12" CornerRadius="8">
-          <StackPanel>
-            <TextBlock Text="STAT FOUR" Foreground="#8899AA" FontSize="11"/>
-            <TextBlock Text="{Binding StatFour}" Foreground="#00B4FF"
-                       FontSize="32" FontWeight="Bold"/>
-            <TextBlock Text="{Binding StatFourTrend}" Foreground="#8899AA" FontSize="11"/>
-          </StackPanel>
-        </Border>
-
-      </UniformGrid>
-
-      <!-- ── Main Content Area ─────────────────────────────────── -->
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="2*"/>
-          <ColumnDefinition Width="12"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <!-- Primary content card -->
-        <Border Grid.Column="0"
-                Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
-                CornerRadius="8" Padding="16" MinHeight="300">
-          <StackPanel>
-            <TextBlock Text="MAIN CONTENT"
-                       Foreground="#8899AA" FontSize="11"
-                       Margin="0,0,0,12"/>
-            <!-- AGENT: Replace with real content / ItemsControl -->
-            <TextBlock Text="[ bind your primary content here ]"
-                       Foreground="#2A3347" FontFamily="Cascadia Code" FontSize="11"
+        <!-- Main content area -->
+        <Border Grid.Row="2" Background="{DynamicResource BackgroundPanelBrush}"
+                BorderBrush="{DynamicResource BorderSubtleBrush}"
+                BorderThickness="1" CornerRadius="8" Padding="20">
+            <TextBlock Text="[ Main content goes here ]"
                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Margin="0,80,0,0"/>
-          </StackPanel>
+                       Foreground="{DynamicResource TextDisabledBrush}" FontSize="14"/>
         </Border>
-
-        <!-- Side panel card -->
-        <Border Grid.Column="2"
-                Background="#12171F" BorderBrush="#2A3347" BorderThickness="1"
-                CornerRadius="8" Padding="16" MinHeight="300">
-          <StackPanel>
-            <TextBlock Text="SIDE PANEL"
-                       Foreground="#8899AA" FontSize="11"
-                       Margin="0,0,0,12"/>
-            <!-- AGENT: Replace with real side content -->
-            <TextBlock Text="[ side content ]"
-                       Foreground="#2A3347" FontFamily="Cascadia Code" FontSize="11"
-                       HorizontalAlignment="Center" Margin="0,40,0,0"/>
-          </StackPanel>
-        </Border>
-      </Grid>
-
-    </StackPanel>
-  </ScrollViewer>
-</Page>
+    </Grid>
+</UserControl>

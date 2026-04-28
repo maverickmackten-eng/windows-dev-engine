@@ -3,16 +3,8 @@ using Serilog;
 
 namespace __APP_NAME__.Views.Pages
 {
-    /// <summary>
-    /// Dashboard page. DataContext = DashboardViewModel (set by NavigationService).
-    /// Code-behind is intentionally minimal — all logic lives in ViewModel.
-    /// </summary>
-    public partial class DashboardPage : Page
+    public partial class DashboardPage : UserControl
     {
-        public DashboardPage()
-        {
-            InitializeComponent();
-            Log.Debug("[DashboardPage] Initialized");
-        }
+        public DashboardPage() { InitializeComponent(); Log.Debug("[DashboardPage] Initialized"); }
     }
 }
